@@ -3,9 +3,9 @@ name: tdd
 description: Follows test-driven development process when writing code. Use when implementing features with TDD, writing tests first, or when user mentions TDD or test-driven development.
 ---
 
-# Test-Driven Development
+# Test-Driven Development Process
 
-TDD is a design technique that uses tests as a tool. Design emerges from usage, not speculation. Short feedback loops let you course-correct immediately. The resulting architecture is testable by design, not retrofitted. It's crucial to be thorough and only add what tests demand.
+TDD is a design technique that uses tests as a tool. Design emerges from usage, not speculation. Short feedback loops let you course-correct immediately. The resulting architecture is testable by design, not retrofitted. We are not trying to rush towards a feature completion, it's important that the code is correct and well-designed, it's crucial to be thorough and only add what tests demand. 
 
 When starting, announce: "Using TDD skill in mode: [auto|human]"
 
