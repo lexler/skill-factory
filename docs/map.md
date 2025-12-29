@@ -3,12 +3,13 @@
 ```
 skill-factory/
 ├── CLAUDE.md                           # Agent instructions for this project
+├── scripts/                            # Automation scripts
+│   └── fetch_anthropic_skill_docs.py   # Fetch latest Anthropic docs
 ├── docs/                               # All knowledge about creating skills
 │   ├── knowledge/
 │   │   └── anthropic-skill-docs/       # Official Anthropic skill documentation
-│   │       ├── README.md               # Guide to the documentation
+│   │       ├── map.md                  # Guide to this folder
 │   │       ├── sources.txt             # URLs to fetch docs from
-│   │       ├── update_docs.py          # Script to fetch latest docs
 │   │       ├── overview.md             # (fetched)
 │   │       ├── skills.md               # (fetched)
 │   │       ├── best-practices.md       # (fetched)

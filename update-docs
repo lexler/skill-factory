@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+uv run scripts/fetch_anthropic_skill_docs.py
