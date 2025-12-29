@@ -69,7 +69,7 @@ STARTER_CHARACTER = 🔴 for red test, 🌱 for green, 🌀 when refactoring, al
     - Repeat until every line is justified by a test
 12. Refactor.
     - Reflect on the domain: Is there a missing concept that would make the code more expressive? An object waiting to be extracted? A better way to model the problem?
-    - You may introduce domain concepts (new classes, enums, abstractions) as long as you add NO new behavior. Tests must still pass.
+    - You may introduce domain concepts (new abstractions) as long as you add NO new behavior. Tests must still pass, and there should be no new code added that doesn't have tests.
     - Think about improvements to expressiveness, clarity, simplicity
     - Say `🧹 Starting refactoring stage` and list planned refactorings
     - Implement one at a time, run tests after each
