@@ -6,10 +6,13 @@ skill-factory/
 ├── docs/                               # All knowledge about creating skills
 │   ├── knowledge/
 │   │   └── anthropic-skill-docs/       # Official Anthropic skill documentation
-│   │       ├── overview.md
-│   │       ├── skills.md
-│   │       ├── best-practices.md
-│   │       └── quickstart.md
+│   │       ├── README.md               # Guide to the documentation
+│   │       ├── sources.txt             # URLs to fetch docs from
+│   │       ├── update_docs.py          # Script to fetch latest docs
+│   │       ├── overview.md             # (fetched)
+│   │       ├── skills.md               # (fetched)
+│   │       ├── best-practices.md       # (fetched)
+│   │       └── quickstart.md           # (fetched)
 │   ├── map.md                          # This file - repository structure
 │   └── project.md                      # Project-specific information
 └── output_skills/                      # Created skills organized by name
