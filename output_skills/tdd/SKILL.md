@@ -8,24 +8,25 @@ description: Follows test-driven development process when writing code. Use when
 When starting, announce: "Using TDD skill in mode: [auto|human]"
 
 MODE (user specifies, default: auto)
-- auto: fully automated, no stops
+- auto: DO NOT ask for confirmation or approval. Proceed through all steps without stopping.
 - human: wait for confirmation at key points
 
 STARTER_CHARACTER = 🔴 for red test, 🌱 for green, 🌀 when refactoring, always followed by a space
 
 ## Core Rules
 
-1. Write only one test at a time - focus on the simplest, lowest-hanging fruit test
-2. Predict failures - State what we expect to fail before running tests
-3. Two-step red phase:
+1. ALL code changes follow TDD - Feature requests mid-stream are NOT exceptions. Write test first, then code.
+2. Write only one test at a time - focus on the simplest, lowest-hanging fruit test
+3. Predict failures - State what we expect to fail before running tests
+4. Two-step red phase:
    - First: Make it fail to compile (class/method doesn't exist)
    - Second: Make it compile but fail the assertion (return wrong value)
-4. Minimal code to pass - Just enough to make the test green
-5. No comments in production code - Keep it clean unless specifically asked
-6. Run all tests every time - Not just the one you're working on
-7. Refactor at the first opportunity when the tests are green
-8. Test behavior, not implementation - check responses or state, not method calls
-9. Push back when something seems wrong or unclear
+5. Minimal code to pass - Just enough to make the test green. If no test requires it, don't write it.
+6. No comments in production code - Keep it clean unless specifically asked
+7. Run all tests every time - Not just the one you're working on
+8. Refactor at the first opportunity when the tests are green
+9. Test behavior, not implementation - check responses or state, not method calls
+10. Push back when something seems wrong or unclear
 
 ## Test Planning
 
@@ -39,31 +40,37 @@ STARTER_CHARACTER = 🔴 for red test, 🌱 for green, 🌀 when refactoring, al
    [TEST] Division by zero is not allowed
    ...
    ```
-3. Check completeness - consider [ZOMBIES](references/zombies.md) and any other edge cases. Missing anything?
+3. Check completeness - walk through [ZOMBIES](references/zombies.md) explicitly:
+   - Zero/empty cases covered?
+   - One item cases covered?
+   - Many items cases covered?
+   - Boundary transitions covered?
+   - Interface clarity verified?
+   - Exceptions/errors covered?
 4. If MODE is human, wait for confirmation after test planning
 
 ## Implementation Phase
 
-1. Replace the next comment with a failing test
+1. Replace the next [TEST] comment directly with a failing test. No intermediate markers.
 2. Test should be in format given-when-then (do not add as comments), with empty line separating them
-3. Predict what will fail
-4. Run tests, see compilation error (if testing something new)
-5. Add minimal code to compile
-6. Predict assertion failure
-7. Run tests, see assertion failure
-8. Add minimal code to pass
-9. Predict whether the tests will pass and why. Run tests, see green
-10. Simplify. Look at the code you just added, only the change you added. Did you accidentally add too much code? Can you take something out with having the tests still passing? Make a list of simplifications.
-    - If there's simplifications left, take one step to simplify.
-    - Run tests, make sure everything is still green
-    - Repeat until you cannot see any way to simplify any further without affecting existing functionality and other tests.
-11. Refactor.
-    - Think about things that can be improved about the code we are working on that is already written without affecting the functionality at all. How do we get the code more expressive? Cleaner? Simpler? Make a todo list of things to improve.
-    - Say `🧹 Starting refactoring stage` and output a list of refactorings you're planning to do
-    - Implement the simplest refactoring from the list.
-    - Run tests. If they are passing, mark that refactoring as done and move on to the next one. Otherwise, undo the change and try again.
-    - If there's still refactorings to implement, repeat. Otherwise say "🧹 Refactoring complete" and continue
-12. Go to step 1 for the next [TEST] comment. Repeat until all planned tests are passing.
+3. Think through the expected value BEFORE writing the assertion. Trace the logic step by step.
+4. Predict what will fail
+5. Run tests, see compilation error (if testing something new)
+6. Add minimal code to compile
+7. Predict assertion failure
+8. Run tests, see assertion failure
+9. Add minimal code to pass
+10. Predict whether the tests will pass and why. Run tests, see green
+11. Simplify. For each line/expression you just added, ask: "Does a failing test require this?"
+    - If no test requires it, delete it or if it's necessary, add a test comment to write that test
+    - Run tests after each simplification
+    - Repeat until every line is justified by a test
+12. Refactor.
+    - Think about improvements to expressiveness, clarity, simplicity - without changing behavior
+    - Say `🧹 Starting refactoring stage` and list planned refactorings
+    - Implement one at a time, run tests after each
+    - When done (or if none needed), say "🧹 Refactoring complete"
+13. Go to step 1 for the next [TEST] comment. Repeat until all planned tests are passing.
 
 ## Final Evaluation
 
