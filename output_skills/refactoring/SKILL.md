@@ -7,10 +7,11 @@ description: Refactoring process. Use when improving code structure, cleaning up
 
 STARTER_CHARACTER = 🟣
 
+When starting, announce: "🟣Using REFACTORING skill".
+
 Ask one question at a time and wait for a response.
-
-Confirm file names and locations if unsure.
-
+Search for ./test.sh script in the root and run it for all tests on every refactoring.
+If it's not present, suggest to create it. Confirm file names and locations if unsure. 
 Never change test code in this process.
 
 ## Process
