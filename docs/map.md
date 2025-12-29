@@ -14,6 +14,7 @@ skill-factory/
 │   │       ├── skills.md               # Implementation syntax, structure, usage patterns
 │   │       ├── best-practices.md       # Proven patterns, common pitfalls, guidelines
 │   │       └── quickstart.md           # Quick start guide to first skill
+│   ├── creating-skills.md              # Instructions for creating skills
 │   ├── map.md                          # This file - repository structure
 │   └── project.md                      # Project-specific information
 └── output_skills/                      # Created skills organized by name
