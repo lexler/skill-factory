@@ -1,0 +1,97 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["pyyaml"]
+# ///
+
+import curses
+import os
+import sys
+from pathlib import Path
+
+import yaml
+
+REPO_ROOT = Path(__file__).parent.resolve()
+REGISTRY_FILE = REPO_ROOT / "skills.yaml"
+GLOBAL_SKILLS_DIR = Path.home() / ".claude" / "skills"
+
+
+def load_registry():
+    with open(REGISTRY_FILE) as f:
+        return yaml.safe_load(f)
+
+
+def get_skill_source(skill_info):
+    return REPO_ROOT / skill_info["source"]
+
+
+def is_installed(skill_name, skill_info):
+    source = get_skill_source(skill_info)
+    target = GLOBAL_SKILLS_DIR / skill_name
+    return target.is_symlink() and target.resolve() == source
+
+
+def install_skill(skill_name, skill_info):
+    source = get_skill_source(skill_info)
+    target = GLOBAL_SKILLS_DIR / skill_name
+
+    if target.exists() or target.is_symlink():
+        target.unlink() if target.is_symlink() else None
+
+    GLOBAL_SKILLS_DIR.mkdir(parents=True, exist_ok=True)
+    target.symlink_to(source)
+
+
+def uninstall_skill(skill_name):
+    target = GLOBAL_SKILLS_DIR / skill_name
+    if target.is_symlink():
+        target.unlink()
+
+
+def main(stdscr):
+    curses.curs_set(0)
+    curses.use_default_colors()
+
+    registry = load_registry()
+    skills = list(registry.get("skills", {}).items())
+
+    if not skills:
+        stdscr.addstr(0, 0, "No skills in registry. Press any key to exit.")
+        stdscr.getch()
+        return
+
+    selected = 0
+
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Skills Manager")
+        stdscr.addstr(1, 0, "─" * 40)
+
+        for i, (name, info) in enumerate(skills):
+            installed = is_installed(name, info)
+            checkbox = "[x]" if installed else "[ ]"
+            prefix = "→ " if i == selected else "  "
+            line = f"{prefix}{checkbox} {name}"
+            stdscr.addstr(i + 3, 0, line)
+
+        stdscr.addstr(len(skills) + 5, 0, "↑↓ navigate | SPACE toggle | q quit")
+        stdscr.refresh()
+
+        key = stdscr.getch()
+
+        if key == ord("q"):
+            break
+        elif key == curses.KEY_UP and selected > 0:
+            selected -= 1
+        elif key == curses.KEY_DOWN and selected < len(skills) - 1:
+            selected += 1
+        elif key == ord(" "):
+            name, info = skills[selected]
+            if is_installed(name, info):
+                uninstall_skill(name)
+            else:
+                install_skill(name, info)
+
+
+if __name__ == "__main__":
+    curses.wrapper(main)

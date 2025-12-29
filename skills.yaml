@@ -1,0 +1,6 @@
+# Skill Registry
+# Lists all skills in this repository and their source paths
+
+skills:
+  tdd:
+    source: output_skills/tdd
