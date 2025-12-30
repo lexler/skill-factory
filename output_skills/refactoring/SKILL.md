@@ -1,6 +1,6 @@
 ---
 name: refactoring
-description: Refactoring process. Always follow when refactoring, simplifying and improving code. Always follow when user or document mentions refactoring.
+description: Refactoring process. Invoke immediately when user or document mentions refactoring, or proactively when code gets too complex or messy.
 ---
 
 # Refactoring Production Code
