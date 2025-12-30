@@ -46,7 +46,7 @@ Write self-explanatory, readable code.
 - Remove unused imports
 - Remove unhelpful local variables
 - Look for opportunities to simplify
-- Unify similar structures that vary only in details
+- Generalize similar structures where it makes sense
 
 ### Refactoring Process
 Follow this process for each refactoring:
