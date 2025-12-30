@@ -1,6 +1,6 @@
 ---
 name: refactoring
-description: Refactoring process. Use when improving code structure, cleaning up code, when code gets messy or complex, or when the user mentions refactoring.
+description: Refactoring process. Always follow when refactoring, simplifying and improving code. Always follow when user or document mentions refactoring.
 ---
 
 # Refactoring Production Code
@@ -10,9 +10,8 @@ STARTER_CHARACTER = 🟣
 When starting, announce: "🟣Using REFACTORING skill".
 
 Ask one question at a time and wait for a response.
-Search for ./test.sh script in the root and run it for all tests on every refactoring.
-If it's not present, suggest to create it. Confirm file names and locations if unsure. 
-Never change test code in this process.
+Search for ./test.sh script in the root and run it for all tests on every refactoring. If it's not present, create it and ensure it runs all tests. 
+Never change test code in this process. Work autonomously as much as possible.
 
 ## Process
 

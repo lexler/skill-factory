@@ -29,10 +29,10 @@ Ask the user:
 - What does Claude NOT already know that this skill needs to provide?
 - Do you have examples that should be included as reference material?
 
-### 3. Propose Name and Trigger
+### 3. Propose Name and Description
 Based on what the user described, SUGGEST:
 - A skill name (the essence of what it does, extremely succinct, lowercase with hyphens)
-- A trigger description (what user requests should activate this)
+- A description (what it does + trigger words users would say)
 
 Present both for user approval before proceeding.
 
@@ -97,22 +97,19 @@ Suggest improvements before proceeding.
 ### 9. Install Skill
 Ask user: **Global skill or project skill?**
 
-**Global (personal, all projects):**
+**Global (symlink, personal, all projects):**
 ```bash
-cp -r output_skills/[skill-name] ~/.claude/skills/[skill-name]
+./skills install [skill-name]
 ```
 
-**Project (shared via git):**
+**Project (copy, shared via git):**
 ```bash
-cp -r output_skills/[skill-name] .claude/skills/[skill-name]
+./skills local install [skill-name]
 ```
 
-After copying, verify the structure:
-```bash
-ls -la [target-path]/[skill-name]/
-```
+Check status with `./skills status` or `./skills local status`.
 
-Confirm SKILL.md and any references/ are in place before telling user to restart Claude Code.
+Tell user to restart Claude Code to load the skill.
 
 ### 10. Test
 - Restart Claude Code to load the skill

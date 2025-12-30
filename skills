@@ -4,12 +4,14 @@
 # ///
 
 import curses
+import shutil
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.resolve()
 SKILLS_SOURCE_DIR = REPO_ROOT / "output_skills"
 GLOBAL_SKILLS_DIR = Path.home() / ".claude" / "skills"
+LOCAL_SKILLS_DIR = Path.cwd() / ".claude" / "skills"
 
 
 def discover_skills():
@@ -22,6 +24,11 @@ def is_installed(skill_name):
     source = SKILLS_SOURCE_DIR / skill_name
     target = GLOBAL_SKILLS_DIR / skill_name
     return target.is_symlink() and target.resolve() == source
+
+
+def is_installed_local(skill_name):
+    target = LOCAL_SKILLS_DIR / skill_name
+    return target.exists() and target.is_dir()
 
 
 def install_skill(skill_name):
@@ -55,6 +62,33 @@ def uninstall_skill(skill_name):
     return True
 
 
+def install_skill_local(skill_name):
+    source = SKILLS_SOURCE_DIR / skill_name
+    target = LOCAL_SKILLS_DIR / skill_name
+
+    if not source.exists():
+        print(f"Error: Skill '{skill_name}' not found in output_skills/")
+        return False
+
+    if target.exists():
+        shutil.rmtree(target)
+
+    LOCAL_SKILLS_DIR.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(source, target)
+    return True
+
+
+def uninstall_skill_local(skill_name):
+    target = LOCAL_SKILLS_DIR / skill_name
+    if target.exists() and target.is_dir():
+        shutil.rmtree(target)
+        return True
+    elif target.exists():
+        print(f"Error: {target} is not a directory. Remove manually.")
+        return False
+    return True
+
+
 def cli_status():
     skills = discover_skills()
     if not skills:
@@ -68,16 +102,44 @@ def cli_status():
         print(f"{name:<20} {status}")
 
 
+def cli_status_local():
+    skills = discover_skills()
+    if not skills:
+        print("No skills found in output_skills/")
+        return
+
+    print(f"Local skills ({LOCAL_SKILLS_DIR}):")
+    print(f"{'Skill':<20} {'Status'}")
+    print("-" * 35)
+    for name in skills:
+        status = "installed" if is_installed_local(name) else "not installed"
+        print(f"{name:<20} {status}")
+
+
 def cli_install(skill_name):
     if install_skill(skill_name):
-        print(f"Installed '{skill_name}'")
+        print(f"Installed '{skill_name}' (global)")
     else:
         sys.exit(1)
 
 
 def cli_uninstall(skill_name):
     if uninstall_skill(skill_name):
-        print(f"Uninstalled '{skill_name}'")
+        print(f"Uninstalled '{skill_name}' (global)")
+    else:
+        sys.exit(1)
+
+
+def cli_install_local(skill_name):
+    if install_skill_local(skill_name):
+        print(f"Installed '{skill_name}' (local: {LOCAL_SKILLS_DIR})")
+    else:
+        sys.exit(1)
+
+
+def cli_uninstall_local(skill_name):
+    if uninstall_skill_local(skill_name):
+        print(f"Uninstalled '{skill_name}' (local)")
     else:
         sys.exit(1)
 
@@ -97,7 +159,7 @@ def interactive_mode(stdscr):
 
     while True:
         stdscr.clear()
-        stdscr.addstr(0, 0, "Skills Manager")
+        stdscr.addstr(0, 0, "Skills Manager (global)")
         stdscr.addstr(1, 0, "─" * 40)
 
         for i, name in enumerate(skills):
@@ -128,12 +190,14 @@ def interactive_mode(stdscr):
 
 def print_usage():
     print("Usage:")
-    print("  ./skills status           List all skills and status")
-    print("  ./skills install <name>   Install a skill")
-    print("  ./skills uninstall <name> Uninstall a skill")
-    print("  ./skills toggle           Interactive mode (TUI)")
-    print("  ./skills on               Interactive mode (TUI)")
-    print("  ./skills off              Interactive mode (TUI)")
+    print("  ./skills status              List global skills status")
+    print("  ./skills install <name>      Install skill globally (symlink)")
+    print("  ./skills uninstall <name>    Uninstall skill globally")
+    print("  ./skills toggle              Interactive mode (TUI)")
+    print("")
+    print("  ./skills local status        List local skills status")
+    print("  ./skills local install <name>   Install skill locally (copy)")
+    print("  ./skills local uninstall <name> Uninstall skill locally")
 
 
 def main():
@@ -147,6 +211,26 @@ def main():
         cli_install(args[1])
     elif args[0] == "uninstall" and len(args) == 2:
         cli_uninstall(args[1])
+    elif args[0] == "global" and len(args) >= 2:
+        if args[1] == "status":
+            cli_status()
+        elif args[1] == "install" and len(args) == 3:
+            cli_install(args[2])
+        elif args[1] == "uninstall" and len(args) == 3:
+            cli_uninstall(args[2])
+        else:
+            print_usage()
+            sys.exit(1)
+    elif args[0] == "local" and len(args) >= 2:
+        if args[1] == "status":
+            cli_status_local()
+        elif args[1] == "install" and len(args) == 3:
+            cli_install_local(args[2])
+        elif args[1] == "uninstall" and len(args) == 3:
+            cli_uninstall_local(args[2])
+        else:
+            print_usage()
+            sys.exit(1)
     elif args[0] in ("toggle", "on", "off"):
         curses.wrapper(interactive_mode)
     else:

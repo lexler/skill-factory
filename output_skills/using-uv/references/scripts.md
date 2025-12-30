@@ -9,6 +9,7 @@ Standalone Python scripts with automatic dependency management. No virtualenv, n
 - Executable scripts
 - Locking for reproducibility
 - Python version control
+- No-comment hook compatibility
 
 ## Basic Execution
 
@@ -87,13 +88,9 @@ uv lock --script example.py
 
 Creates `example.py.lock` with exact versions.
 
-Time-based reproducibility in metadata:
-```python
-# /// script
-# dependencies = ["requests"]
-# [tool.uv]
-# exclude-newer = "2024-01-15T00:00:00Z"
-# ///
+Time-based reproducibility via command line:
+```bash
+uv run --exclude-newer "2024-01-15" script.py
 ```
 
 ## Python Version Control
@@ -113,18 +110,15 @@ Or in metadata:
 ## Alternative Package Indexes
 
 ```bash
+uv run --index "https://example.com/simple" script.py
 uv add --index "https://example.com/simple" --script example.py package
 ```
 
-Or in metadata:
-```python
-# /// script
-# dependencies = ["private-package"]
-#
-# [[tool.uv.index]]
-# url = "https://example.com/simple"
-# ///
-```
+For persistent index config, use a UV project with `pyproject.toml` instead.
+
+## No-Comment Hook
+
+Script metadata must stay within lines 2-10, dependencies on one line. Advanced config (indexes, exclude-newer) → use command line flags or a project.
 
 ## Platform Notes
 
