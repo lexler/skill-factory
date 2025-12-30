@@ -45,6 +45,7 @@ Write self-explanatory, readable code.
 - Use better variable names
 - Remove unused imports
 - Remove unhelpful local variables
+- Unify duplicate patterns or repeated structures
 
 ### Refactoring Process
 Follow this process for each refactoring:
@@ -61,14 +62,16 @@ If a refactor fails three times or no further refactoring is found, pause and ch
 
 When you see no more obvious refactoring opportunities, say "🔍 Entering final evaluation".
 
-Examine each file in scope. For each file, think about the problem space:
-- What is the purpose of the code? Express it as both fully and succinctly as possible, say "CODE PURPOSE: [your summary]"
-- Does the actual code express that purpose in a way that is clear to see and understand for the reader?
-- Look for opportunities to use domain language over implementation details in both explanations and names. Express what things ARE and why they exist, instead of how they're implemented.
-- Think about applying this on different layers of abstraction: the whole file, methods, or parts of methods
-- Look for methods where levels of abstraction are mixed: too much detail vs more abstract blocks that express the meaning. Can you see an opportunity to raise the level of abstraction in the more detailed sections?
-- Think about the list of refactorings that you could implement to make the code better from that perspective
-- If you identified improvements, follow the same refactoring process to implement them, be sure to commit and run tests as before, performing simplest refactoring first.
+Examine each file in scope. For each file:
+
+1. State "CODE PURPOSE: [summary]" - express what the code does, fully and succinctly
+2. List whether the code expresses that purpose clearly for a reader
+3. List opportunities to use domain language over implementation details. Express what things ARE and why they exist, instead of how they're implemented.
+4. Consider different layers of abstraction: the whole file, methods, or parts of methods
+5. List methods where levels of abstraction are mixed: too much detail vs more abstract blocks. Note opportunities to raise abstraction in detailed sections.
+6. List specific refactorings that would improve the code
+
+If you identified improvements, apply them using the same refactoring process (test, change, test, commit).
 
 ## 4. Summary
 
