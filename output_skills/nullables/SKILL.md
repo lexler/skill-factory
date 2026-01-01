@@ -5,6 +5,8 @@ description: Writes tests without mocks using James Shore's Nullables pattern. U
 
 # Nullables: Testing Without Mocks
 
+STARTER_CHARACTER = ⚪
+
 Nullables are production code with an "off" switch for external communication. This enables **sociable tests**: tests that exercise real code paths, with only infrastructure I/O neutralized. No mock libraries needed. It also enables really fast and robust tests, which are extremely valuable feedback loops.
 
 ## When to Use Nullables
