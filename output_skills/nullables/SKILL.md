@@ -263,14 +263,14 @@ LoginClient.createNull({ email: "user@example.com", verified: true });
 ## Reference Files
 
 **Building Nullables:**
-- [references/infrastructure-wrappers.md](references/infrastructure-wrappers.md) - Building complete wrappers
-- [references/output-tracking.md](references/output-tracking.md) - Tracking writes and side effects
-- [references/configurable-responses.md](references/configurable-responses.md) - Controlling external inputs
-- [references/embedded-stubs.md](references/embedded-stubs.md) - Stubbing third-party code
+- [infrastructure-wrappers.md](references/infrastructure-wrappers.md) - Step-by-step construction, wrapper composition, when NOT to wrap
+- [output-tracking.md](references/output-tracking.md) - The OutputListener utility, a reusable tracking pattern
+- [configurable-responses.md](references/configurable-responses.md) - Response sequences, error simulation, the ConfigurableResponses helper
+- [embedded-stubs.md](references/embedded-stubs.md) - Async/event patterns, keeping stubs minimal
 
 **Testing and Architecture:**
-- [references/test-patterns.md](references/test-patterns.md) - Structuring tests, Signature Shielding
-- [references/architecture.md](references/architecture.md) - A-Frame, Logic Sandwich, Traffic Cop patterns
+- [test-patterns.md](references/test-patterns.md) - Signature Shielding protects tests from constructor changes; sociable and overlapping tests
+- [architecture.md](references/architecture.md) - Traffic Cop pattern for event-driven code (WebSockets, queues)
 
 **Migrating Existing Code:**
-- [references/migration.md](references/migration.md) - Converting from mocks to Nullables
+- [migration.md](references/migration.md) - Descend/Climb the Ladder strategies for incremental conversion
