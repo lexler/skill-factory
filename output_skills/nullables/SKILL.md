@@ -39,7 +39,7 @@ Both Logic and Infrastructure use Value Objects (shared types)
 This means:
 - **Logic** is pure functions - test directly, no Nullables needed
 - **Infrastructure** is wrapped with Nullables - test with `createNull()`
-- **Application** uses Logic Sandwich: read → process → write
+- **Application** uses [Logic Sandwich](references/logic-sandwich.md): read → process → write
 
 ```javascript
 async processOrder(orderId) {
@@ -164,7 +164,7 @@ describe("App", () => {
 
 ## Three Supporting Patterns
 
-### 1. Output Tracking
+### 1. [Output Tracking](references/output-tracking.md)
 
 Test what was *produced*, not what methods were *called*. Refactoring internals won't break your tests because they are not coupled to implementation details.
 
@@ -180,9 +180,7 @@ assert.deepEqual(output.data, [
 ]);
 ```
 
-See [references/output-tracking.md](references/output-tracking.md) for implementation details.
-
-### 2. Configurable Responses
+### 2. [Configurable Responses](references/configurable-responses.md)
 
 Configure at *your* abstraction level, not the implementation's. When internals change, tests stay meaningful.
 
@@ -197,9 +195,7 @@ const client = HttpClient.createNull([
 ]);
 ```
 
-See [references/configurable-responses.md](references/configurable-responses.md) for patterns.
-
-### 3. Embedded Stubs
+### 3. [Embedded Stubs](references/embedded-stubs.md)
 
 Stubs live in production code, not test files. They're maintained alongside the wrapper and implement only what's actually used.
 
@@ -217,8 +213,6 @@ class StubbedHttp {  // Implements only what HttpClient actually uses
   }
 }
 ```
-
-See [references/embedded-stubs.md](references/embedded-stubs.md) for async patterns.
 
 ## Anti-Patterns
 
@@ -274,4 +268,4 @@ LoginClient.createNull({ email: "user@example.com", verified: true });
 - [event-driven.md](references/event-driven.md) - Traffic Cop + Behavior Simulation for WebSockets, queues
 
 **Migrating Existing Code:**
-- [migration.md](references/migration.md) - Descend/Climb the Ladder strategies for incremental conversion
+- [migration.md](references/migration.md) - migrating from mocks to Nullables incrementally using Descend/Climb the Ladder
