@@ -235,7 +235,9 @@ verify(logger).info("message");
 assert.deepEqual(logOutput.data, [{ level: "info", message: "message" }]);
 ```
 
-**Constructor does work**
+**Constructor connects to infrastructure**
+Problem: makes it impossible to decouple your logic from brittle slow infrastructure. 
+
 ```javascript
 // BAD: Constructor connects to database
 constructor(connectionString) {
@@ -252,6 +254,7 @@ async connect() {
 ```
 
 **Parameters at wrong abstraction level**
+Problem: exposes internal infrastructure considerations to your code, violating information hiding.
 ```javascript
 // BAD: Leaking implementation details
 LoginClient.createNull({ httpResponse: { status: 200, body: '{"email":"x"}' } });
