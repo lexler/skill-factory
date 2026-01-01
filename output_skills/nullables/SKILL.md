@@ -41,7 +41,7 @@ Both Logic and Infrastructure use Value Objects (shared types)
 This means:
 - **Logic** is pure functions - test directly, no Nullables needed
 - **Infrastructure** is wrapped with Nullables - test with `createNull()`
-- **Application** uses [Logic Sandwich](references/logic-sandwich.md): read → process → write
+- **Application** uses [Logic Sandwich](references/architecture/logic-sandwich.md): read → process → write
 
 ```javascript
 async processOrder(orderId) {
@@ -51,7 +51,7 @@ async processOrder(orderId) {
 }
 ```
 
-For event-driven code (WebSockets, queues), each event handler is a Logic Sandwich. See [event-driven.md](references/event-driven.md) for Traffic Cop pattern.
+For event-driven code (WebSockets, queues), each event handler is a Logic Sandwich. See [event-driven.md](references/architecture/event-driven.md) for Traffic Cop pattern.
 
 ## Core Pattern: Two Factory Methods
 
@@ -166,7 +166,7 @@ describe("App", () => {
 
 ## Three Supporting Patterns
 
-### 1. [Output Tracking](references/output-tracking.md)
+### 1. [Output Tracking](references/building/output-tracking.md)
 
 Test what was *produced*, not what methods were *called*. Refactoring internals won't break your tests because they are not coupled to implementation details.
 
@@ -182,7 +182,7 @@ assert.deepEqual(output.data, [
 ]);
 ```
 
-### 2. [Configurable Responses](references/configurable-responses.md)
+### 2. [Configurable Responses](references/building/configurable-responses.md)
 
 Configure at *your* abstraction level, not the implementation's. When internals change, tests stay meaningful.
 
@@ -197,7 +197,7 @@ const client = HttpClient.createNull([
 ]);
 ```
 
-### 3. [Embedded Stubs](references/embedded-stubs.md)
+### 3. [Embedded Stubs](references/building/embedded-stubs.md)
 
 Stubs live in production code, not test files. They're maintained alongside the wrapper and implement only what's actually used.
 
@@ -259,15 +259,15 @@ LoginClient.createNull({ email: "user@example.com", verified: true });
 ## Reference Files
 
 **Building Nullables:**
-- [infrastructure-wrappers.md](references/infrastructure-wrappers.md) - Step-by-step construction, wrapper composition, when NOT to wrap
-- [output-tracking.md](references/output-tracking.md) - The OutputListener utility, a reusable tracking pattern
-- [configurable-responses.md](references/configurable-responses.md) - Response sequences, error simulation, the ConfigurableResponses helper
-- [embedded-stubs.md](references/embedded-stubs.md) - Async/event patterns, keeping stubs minimal
+- [infrastructure-wrappers.md](references/building/infrastructure-wrappers.md) - Step-by-step construction, wrapper composition, when NOT to wrap
+- [output-tracking.md](references/building/output-tracking.md) - The OutputListener utility, a reusable tracking pattern
+- [configurable-responses.md](references/building/configurable-responses.md) - Response sequences, error simulation, the ConfigurableResponses helper
+- [embedded-stubs.md](references/building/embedded-stubs.md) - Async/event patterns, keeping stubs minimal
 
 **Testing and Patterns:**
 - [test-patterns.md](references/test-patterns.md) - Signature Shielding protects tests from constructor changes; sociable and overlapping tests
-- [logic-sandwich.md](references/logic-sandwich.md) - Detailed examples of read → process → write pattern
-- [event-driven.md](references/event-driven.md) - Traffic Cop + Behavior Simulation for WebSockets, queues
+- [logic-sandwich.md](references/architecture/logic-sandwich.md) - Detailed examples of read → process → write pattern
+- [event-driven.md](references/architecture/event-driven.md) - Traffic Cop + Behavior Simulation for WebSockets, queues
 
 **Migrating Existing Code:**
 - [migration.md](references/migration.md) - migrating from mocks to Nullables incrementally using Descend/Climb the Ladder
