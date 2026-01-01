@@ -11,9 +11,16 @@ Analysis based on:
 
 **Problem:** The most powerful framing from Shore - "production code with an off switch" - appears in line 10, buried after the header. This is THE insight that makes Nullables click.
 
-Compare Shore's framing: *"Nullables are production code with an 'off switch' for external communication."*
+But even Shore's framing is missing the WHY: external communication is slow, flaky, and unreliable. We want tests that run in milliseconds and never fail because a server is down. Fast tests = fast feedback loops = better code.
 
-**Suggestion:** Lead with the insight, not the when-to-use rules.
+**Suggested opening:**
+```
+Nullables are production code with an "off switch" for external communication.
+External I/O is slow and flaky - we want tests that run instantly and never
+fail due to network issues. Fast tests mean fast feedback loops.
+```
+
+**Suggestion:** Lead with the insight AND the motivation, not the when-to-use rules.
 
 - [ ] Move "production code with an off switch" to be the first sentence after the header
 - [ ] Consider opening with: "Nullables are production code with an 'off switch' for infrastructure. No mock libraries. Real code paths in tests."
