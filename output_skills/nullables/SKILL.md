@@ -24,6 +24,8 @@ Do NOT use when:
 - You need to verify exact interaction sequences - use mocks
 - The external system is simple enough to use directly in tests
 
+For codebases with existing mocks, see [migration.md](references/migration.md) for incremental conversion strategies.
+
 ## Structure Your Code: A-Frame
 
 Traditional layered architecture stacks Logic on top of Infrastructure. This causes problems: Logic depends on slow and brittle infrastructure, making it hard to test. With nullables, logic never imports Infrastructure directly. This is the approach that makes Nullables work well - you can swap real infrastructure for nulled versions without touching Logic.
@@ -139,6 +141,8 @@ class StubbedProcess {
 }
 ```
 
+For step-by-step wrapper construction and when NOT to wrap, see [infrastructure-wrappers.md](references/building/infrastructure-wrappers.md).
+
 ## Testing with Nullables
 
 ```javascript
@@ -165,7 +169,7 @@ describe("App", () => {
 });
 ```
 
-**Notice**: Tests exercise real `App` code. Only infrastructure I/O is neutralized.
+**Notice**: Tests exercise real `App` code. Only infrastructure I/O is neutralized. The `run()` helper encapsulates setup - this is Signature Shielding, which protects tests from constructor changes. See [test-patterns.md](references/test-patterns.md) for more testing patterns.
 
 ## Three Supporting Patterns
 
@@ -263,19 +267,3 @@ LoginClient.createNull({ httpResponse: { status: 200, body: '{"email":"x"}' } })
 // GOOD: Caller's abstraction level
 LoginClient.createNull({ email: "user@example.com", verified: true });
 ```
-
-## Reference Files
-
-**Building Nullables:**
-- [infrastructure-wrappers.md](references/building/infrastructure-wrappers.md) - Step-by-step construction, wrapper composition, when NOT to wrap
-- [output-tracking.md](references/building/output-tracking.md) - The OutputListener utility, a reusable tracking pattern
-- [configurable-responses.md](references/building/configurable-responses.md) - Response sequences, error simulation, the ConfigurableResponses helper
-- [embedded-stubs.md](references/building/embedded-stubs.md) - Async/event patterns, keeping stubs minimal
-
-**Testing and Patterns:**
-- [test-patterns.md](references/test-patterns.md) - Signature Shielding protects tests from constructor changes; sociable and overlapping tests
-- [logic-sandwich.md](references/architecture/logic-sandwich.md) - Detailed examples of read → process → write pattern
-- [event-driven.md](references/architecture/event-driven.md) - Traffic Cop + Behavior Simulation for WebSockets, queues
-
-**Migrating Existing Code:**
-- [migration.md](references/migration.md) - migrating from mocks to Nullables incrementally using Descend/Climb the Ladder
