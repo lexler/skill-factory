@@ -225,6 +225,8 @@ class StubbedHttp {  // Implements only what HttpClient actually uses
 **Writing broad integration tests** - Sociable unit tests with Nullables provide coverage without slow, flaky end-to-end tests.
 
 **Testing interactions instead of outcomes**
+Problem: couple tests to implementation, resulting in brittle tests. 
+
 ```javascript
 // BAD: Verifying method calls (mock-style thinking)
 verify(logger).info("message");
