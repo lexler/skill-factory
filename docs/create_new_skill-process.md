@@ -83,7 +83,7 @@ description: [What it does]. Use when [trigger phrases user would say].
 
 **Scripts:** For operations that need deterministic reliability.
 
-Keep references one level deep from SKILL.md.
+**One level deep means link chains, not folders.** SKILL.md should link directly to content files - avoid SKILL.md → index.md → actual-content.md chains. Organizing references into subfolders (`references/architecture/`, `references/building/`) is fine as long as SKILL.md links directly to each file.
 
 ### 8. Review Against Best Practices
 Re-read `docs/knowledge/anthropic-skill-docs/best-practices.md` and `skills.md` (troubleshooting section). Compare to what you created:
