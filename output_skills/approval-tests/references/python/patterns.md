@@ -9,29 +9,14 @@
 
 ## Quick Decision Guide
 
-Verifying an object?
-- Use `verify_as_json(obj)` - not `verify(str(obj))`
-
-Verifying a list of items?
-- Structured data: `verify_as_json({"items": items})`
-- Simple labels: `verify_all("Items", items, formatter)`
-
-Has timestamps, GUIDs, or random values?
-- Add scrubbers before first test run, not after CI fails
-- See [scrubbers.md](scrubbers.md)
-
-Multiple scenarios in one test?
-- Use `NamerFactory.with_parameters()` for separate approval files
-- Not multiple `verify()` calls (they overwrite each other)
-
-Testing function with many input combinations?
-- See [combinations.md](combinations.md) for `verify_all_combinations_with_labeled_input`
-
-Verifying state changes over time?
-- Use Storyboard - see [api.md](api.md)
-
-Need to capture log output?
-- See [logging.md](logging.md) for SimpleLogger and verify_logging
+- Objects → `verify_as_json(obj)`, not `verify(str(obj))`
+- Lists (structured) → `verify_as_json({"items": items})`
+- Lists (labeled) → `verify_all("Items", items, formatter)`
+- Non-deterministic data → scrubbers, add before first run ([scrubbers.md](scrubbers.md))
+- Multiple scenarios per test → `NamerFactory.with_parameters()`, not multiple `verify()` calls
+- Input combinations → [combinations.md](combinations.md)
+- State progression → Storyboard ([api.md](api.md))
+- Log output → [logging.md](logging.md)
 
 ## Characterization Tests
 
