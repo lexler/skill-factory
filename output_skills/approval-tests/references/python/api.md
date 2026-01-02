@@ -200,17 +200,24 @@ verify(data, options=options)
 
 ## Storyboard
 
-For verifying sequences/animations:
+Capture object state progression over time. Output stacks frames vertically like comic book panels—easy to diff.
+
+Use for: state machines, multi-step workflows, animations, before/after comparisons.
 
 ```python
 from approvaltests.storyboard import Storyboard
 
 story = Storyboard()
+story.add_description("Testing user registration flow")
 story.add_frame(initial_state)
 story.add_frame(after_action, title="After click")
 story.add_frame(final_state, title="Final")
 verify(story)
 ```
+
+Methods:
+- `add_frame(obj, title=None)` - Capture a state snapshot
+- `add_description(text)` - Add context/labels between frames
 
 Or with context manager:
 
