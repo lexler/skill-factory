@@ -6,7 +6,7 @@
 
 ## Missing Concepts from James Shore
 
-- [ ] **Emphasize "production code, not test code"** — The key insight that Nullables are shippable production artifacts (useful for dry-run mode, cache warming) is mentioned once but deserves more prominence. This is the philosophical core.
+- [x] **Emphasize "production code, not test code"** — The key insight that Nullables are shippable production artifacts (useful for dry-run mode, cache warming) is mentioned once but deserves more prominence. This is the philosophical core.
 
 - [x] **Expand Paranoic Telemetry** — Currently just a bullet point. Add brief explanation: "Assume everything fails. Test error paths, timeouts, and network failures as thoroughly as happy paths."
 

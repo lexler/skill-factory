@@ -9,8 +9,8 @@ STARTER_CHARACTER = ⭕️
 
 External I/O is slow and flaky. Tests that hit real databases, APIs, or file systems run slow and fail randomly. We want tests that run in milliseconds and never fail due to network issues. Fast tests mean fast feedback loops.
 
-Nullables are production code with an "off switch" for infrastructure. They enable **narrow, sociable, state-based tests**:
-
+Nullables are production code with an "off switch" for infrastructure - not test doubles, but real code you can ship (useful for dry-run modes, cache warming, offline operation). 
+They enable **narrow, sociable, state-based tests**:
 - **Narrow**: Each test focuses on a specific class or module, not broad end-to-end flows
 - **Sociable**: Tests use real dependencies, not mocks—only infrastructure I/O is neutralized
 - **State-based**: Assert on outputs and state, not on which methods were called
