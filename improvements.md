@@ -61,7 +61,7 @@
 
 - [ ] **Decide on "Nullable" vs "Nullable Infrastructure"** — Be consistent. Shore uses both but the skill should pick one.
 
-- [ ] **Clarify "sociable" vs "solitary" upfront** — These terms appear without definition. Brief explanation would help.
+- [x] **Clarify "sociable" vs "solitary" upfront** — These terms appear without definition. Brief explanation would help.
 
 ## Output Tracking Reference
 
