@@ -1,5 +1,17 @@
 # Python ApprovalTests Setup
 
+## Contents
+
+- Installation
+- pytest Integration
+- unittest Integration
+- Dependencies
+- Reporters
+- Configuration
+- Git Configuration
+- Python Versions
+- Gotchas
+
 ## Installation
 
 ```bash
