@@ -45,26 +45,15 @@ A-Frame makes Logic and Infrastructure **peers** instead of layers. Neither depe
         Application (coordinates)
             ↓              ↓
 Logic (pure, tested)    Infrastructure (Nullables)
-
-Both Logic and Infrastructure use Value Objects (shared types)
 ```
 
 **Key rule:** Logic never imports Infrastructure directly. Application coordinates between them.
 
-This means:
-- **Logic** is pure functions - test directly, no Nullables needed
-- **Infrastructure** is wrapped with Nullables - test with `createNull()`
-- **Application** uses [Logic Sandwich](references/architecture/logic-sandwich.md): read → process → write
+- **Logic** — pure functions, test directly
+- **Infrastructure** — wrapped with Nullables, test with `createNull()`
+- **Application** — coordinates via [Logic Sandwich](references/architecture/logic-sandwich.md): read → process → write
 
-```javascript
-async processOrder(orderId) {
-  const order = await this._db.getOrder(orderId);     // READ (infrastructure)
-  const result = OrderLogic.validate(order);          // PROCESS (pure logic)
-  await this._db.save(result);                        // WRITE (infrastructure)
-}
-```
-
-For event-driven code (WebSockets, queues), each event handler is a Logic Sandwich. See [event-driven.md](references/architecture/event-driven.md) for Traffic Cop pattern.
+For full architecture details, see [a-frame.md](references/architecture/a-frame.md). For event-driven code, see [event-driven.md](references/architecture/event-driven.md).
 
 ## Core Pattern: Two Factory Methods
 
