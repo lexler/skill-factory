@@ -1,6 +1,6 @@
 # Python Scrubbers
 
-Scrubbers normalize non-deterministic data before comparison.
+Scrubbers normalize non-deterministic data before comparison. Flaky tests across environments usually means unscrubbed timestamps, UUIDs, ports, or paths.
 
 ## Contents
 

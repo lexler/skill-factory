@@ -1,6 +1,6 @@
 # Java Scrubbers
 
-Scrubbers normalize dynamic data before comparison.
+Scrubbers normalize dynamic data before comparison. Flaky tests across environments usually means unscrubbed timestamps, UUIDs, ports, or paths.
 
 ## Contents
 
