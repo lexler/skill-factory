@@ -115,7 +115,8 @@ Commit all `.approved.*` files.
 
 - [api.md](references/java/api.md) - verifyXml/Html, CombinationApprovals, Verifiable interface, database results
 - [scrubbers.md](references/java/scrubbers.md) - DateScrubber formats, GuidScrubber, RegExScrubber, combining scrubbers
-- [setup.md](references/java/setup.md) - JUnit 4/5 setup, reporter selection, dynamic tests, Kotlin support
+- [reporters.md](references/java/reporters.md) - IDE/diff tool reporters, FirstWorkingReporter, custom reporters
+- [setup.md](references/java/setup.md) - JUnit 4/5 setup, dynamic tests, Kotlin support
 - [inline.md](references/java/inline.md) - Text blocks for inline approvals, InlineOptions modes
 - [logging.md](references/java/logging.md) - ConsoleOutput for System.out/err verification
 - [advanced.md](references/java/advanced.md) - NamerFactory, PackageSettings, OS/machine-specific tests, common mistakes

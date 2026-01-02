@@ -141,31 +141,17 @@ Approvals.verify(result, options);
 
 ## Reporters
 
-### Common Reporters
+See [reporters.md](reporters.md) for full reporter reference.
 
-- `Junit4Reporter` - JUnit 4 integration
-- `Junit5Reporter` - JUnit 5 integration
-- `DiffReporter` - Opens diff tool
-- `QuietReporter` - No output, just fails
-- `AutoApproveReporter` - Auto-approve all
-- `ClipboardReporter` - Copy command to clipboard
-
-### Using Reporters
+Common reporters: `Junit5Reporter`, `IntelliJReporter`, `QuietReporter`, `ClipboardReporter`
 
 ```java
-Approvals.verify(result, new Options().withReporter(new Junit5Reporter()));
-```
-
-### Annotation-Based
-
-```java
+// Via annotation
 @UseReporter(Junit5Reporter.class)
-public class MyTest {
-    @Test
-    void testSomething() {
-        Approvals.verify(result);
-    }
-}
+public class MyTest { }
+
+// Via Options
+Approvals.verify(result, new Options().withReporter(new Junit5Reporter()));
 ```
 
 ## Verifiable Interface

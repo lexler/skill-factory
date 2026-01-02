@@ -13,7 +13,7 @@
 - [File Naming](#file-naming)
 - [Kotlin Support](#kotlin-support)
 
-For full reporter list and Options methods, see [api.md](api.md).
+For full reporter list, see [reporters.md](reporters.md). For Options methods, see [api.md](api.md).
 
 ## Maven
 
@@ -112,32 +112,18 @@ The `binary` attribute prevents line ending changes.
 
 ## Reporter Selection
 
-### IDE Reporters
+See [reporters.md](reporters.md) for full reporter reference including custom reporters and chaining.
+
+Quick examples:
 
 ```java
-// IntelliJ
+// IDE
 @UseReporter(IntelliJReporter.class)
-
-// Eclipse
-@UseReporter(EclipseReporter.class)
-
-// VS Code
 @UseReporter(VsCodeReporter.class)
-```
 
-### Diff Tool Reporters
-
-```java
-@UseReporter(BeyondCompare4Reporter.class)  // Windows/Mac
-@UseReporter(KaleidoscopeDiffReporter.class) // Mac
-@UseReporter(MeldMergeReporter.class)        // Linux
-```
-
-### CI Reporters
-
-```java
-@UseReporter(QuietReporter.class)     // Just fails, no output
-@UseReporter(ClipboardReporter.class) // Copies approve command
+// CI
+@UseReporter(QuietReporter.class)
+@UseReporter(ClipboardReporter.class)
 ```
 
 ## Options Configuration
