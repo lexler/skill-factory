@@ -38,7 +38,7 @@ Do NOT use when:
 
 ## Structure Your Code: A-Frame
 
-Traditional layered architecture stacks Logic on top of Infrastructure. This causes problems: Logic depends on slow and brittle infrastructure, making it hard to test. With nullables, logic never imports Infrastructure directly. This is the approach that makes Nullables work well - you can swap real infrastructure for nulled versions without touching Logic.
+Traditional layered architecture stacks Logic on top of Infrastructure. This causes problems: Logic depends on slow and brittle infrastructure, making it hard to test. With Nullables, logic never imports Infrastructure directly. This is the approach that makes Nullables work well - you can swap real infrastructure for nulled versions without touching Logic.
 
 A-Frame makes Logic and Infrastructure **peers** instead of layers. Neither depends on the other. Logic stays pure, Infrastructure is isolated behind Nullables.
 
