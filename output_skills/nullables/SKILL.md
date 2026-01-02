@@ -23,9 +23,14 @@ Nullables are production code with an "off switch" for infrastructure—not test
 
 ## When to Use
 
-Use Nullables when testing code that talks to external systems (HTTP, files, databases, clocks) or when you need fast tests without real I/O.
+**Use Nullables for:**
+- Code that talks to external systems (HTTP, files, databases, clocks, random)
+- Third-party libraries you don't control
+- Non-deterministic operations
 
-Skip Nullables for pure logic—just test directly.
+**Don't use Nullables for:**
+- Pure logic — test directly, no wrapper needed
+- Your own classes — make them Nullable directly, or null their dependencies
 
 **Greenfield**: Add wrappers incrementally as tests demand—don't over-engineer upfront.
 
@@ -43,8 +48,8 @@ Logic (pure, tested)    Infrastructure (Nullables)
 
 **Key rule:** Logic never imports Infrastructure directly. Application coordinates between them via [Logic Sandwich](references/architecture/logic-sandwich.md): read → process → write.
 
-- **Logic** — pure functions, test directly without Nullables
-- **Infrastructure** — wrapped with `create()`/`createNull()`, tested with Nullables
+- **Logic** — pure functions, no I/O
+- **Infrastructure** — wrapped with `create()`/`createNull()`
 - **Application** — thin coordination layer
 
 This separation lets you swap real infrastructure for nulled versions without touching Logic. For full details, see [a-frame.md](references/architecture/a-frame.md). For event-driven code, see [event-driven.md](references/architecture/event-driven.md).
@@ -152,9 +157,5 @@ LoginClient.createNull({ email: "user@example.com", verified: true });
 ```
 
 **Stubs in test files** — Stubs belong in production code alongside the wrapper. See [embedded-stubs.md](references/building/embedded-stubs.md).
-
-**Mocking your own code** — Only wrap third-party code and infrastructure. Make your own classes Nullable directly, or null their dependencies.
-
-**Wrapping pure code** — Pure functions don't need Nullables; test directly.
 
 **Stub as complex as the real thing** — If your stub needs significant logic, reconsider the abstraction.
