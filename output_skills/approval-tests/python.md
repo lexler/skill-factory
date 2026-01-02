@@ -93,11 +93,13 @@ Commit all `.approved.*` files.
 
 ## Reference Files
 
-- [api.md](references/python/api.md) - All verify functions, Options class, Storyboard, MarkdownTable
-- [scrubbers.md](references/python/scrubbers.md) - Normalizing timestamps, GUIDs, regex patterns, custom scrubbers
-- [combinations.md](references/python/combinations.md) - Testing all input combinations, pairwise testing
-- [patterns.md](references/python/patterns.md) - Characterization tests, multiple approvals per test, common mistakes
-- [inline.md](references/python/inline.md) - Storing approvals in docstrings instead of files
-- [logging.md](references/python/logging.md) - Capturing and verifying log output
-- [reporters.md](references/python/reporters.md) - Diff tools, custom reporters, chaining reporters
-- [setup.md](references/python/setup.md) - Installation, CI configuration, pytest integration
+When to go deeper:
+
+- [api.md](references/python/api.md) - Need verify_xml/html/binary, Storyboard for state machines, MarkdownTable for input grids, Options methods
+- [scrubbers.md](references/python/scrubbers.md) - Custom date formats, regex patterns, combining scrubbers, line removal
+- [combinations.md](references/python/combinations.md) - Testing input combinations, pairwise for large parameter spaces, handling exceptions in combinations
+- [patterns.md](references/python/patterns.md) - Characterizing legacy code, multiple approvals per test, avoiding common mistakes
+- [inline.md](references/python/inline.md) - Want expectations in docstrings instead of .approved files
+- [logging.md](references/python/logging.md) - Verifying log output, tracing method execution with SimpleLogger
+- [reporters.md](references/python/reporters.md) - Custom diff tools, fallback reporter chains
+- [setup.md](references/python/setup.md) - CI failures, pytest config, custom approval file locations
