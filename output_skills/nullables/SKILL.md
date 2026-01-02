@@ -27,15 +27,14 @@ Use Nullables when:
 - You need tests that run fast without real I/O
 
 Do NOT use when:
-- Testing pure logic (no infrastructure) - just test directly
-- You need to verify exact interaction sequences - use mocks
+- Testing pure logic (no infrastructure) — just test directly
 - The external system is simple enough to use directly in tests
 
-For when NOT to create a wrapper (avoiding over-engineering), see [infrastructure-wrappers.md](references/building/infrastructure-wrappers.md#when-not-to-create-a-wrapper).
+## Getting Started
 
-For codebases with existing mocks, see [migration.md](references/migration.md) for incremental conversion strategies.
+**Greenfield code**: Start with hardcoded implementations. Add infrastructure wrappers incrementally as tests demand them—don't over-engineer upfront. See [infrastructure-wrappers.md](references/building/infrastructure-wrappers.md#when-not-to-create-a-wrapper) for when NOT to create a wrapper.
 
-**Grow Evolutionary Seeds**: For greenfield code, start with hardcoded implementations. Add infrastructure wrappers incrementally as tests demand them—don't over-engineer upfront.
+**Existing codebase with mocks**: See [migration.md](references/migration.md) for incremental conversion strategies (Descend the Ladder, Climb the Ladder, Throwaway Stubs).
 
 ## Structure Your Code: A-Frame
 
