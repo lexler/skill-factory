@@ -1,13 +1,5 @@
 # Nullables Skill Improvement Suggestions
 
-## Description (Trigger Words)
-
-- [ ] Rewrite description to include common user phrases:
-  - Current: "Writes tests without mocks using James Shore's Nullables pattern. Use when writing tests and designing code for testability."
-  - Add: "infrastructure", "HTTP client", "database wrapper", "file system", "clock", "flaky tests", "slow tests", "test doubles", "sociable tests", "dependency injection"
-  - Suggested: "Writes tests without mocks using the Nullables pattern (embedded stubs, output tracking, configurable responses). Use when testing code that talks to HTTP APIs, databases, file systems, or clocks. Replaces mocking libraries with sociable, state-based tests that run fast and don't break during refactoring."
-
----
 
 ## Missing Patterns from James Shore
 
