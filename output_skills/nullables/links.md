@@ -9,5 +9,5 @@ Course Testing Without Mocks:
 https://www.jamesshore.com/v2/courses/testing-without-mocks
 
 Example:
-Simple example: /Users/ladak/workspace/knowledge/references-for-skills/nullables/example_repos/testing-without-mocks-example
-Complex example: /Users/ladak/workspace/knowledge/references-for-skills/nullables/example_repos/testing-without-mocks-complex
+Simple example: ~/workspace/knowledge/references-for-skills/nullables/example_repos/testing-without-mocks-example
+Complex example: ~/workspace/knowledge/references-for-skills/nullables/example_repos/testing-without-mocks-complex

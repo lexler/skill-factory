@@ -1,6 +1,6 @@
 ---
 name: nullables
-description: Writes tests without mocks using Nullables. Use when testing code with external I/O (HTTP, files, databases, clocks), designing infrastructure wrappers, or replacing brittle mock-based tests with sociable, state-based tests.
+description: Writes tests without mocks using Nullables. Use when writing tests, especially testing code with external I/O (HTTP, files, databases, clocks, random numbers), designing infrastructure wrappers or replacing mock-based tests.
 ---
 
 # Nullables: Testing Without Mocks
@@ -158,7 +158,3 @@ LoginClient.createNull({ email: "user@example.com", verified: true });
 **Wrapping pure code** — Pure functions don't need Nullables; test directly.
 
 **Stub as complex as the real thing** — If your stub needs significant logic, reconsider the abstraction.
-
-## Further Reading
-
-See [links.md](links.md) for James Shore's original article and course materials.

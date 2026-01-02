@@ -1,11 +1,5 @@
 # Nullables Skill Improvements
 
-## High Priority
-
-- [ ] **Trim "The Problem" section** — Claude already knows mocks couple tests to implementation. Reduce to 1-2 sentences max, or merge into "The Solution"
-
-- [ ] **Fix links.md local paths** — Contains absolute machine-specific paths (`/Users/ladak/workspace/...`) that won't work for anyone else. Either remove or convert to relative paths within the skill
-
 ## Medium Priority
 
 - [ ] **Add Contents/TOC to logic-sandwich.md** — At 110 lines, just over the 100-line threshold. A brief TOC helps Claude navigate
