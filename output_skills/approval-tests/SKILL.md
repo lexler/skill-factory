@@ -1,6 +1,6 @@
 ---
 name: approval-tests
-description: Writes approval tests (snapshot testing) for Python, JavaScript/TypeScript, or Java. Use when verifying complex output, testing with golden masters, or working with .approved/.received files.
+description: Writes approval tests (snapshot/golden master testing) for Python, JavaScript/TypeScript, or Java. Use when verifying complex output, characterization testing legacy code, testing combinations, or working with .approved/.received files.
 ---
 
 # Approval Tests
@@ -13,7 +13,7 @@ Approval tests verify complex output by comparing against a saved "golden master
 
 **Use approval tests when:**
 - Output is complex (JSON, XML, formatted text, multiple fields)
-- You're characterizing legacy code behavior
+- Characterizing legacy code behavior before refactoring
 - Testing combinations of inputs
 - Assertions would be tedious or brittle
 
@@ -45,144 +45,49 @@ Approval tests verify complex output by comparing against a saved "golden master
 - `.received` files are temporary - add `*.received.*` to .gitignore
 - Never edit `.approved` files by hand - always generate via test
 
-## Quick Start
-
-**Python:**
-```python
-from approvaltests import verify
-
-def test_report():
-    result = generate_report()
-    verify(result)
-```
-
-**JavaScript/TypeScript:**
-```javascript
-const approvals = require('approvals');
-
-it('generates report', function() {
-    const result = generateReport();
-    approvals.verify(__dirname, 'test_report', result);
-});
-```
-
-**Java:**
-```java
-import org.approvaltests.Approvals;
-
-@Test
-void testReport() {
-    String result = generateReport();
-    Approvals.verify(result);
-}
-```
-
-**First run:** Test fails, `.received` file created. Review it, approve it, rerun.
-
 ## When Approval Tests Shine
 
-**Complex objects** - Instead of asserting 20 fields:
-```python
-# Bad: tedious, brittle
-assert user.name == "Alice"
-assert user.email == "alice@example.com"
-assert user.created_at == ...
-# ... 17 more assertions
+**Complex objects** - Instead of asserting 20 fields individually, verify the whole object as JSON. One approval captures everything.
 
-# Good: verify the whole thing
-verify_as_json(user)
+**Characterization tests** - Capture legacy behavior before refactoring. Run `verify(result)` to snapshot current behavior, then refactor with a safety net.
+
+**Combinatorial testing** - Test all combinations of inputs with a single approval file. `verify_all_combinations()` generates every permutation.
+
+## Core API Pattern
+
+All languages follow the same pattern:
+
+```
+verify(result)                    # Basic string/object verification
+verify_as_json(object)            # Objects as formatted JSON
+verify_all(header, items)         # Collections with labels
+verify_all_combinations(fn, inputs)  # All input combinations
 ```
 
-**Characterization tests** - Capture legacy behavior before refactoring:
-```python
-def test_legacy_billing():
-    result = legacy_billing_system.calculate(test_data)
-    verify(result)  # Captures current behavior as baseline
-```
+Non-deterministic data (timestamps, GUIDs) must be scrubbed before verification.
 
-**Combinatorial testing** - Test all input combinations:
-```python
-verify_all_combinations(
-    process_order,
-    sizes=["S", "M", "L"],
-    colors=["red", "blue"],
-    shipping=["standard", "express"]
-)
-```
+## Language References
 
-## Common Patterns
+Detect language from project files, then read the appropriate reference:
 
-### verify() - Basic string/object verification
-```python
-verify(result)                    # String output
-verify(str(complex_object))       # Object as string
-```
+| Project Files | Language | Reference |
+|---------------|----------|-----------|
+| `pyproject.toml`, `setup.py`, `requirements.txt` | Python | [references/python.md](references/python.md) |
+| `package.json` | JavaScript/TypeScript | [references/nodejs.md](references/nodejs.md) |
+| `pom.xml`, `build.gradle` | Java | [references/java.md](references/java.md) |
 
-### verify_as_json() - Objects as formatted JSON
-```python
-verify_as_json(user)              # Pretty-printed JSON
-verify_as_json(list_of_users)     # Works with collections
-```
+## Cross-Language Patterns
 
-### verify_all() - Collections with labels
-```python
-verify_all("Users", users, lambda u: f"{u.name}: {u.email}")
-```
-
-### Scrubbing non-deterministic data
-Timestamps, GUIDs, and random values break approval tests. Use scrubbers:
-```python
-from approvaltests import verify, Options
-from approvaltests.scrubbers import scrub_all_dates
-
-verify(result, options=Options().with_scrubber(scrub_all_dates))
-```
-
-See language-specific reference for scrubber details.
-
-## Language Detection
-
-Determine language from project context:
-- `pyproject.toml`, `setup.py`, `requirements.txt` → Python
-- `package.json` → JavaScript/TypeScript
-- `pom.xml`, `build.gradle` → Java
-
-Then read the appropriate reference for accurate API details.
-
-## References
-
-**Language-specific API and setup:**
-- Python: [references/python/api.md](references/python/api.md) | [setup](references/python/setup.md)
-- Node.js: [references/nodejs/api.md](references/nodejs/api.md) | [setup](references/nodejs/setup.md)
-- Java: [references/java/api.md](references/java/api.md) | [setup](references/java/setup.md)
-
-**Advanced patterns:**
-- Inline approvals: [python](references/python/inline.md) | [nodejs](references/nodejs/inline.md) | [java](references/java/inline.md)
-- Scrubbers: [python](references/python/scrubbers.md) | [nodejs](references/nodejs/scrubbers.md) | [java](references/java/scrubbers.md)
-- Combinations: [references/patterns/combinations.md](references/patterns/combinations.md)
+- [Combination Testing](references/patterns/combinations.md)
+- [Testing Patterns](references/patterns/testing-patterns.md)
 
 ## Anti-Patterns
 
-**Don't write assertions for complex objects:**
-```python
-# Bad
-assert json.loads(result)["users"][0]["name"] == "Alice"
-assert json.loads(result)["users"][0]["email"] == "alice@example.com"
-
-# Good
-verify_as_json(result)
-```
+**Don't write assertions for complex objects** - Use verify_as_json() instead of multiple assertions.
 
 **Don't commit .received files** - They're temporary test artifacts.
 
-**Don't forget scrubbers for timestamps/GUIDs:**
-```python
-# Bad - will fail randomly
-verify(f"Created at: {datetime.now()}")
-
-# Good - scrub the date
-verify(result, options=Options().with_scrubber(scrub_all_dates))
-```
+**Don't forget scrubbers** - Timestamps, GUIDs, random values will cause random failures. Scrub them.
 
 **Don't over-verify** - One approval per logical behavior, not one per line of output.
 
