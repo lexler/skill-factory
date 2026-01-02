@@ -147,7 +147,7 @@ gather_all_exceptions_and_throw(
 )
 ```
 
-See Python details: [python/advanced.md](../python/advanced.md)
+See Python details: [advanced.md](../python/advanced.md)
 
 ## Verifying Logs and Results
 
@@ -167,7 +167,7 @@ with verify_logging(options=NamerFactory.with_parameters("logs")):
 verify(result)  # Separate approval file
 ```
 
-See Python details: [python/logging.md](../python/logging.md)
+See Python details: [logging.md](../python/logging.md)
 
 ## Tips
 

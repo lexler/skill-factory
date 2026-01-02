@@ -81,9 +81,9 @@ Commit all `.approved.*` files.
 
 ## Deep References
 
-- [API Reference](python/api.md) - All verify functions and Options
-- [Setup & Configuration](python/setup.md) - pytest plugin, reporters, config files
-- [Scrubbers](python/scrubbers.md) - Handling timestamps, GUIDs, dynamic data
-- [Inline Approvals](python/inline.md) - Store approvals in docstrings
-- [Logging Verification](python/logging.md) - Test log output with SimpleLogger
-- [Advanced Patterns](python/advanced.md) - Multiple approvals, parametrized tests, configuration
+- [API Reference](references/python/api.md) - All verify functions and Options
+- [Setup & Configuration](references/python/setup.md) - pytest plugin, reporters, config files
+- [Scrubbers](references/python/scrubbers.md) - Handling timestamps, GUIDs, dynamic data
+- [Inline Approvals](references/python/inline.md) - Store approvals in docstrings
+- [Logging Verification](references/python/logging.md) - Test log output with SimpleLogger
+- [Advanced Patterns](references/python/advanced.md) - Multiple approvals, parametrized tests, configuration

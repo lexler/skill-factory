@@ -92,7 +92,7 @@ Commit all `.approved.*` files.
 
 ## Deep References
 
-- [API Reference](nodejs/api.md) - All functions and Options
-- [Setup & Configuration](nodejs/setup.md) - reporters, config options
-- [Scrubbers](nodejs/scrubbers.md) - Handling dynamic data
-- [Inline Approvals](nodejs/inline.md) - Store approvals in code
+- [API Reference](references/nodejs/api.md) - All functions and Options
+- [Setup & Configuration](references/nodejs/setup.md) - reporters, config options
+- [Scrubbers](references/nodejs/scrubbers.md) - Handling dynamic data
+- [Inline Approvals](references/nodejs/inline.md) - Store approvals in code

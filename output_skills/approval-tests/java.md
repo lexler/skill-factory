@@ -100,7 +100,7 @@ Commit all `.approved.*` files.
 
 ## Deep References
 
-- [API Reference](java/api.md) - All methods and Options
-- [Setup & Configuration](java/setup.md) - JUnit integration, reporters
-- [Scrubbers](java/scrubbers.md) - Handling dynamic data
-- [Inline Approvals](java/inline.md) - Store approvals in code
+- [API Reference](references/java/api.md) - All methods and Options
+- [Setup & Configuration](references/java/setup.md) - JUnit integration, reporters
+- [Scrubbers](references/java/scrubbers.md) - Handling dynamic data
+- [Inline Approvals](references/java/inline.md) - Store approvals in code
