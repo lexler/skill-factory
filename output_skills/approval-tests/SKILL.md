@@ -63,14 +63,9 @@ Non-deterministic data (timestamps, GUIDs) must be scrubbed before verification.
 
 Detect language from project files, then read the appropriate reference:
 
-**Python** (`pyproject.toml`, `setup.py`, `requirements.txt`)
-→ [python.md](python.md)
-
-**JavaScript/TypeScript** (`package.json`)
-→ [nodejs.md](nodejs.md)
-
-**Java** (`pom.xml`, `build.gradle`)
-→ [java.md](java.md)
+- [python.md](python.md) - Python (`pyproject.toml`, `setup.py`, `requirements.txt`)
+- [nodejs.md](nodejs.md) - JavaScript/TypeScript (`package.json`)
+- [java.md](java.md) - Java (`pom.xml`, `build.gradle`)
 
 ## Anti-Patterns
 
