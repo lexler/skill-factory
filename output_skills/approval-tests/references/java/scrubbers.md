@@ -13,6 +13,8 @@ Scrubbers normalize dynamic data before comparison.
 - [Common Patterns](#common-patterns)
 - [Built-in Utility Scrubbers](#built-in-utility-scrubbers)
 
+For Options usage patterns, see [api.md](api.md).
+
 ## Imports
 
 ```java

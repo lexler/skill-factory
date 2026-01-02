@@ -139,18 +139,6 @@ Approvals.verify(result, options);
 - `forFile().withBaseName(name)` - Custom base filename
 - `forFile().withAdditionalInformation(info)` - Add info to filename
 
-## File Extension Options
-
-```java
-Options options = new Options()
-    .forFile()
-    .withExtension(".json");
-
-Options options = new Options()
-    .forFile()
-    .withName("customName", ".xml");
-```
-
 ## Reporters
 
 ### Common Reporters

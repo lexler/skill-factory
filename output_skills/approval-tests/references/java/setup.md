@@ -36,9 +36,6 @@ testImplementation 'com.approvaltests:approvaltests:24.9.0'
 
 ```java
 import org.approvaltests.Approvals;
-import org.approvaltests.core.Options;
-import org.approvaltests.reporters.UseReporter;
-import org.approvaltests.reporters.intellij.IntelliJReporter;
 import org.junit.jupiter.api.Test;
 
 class MyTest {
