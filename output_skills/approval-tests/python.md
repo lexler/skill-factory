@@ -99,4 +99,5 @@ Commit all `.approved.*` files.
 - [patterns.md](references/python/patterns.md) - Characterization tests, multiple approvals per test, common mistakes
 - [inline.md](references/python/inline.md) - Storing approvals in docstrings instead of files
 - [logging.md](references/python/logging.md) - Capturing and verifying log output
-- [setup.md](references/python/setup.md) - Reporters, CI configuration, pytest integration
+- [reporters.md](references/python/reporters.md) - Diff tools, custom reporters, chaining reporters
+- [setup.md](references/python/setup.md) - Installation, CI configuration, pytest integration

@@ -5,7 +5,7 @@
 - [Installation](#installation)
 - [pytest Integration](#pytest-integration)
 - [unittest Integration](#unittest-integration)
-- [Reporters](#reporters)
+- [Reporters](#reporters) (details in [reporters.md](reporters.md))
 - [Configuration](#configuration)
 - [Git Setup](#git-setup)
 - [CI Troubleshooting](#ci-troubleshooting)
@@ -63,7 +63,9 @@ if __name__ == "__main__":
 
 ## Reporters
 
-### Using Options
+Set a reporter per-test or globally.
+
+### Per-test
 
 ```python
 from approvaltests import verify, Options
@@ -72,44 +74,7 @@ from approvaltests.reporters import PythonNativeReporter
 verify("Hello", options=Options().with_reporter(PythonNativeReporter()))
 ```
 
-### Using Factory
-
-```python
-from approvaltests import verify, Options
-from approvaltests.reporters import GenericDiffReporterFactory
-
-factory = GenericDiffReporterFactory()
-reporter = factory.get("BeyondCompare")
-verify("Hello", options=Options().with_reporter(reporter))
-```
-
-### Custom Diff Tool
-
-```python
-from approvaltests import verify, Options
-from approvaltests.reporters import GenericDiffReporter
-
-reporter = GenericDiffReporter.create("/path/to/diff/tool")
-verify("Hello", options=Options().with_reporter(reporter))
-```
-
-### Custom Reporter Class
-
-```python
-from approvaltests import verify, Options
-from approvaltests.core.reporter import Reporter
-
-class MyReporter(Reporter):
-    def report(self, received_path: str, approved_path: str) -> bool:
-        print(f"Mismatch: {received_path} vs {approved_path}")
-        return True
-
-verify(result, options=Options().with_reporter(MyReporter()))
-```
-
-### Default Reporter
-
-Set globally:
+### Global default
 
 ```python
 from approvaltests import set_default_reporter
@@ -129,6 +94,8 @@ from approvaltests.reporters import PythonNativeReporter
 def configure_approvaltests():
     set_default_reporter(PythonNativeReporter())
 ```
+
+For diff tools, custom reporters, and chaining: see [reporters.md](reporters.md)
 
 ## Configuration
 
