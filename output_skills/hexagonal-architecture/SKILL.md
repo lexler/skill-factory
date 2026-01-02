@@ -83,9 +83,4 @@ Ports give clean seams for test doubles. Test the domain exhaustively with fast 
 
 ## When NOT to Use
 
-- Requirements still undefined (ports keep changing)
-- Small/simple projects (overhead not worth it)
-- Team lacks time for proper boundary discipline
-- High team turnover without documentation
-
-A well-maintained layered architecture beats a poorly-maintained hexagonal one.
+- Small/simple projects, especially CRUD-based apps (overhead not worth it)

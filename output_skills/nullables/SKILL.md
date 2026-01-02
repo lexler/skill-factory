@@ -119,7 +119,7 @@ Tests exercise real `App` code. Only infrastructure I/O is neutralized. The `run
 - **Paranoic Telemetry** — assume everything fails. Test error paths, timeouts, and failures as thoroughly as happy paths
 - **Collaborator-Based Isolation** — use dependencies' own methods in assertions rather than hardcoding expectations:
   ```javascript
-  // BAD: Breaks if format changes
+  // BAD: Breaks if format changes (also leaks implementation details into your clients, creates bad coupling)
   assert.deepEqual(output.data, [{ level: "info", message: "Done", ts: 123 }]);
   // GOOD: Uses dependency's format
   assert.deepEqual(output.data, [logger.formatEntry("info", "Done")]);
