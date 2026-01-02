@@ -184,7 +184,27 @@ describe("App", () => {
 });
 ```
 
-**Notice**: Tests exercise real `App` code. Only infrastructure I/O is neutralized. The `run()` helper encapsulates setup - this is Signature Shielding, which protects tests from constructor changes. See [test-patterns.md](references/test-patterns.md) for more testing patterns.
+**Notice**: Tests exercise real `App` code. Only infrastructure I/O is neutralized.
+
+### Testing Philosophy
+
+Nullables enable a different approach:
+
+- **State-based, not interaction-based** — verify what was produced, not which methods were called
+- **Sociable, not solitary** — tests use real dependencies; only infrastructure is nulled
+- **Overlapping coverage** — when tests share real code, bugs cause multiple failures, pinpointing the problem
+
+### Testing Techniques
+
+See [test-patterns.md](references/test-patterns.md) for details and examples:
+
+- **Arrange-Act-Assert**: Structure tests as setup, execute, verify
+- **Signature Shielding**: Helper functions (like `run()` above) protect tests from constructor changes
+- **Narrow Integration Tests**: Test wrappers against real systems in isolation
+- **Testing Sequences**: Response arrays for retries, pagination
+- **Testing Time-Dependent Code**: Nulled Clock with `advance()`
+- **Behavior Simulation**: `simulateX()` methods for event-driven code
+- **Testing Error Paths**: Configure Nullables to return errors, timeouts
 
 ## Supporting Patterns
 
@@ -286,17 +306,3 @@ LoginClient.createNull({ httpResponse: { status: 200, body: '{"email":"x"}' } })
 // GOOD: Caller's abstraction level
 LoginClient.createNull({ email: "user@example.com", verified: true });
 ```
-
-## Testing Patterns
-
-See [test-patterns.md](references/test-patterns.md) for full details and examples.
-
-- **Arrange-Act-Assert**: Structure tests as setup, execute, verify
-- **Signature Shielding**: Helper functions encapsulate test setup, protecting tests from constructor changes
-- **Overlapping Tests**: Sociable tests overlap in coverage; multiple failures pinpoint shared code bugs
-- **Narrow Integration Tests**: Test wrappers against real systems in isolation to verify the real path works
-- **Testing Sequences**: Response arrays for multi-step flows (retries, pagination)
-- **Testing Time-Dependent Code**: Nulled Clock with `advance()` to control time
-- **Behavior Simulation**: `simulateX()` methods trigger event handlers for WebSockets, queues
-- **Testing Error Paths**: Configure Nullables to return errors, timeouts, network failures
-- **Assertion Patterns**: Partial matching, ignoring dynamic fields like timestamps
