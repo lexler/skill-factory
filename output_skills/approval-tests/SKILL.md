@@ -67,9 +67,9 @@ Non-deterministic data (timestamps, GUIDs) must be scrubbed before verification.
 
 - Scrubbers - normalize dynamic data before comparison. Timestamps become `[Date1]`, UUIDs become `guid_1`. Without scrubbing, tests pass locally but fail in CI.
 - Inline approvals - expectations in source code instead of separate files. Avoids file proliferation for short output. Python uses docstrings, Java uses text blocks.
-- Storyboard - capture state progressions over multiple frames. For workflows, state machines, any object changing over time. Python/Java have classes; Node.js uses string building.
-- Combinations - test all permutations of input parameters in one approval. For large sets, pairwise testing reduces millions of combinations to ~100.
-- Multiple approvals per test - separate approval files for different scenarios using parameter-based naming.
+- Storyboard - capture state progressions over multiple frames. Each step appears in the diff, making it easy to see how state changes. For workflows, state machines, any object changing over time. Python/Java have classes; Node.js uses string building.
+- Combinations - test all permutations of input parameters in one approval. Exhaustive coverage without writing separate tests for each case. For large sets, pairwise testing reduces millions of combinations to ~100.
+- Multiple approvals per test - when one test method has multiple scenarios, each needs its own approval file. Parameter-based naming creates separate files per scenario.
 
 See language references for implementation details.
 
