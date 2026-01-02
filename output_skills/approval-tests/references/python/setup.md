@@ -96,6 +96,26 @@ reporter = GenericDiffReporter.create("/path/to/diff/tool")
 verify("Hello", options=Options().with_reporter(reporter))
 ```
 
+### Custom Reporter Class
+
+Extend `Reporter` for full control:
+
+```python
+from approvaltests.core.reporter import Reporter
+
+class MyReporter(Reporter):
+    def report(self, received_path: str, approved_path: str) -> bool:
+        # Compare files, show diff, or take custom action
+        # Return True if handled, False to try next reporter
+        print(f"Mismatch: {received_path} vs {approved_path}")
+        return True
+```
+
+Use it:
+```python
+verify(result, options=Options().with_reporter(MyReporter()))
+```
+
 ### Custom reporters.json
 
 Create a JSON file:
