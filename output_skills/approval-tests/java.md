@@ -107,13 +107,14 @@ Commit all `.approved.*` files.
 - Arrays/lists (labeled) → `Approvals.verifyAll("Items", items, formatter)`
 - Non-deterministic data → scrubbers, add before first run ([scrubbers.md](references/java/scrubbers.md))
 - Multiple scenarios per test → `NamerFactory.withParameters()` ([advanced.md](references/java/advanced.md))
-- Input combinations → `CombinationApprovals.verifyAllCombinations()` ([api.md](references/java/api.md))
+- Input combinations → `CombinationApprovals.verifyAllCombinations()` (or `verifyBestCoveringPairs` for huge sets) ([api.md](references/java/api.md))
+- State progressions → `StoryBoard` ([api.md](references/java/api.md))
 - Console output → `ConsoleOutput` ([logging.md](references/java/logging.md))
 - Short inline expectations → `Options().inline(expected)` ([inline.md](references/java/inline.md))
 
 ## Reference Files
 
-- [api.md](references/java/api.md) - verifyXml/Html, CombinationApprovals, Verifiable interface, database results
+- [api.md](references/java/api.md) - verifyXml/Html, CombinationApprovals, StoryBoard, Verifiable interface, database results
 - [scrubbers.md](references/java/scrubbers.md) - DateScrubber formats, GuidScrubber, RegExScrubber, combining scrubbers
 - [reporters.md](references/java/reporters.md) - IDE/diff tool reporters, FirstWorkingReporter, custom reporters
 - [setup.md](references/java/setup.md) - JUnit 4/5 setup, dynamic tests, Kotlin support
