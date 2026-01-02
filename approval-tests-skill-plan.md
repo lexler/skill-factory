@@ -163,20 +163,20 @@ Based on the AI patterns (limited focus, focused agent, reference docs):
 - [x] `references/python/scrubbers.md` - Python scrubber patterns
 
 ### Node.js References
-- [ ] `references/nodejs/api.md` - approvals.verify, verifyAsJSON, etc.
-- [ ] `references/nodejs/setup.md` - npm install, mocha/jest integration
-- [ ] `references/nodejs/inline.md` - Node inline approvals (if applicable)
-- [ ] `references/nodejs/scrubbers.md` - Node scrubber patterns
+- [x] `references/nodejs/api.md` - approvals.verify, verifyAsJSON, etc.
+- [x] `references/nodejs/setup.md` - npm install, mocha/jest integration
+- [x] `references/nodejs/inline.md` - Node inline approvals (not supported, alternatives)
+- [x] `references/nodejs/scrubbers.md` - Node scrubber patterns
 
 ### Java References
-- [ ] `references/java/api.md` - Approvals.verify, verifyAll, etc.
-- [ ] `references/java/setup.md` - Maven/Gradle deps, JUnit integration
-- [ ] `references/java/inline.md` - Java inline approvals
-- [ ] `references/java/scrubbers.md` - Java scrubber patterns
+- [x] `references/java/api.md` - Approvals.verify, verifyAll, etc.
+- [x] `references/java/setup.md` - Maven/Gradle deps, JUnit integration
+- [x] `references/java/inline.md` - Java inline approvals
+- [x] `references/java/scrubbers.md` - Java scrubber patterns
 
 ### Shared Patterns
-- [ ] `references/patterns/combinations.md` - Testing all input combinations
-- [ ] `references/patterns/testing-patterns.md` - Summary of testing patterns
+- [x] `references/patterns/combinations.md` - Testing all input combinations
+- [x] `references/patterns/testing-patterns.md` - Summary of testing patterns
 
 ---
 
@@ -206,10 +206,10 @@ description: Write approval tests (snapshot testing) for Python, JavaScript/Type
 ## Implementation Phases
 
 - [x] **Phase 1: Core SKILL.md** - Write main skill file with philosophy, workflow, patterns
-- [ ] **Phase 2: Language API References** - Extract accurate APIs from reference repos
+- [x] **Phase 2: Language API References** - Extract accurate APIs from reference repos
   - Source: `/Users/ladak/workspace/knowledge/references-for-skills/approvals/`
-- [ ] **Phase 3: Setup References** - Installation and framework integration per language
-- [ ] **Phase 4: Advanced Pattern References** - Inline approvals, scrubbers, combinations
+- [x] **Phase 3: Setup References** - Installation and framework integration per language
+- [x] **Phase 4: Advanced Pattern References** - Inline approvals, scrubbers, combinations
 - [ ] **Phase 5: Review & Iterate** - Check against best-practices.md, test in real usage
 
 ---
