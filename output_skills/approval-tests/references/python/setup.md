@@ -202,7 +202,3 @@ Fix: File → Settings → Editor → General → On Save → uncheck "Remove tr
 ```bash
 git diff --no-index test.approved.txt test.received.txt
 ```
-
-### Supported Python versions
-
-3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14
