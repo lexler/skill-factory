@@ -14,16 +14,14 @@ STARTER_CHARACTER = 📸
 Approval tests verify complex output by comparing against a saved "golden master" file instead of writing individual assertions. You capture the output once, review it, approve it, and future runs compare against that approved snapshot.
 
 **Use approval tests when:**
-- Output is complex (JSON, XML, formatted text, multiple fields)
-- Output is visual (images, ascii, outputs of APIs)
-- Characterizing legacy code behavior before refactoring
-- Testing combinations of inputs
+- Output is complex - instead of 20 assertions, one approval captures everything
+- Characterizing legacy code - snapshot behavior, then refactor safely
+- Combinatorial testing - test all input combinations in one approval
 - Assertions would be tedious or brittle
 
 **Use assertions when:**
-- Testing simple values
-- Testing specific edge cases
-- Output is non-deterministic and can't be scrubbed
+- Simple values or specific edge cases
+- Non-deterministic output that can't be scrubbed
 
 ## Core Workflow
 
@@ -47,14 +45,6 @@ Approval tests verify complex output by comparing against a saved "golden master
 - `.approved` files ARE your test expectations - commit them
 - `.received` files are temporary - add `*.received.*` to .gitignore
 - Never edit `.approved` files by hand - always generate via test
-
-## When Approval Tests Shine
-
-**Complex objects** - Instead of asserting 20 fields individually, verify the whole object as JSON. One approval captures everything.
-
-**Characterization tests** - Capture legacy behavior before refactoring. Run `verify(result)` to snapshot current behavior, then refactor with a safety net.
-
-**Combinatorial testing** - Test all combinations of inputs with a single approval file. `verify_all_combinations()` generates every permutation.
 
 ## Core API Pattern
 

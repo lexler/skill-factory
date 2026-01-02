@@ -58,55 +58,24 @@ Delete the marker line to approve the new result.
 For input → output style tests:
 
 ```python
-from approvaltests import verify, Options
 from approvaltests.inline.parse import Parse
 
 def test_uppercase():
     """
     hello -> HELLO
     world -> WORLD
-    foo -> FOO
     """
-    parse = Parse.doc_string()
-    parse.verify_all(lambda s: s.upper())
-```
-
-### Auto-Approve Mode
-
-```python
-parse = Parse.doc_string(auto_approve=True)
-parse.verify_all(my_function)
-```
-
-### Two-Parameter Inputs
-
-```python
-from approvaltests.inline.parse import Parse
+    Parse.doc_string().verify_all(lambda s: s.upper())
 
 def test_add():
     """
     1, 2 -> 3
     5, 3 -> 8
     """
-    parse = Parse.doc_string().transform2(int, int)
-    parse.verify_all(lambda a, b: a + b)
+    Parse.doc_string().transform2(int, int).verify_all(lambda a, b: a + b)
 ```
 
-## parse_docstring() Helper
-
-Extract inputs from docstring:
-
-```python
-from approvaltests.inline.parse_docstring import parse_docstring
-
-def test_example():
-    """
-    input1
-    input2 -> ignored
-    input3
-    """
-    inputs = parse_docstring()  # Returns ["input1", "input2", "input3"]
-```
+For auto-approve: `Parse.doc_string(auto_approve=True)`
 
 ## With Combinations
 
@@ -142,14 +111,14 @@ def test_indented():
     verify(get_indented_text(), options=Options().inline())
 ```
 
-## When to Use Inline vs File Approvals
+## When to Use
 
-**Use inline when:**
-- Output is short (few lines)
-- You want tests and expectations in one place
+Inline approvals:
+- Short output (few lines)
 - Input→output mapping tests
+- Tests and expectations co-located
 
-**Use file approvals when:**
-- Output is long or complex
-- Binary data (images, PDFs)
-- JSON/XML that benefits from syntax highlighting
+File approvals:
+- Long or complex output
+- Binary data
+- JSON/XML benefiting from syntax highlighting

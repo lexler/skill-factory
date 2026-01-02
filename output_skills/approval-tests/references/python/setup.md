@@ -133,6 +133,46 @@ factory.load('/path/to/myreporters.json')
 reporter = factory.get_first_working()
 ```
 
+## Configuration
+
+### Approval File Subdirectory
+
+Place `approvaltests_config.json` in test directory:
+
+```json
+{
+  "subdirectory": "approved_files"
+}
+```
+
+All `.approved` and `.received` files go to `tests/approved_files/` instead of alongside tests.
+
+### Default Reporter
+
+Set globally in `tests/__init__.py`:
+
+```python
+from approvaltests import set_default_reporter
+from approvaltests.reporters import PythonNativeReporter
+
+set_default_reporter(PythonNativeReporter())
+```
+
+Or via pytest fixture in `conftest.py`:
+
+```python
+@pytest.fixture(scope="session", autouse=True)
+def configure_approvaltests():
+    set_default_reporter(PythonNativeReporter())
+```
+
+### Custom File Extensions
+
+```python
+verify(html_content, options=Options().for_file.with_extension(".html"))
+verify(xml_content, options=Options().for_file.with_extension(".xml"))
+```
+
 ## Git Configuration
 
 Add to `.gitignore`:

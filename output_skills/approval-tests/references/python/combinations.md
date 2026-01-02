@@ -79,20 +79,20 @@ def test_pricing():
 
 ## When to Use
 
-**All Combinations** - When:
+All Combinations:
 - Total combinations are manageable (<100)
 - All combinations are valid
 - You want exhaustive coverage
 
-**Pairwise (Best Covering Pairs)** - When:
+Pairwise (Best Covering Pairs):
 - Many parameters with many values
 - Most bugs involve 2-parameter interactions
 - Full combinations would be thousands
 
 ## Tips
 
-1. **Prefer labeled input** - `verify_all_combinations_with_labeled_input()` produces clearer output
-2. **Start small** - Begin with 2-3 values per parameter
-3. **Add edge cases** - Include None, empty strings, boundary values
-4. **Use meaningful values** - Not just "a", "b", "c"
-5. **Review the output** - Combinations reveal unexpected behaviors
+- Prefer labeled input. `verify_all_combinations_with_labeled_input()` produces clearer output
+- Start small. Begin with 2-3 values per parameter
+- Add edge cases. Include None, empty strings, boundary values
+- Use meaningful values, not just "a", "b", "c"
+- Review the output. Combinations reveal unexpected behaviors

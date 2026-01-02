@@ -59,25 +59,16 @@ verify(
 
 ### Supported Date Formats
 
-Pass an example date to `get_scrubber_for()`:
+Pass an example date to `get_scrubber_for()`. Supports many formats:
 
-- `23:30:00` - Time only (HH:MM:SS)
-- `2020-02-02` - ISO date (YYYY-MM-DD)
-- `2020-9-10T08:07Z` - ISO 8601 short
-- `2020-09-10T08:07:89Z` - ISO 8601 with seconds
+- `2020-02-02` - ISO date
 - `2020-09-10T01:23:45.678Z` - ISO 8601 with milliseconds
-- `2021-09-10T08:07:00+03:00` - ISO 8601 with timezone offset
-- `2023-07-16 17:39:03.293919` - Datetime with microseconds
-- `Tue May 13 16:30:00` - Day Mon DD HH:MM:SS
+- `2021-09-10T08:07:00+03:00` - ISO 8601 with timezone
 - `Tue May 13 16:30:00 2014` - Day Mon DD HH:MM:SS YYYY
-- `Tue May 13 2014 23:30:00.789` - Day Mon DD YYYY HH:MM:SS.ms
-- `Tue May 13 16:30:00 -0800 2014` - With timezone offset
-- `Wed Nov 17 22:28:33 EET 2021` - With timezone name
-- `13 May 2014 23:50:49,999` - DD Mon YYYY HH:MM:SS,ms
-- `May 13, 2014 11:30:00 PM PST` - Mon DD, YYYY HH:MM:SS AM/PM TZ
-- `2014/05/13 16:30:59.786` - Slash-separated with ms
-- `20210505T091112Z` - Compact ISO format
-- `20250527_125703` - Underscore-separated timestamp
+- `May 13, 2014 11:30:00 PM PST` - US format with AM/PM
+- `20210505T091112Z` - Compact ISO
+
+And many more. Just pass an example that matches your format.
 
 ### Custom Date Format
 
@@ -174,43 +165,20 @@ verify(data, options=Options().with_scrubber(my_scrubber))
 
 ## Common Patterns
 
-### Scrub Timestamps in JSON
-
-```python
-verify_as_json(
-    response_data,
-    options=Options().with_scrubber(scrub_all_dates)
-)
-```
-
-### Scrub Multiple Dynamic Fields
-
+API responses with dynamic fields:
 ```python
 scrubber = combine_scrubbers(
     scrub_all_guids,
     scrub_all_dates,
     create_regex_scrubber(r'"id":\s*\d+', '"id": <ID>'),
-    create_regex_scrubber(r'"token":\s*"[^"]+"', '"token": "<TOKEN>"'),
 )
+verify_as_json(response, options=Options().with_scrubber(scrubber))
 ```
 
-### Scrub Log Output
-
+Log output with noise:
 ```python
 scrubber = combine_scrubbers(
     DateScrubber.get_scrubber_for("2024-01-15 10:30:00"),
     create_line_scrubber("DEBUG"),
-    create_line_scrubber("TRACE"),
-)
-```
-
-### Scrub Database Records
-
-```python
-scrubber = combine_scrubbers(
-    scrub_all_guids,  # UUIDs
-    create_regex_scrubber(r'"id":\s*\d+', '"id": <ID>'),
-    create_regex_scrubber(r'"created_at":\s*"[^"]+"', '"created_at": "<TIMESTAMP>"'),
-    create_regex_scrubber(r'"updated_at":\s*"[^"]+"', '"updated_at": "<TIMESTAMP>"'),
 )
 ```

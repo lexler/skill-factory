@@ -1,5 +1,22 @@
 # Python Testing Patterns
 
+## Quick Decision Guide
+
+Verifying an object?
+- Do: `verify_as_json(obj)`
+- Not: `verify(str(obj))` or `verify(repr(obj))`
+
+Verifying a list?
+- Structured data: `verify_as_json({"items": items})`
+- Simple labels: `verify_all("Items", items, formatter)`
+
+Has timestamps/GUIDs?
+- Always add scrubbers before first run, not after CI fails
+
+Multiple scenarios in one test?
+- Do: `NamerFactory.with_parameters()` for separate files
+- Not: Multiple `verify()` calls that overwrite each other
+
 ## Characterization Tests
 
 Capture existing behavior before refactoring:
@@ -191,14 +208,14 @@ Creates: `TestClass.test_method.scenario1.approved.txt`
 
 When you need both log output and return value:
 
-**Option 1: Log the result too** (single approval file)
+Option 1 - Log the result too (single approval file):
 ```python
 with verify_logging():
     result = process_data()
     logging.info(f"result = {result}")
 ```
 
-**Option 2: Separate files**
+Option 2 - Separate files:
 ```python
 from approvaltests.namer import NamerFactory
 
@@ -209,8 +226,9 @@ verify(result)  # Separate approval file
 
 See [logging.md](logging.md) for more logging patterns.
 
-## Tips
+## Common Mistakes
 
-1. **One approval per behavior** - Don't verify unrelated things together
-2. **Use scrubbers early** - Avoid flaky tests from day one
-3. **Review diffs carefully** - They show exactly what changed
+- Mixing approval with assertions. The approval should capture everything. If adding assertions alongside verify(), probably testing two things
+- Over-approving. Approving entire database record when you only care about one field. Large approvals hide real changes
+- Under-scrubbing. Tests pass locally, fail in CI. If it varies by environment, scrub it
+- Hand-editing .approved files. Breaks the contract. Fix the code and regenerate instead

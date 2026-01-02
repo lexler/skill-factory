@@ -18,25 +18,11 @@ def test_report():
 
 **First run:** Test fails, `.received` file created. Review it, approve it (copy to `.approved`), rerun.
 
-## Common Imports
-
-```python
-from approvaltests import (
-    verify,
-    verify_as_json,
-    verify_all,
-    verify_all_combinations,
-    Options,
-)
-from approvaltests.scrubbers import scrub_all_dates, scrub_all_guids
-```
-
 ## Core Patterns
 
 ### verify() - Basic verification
 ```python
 verify(result)                    # String output
-verify(str(complex_object))       # Object via __str__
 ```
 
 ### verify_as_json() - Objects as formatted JSON
@@ -63,13 +49,11 @@ verify_all_combinations(
 )
 ```
 
-## Python-Specific Notes
+## Key Rules
 
-**Use verify_as_json() over str()** - Python's `__str__` may not be stable or readable. JSON gives consistent, diff-friendly output.
-
-**pytest integration** - Works out of the box. File naming uses test function name.
-
-**unittest integration** - Also supported, uses class.method naming.
+- Use verify_as_json() for objects, not str(). JSON is stable and diff-friendly
+- Always scrub non-deterministic data. Timestamps, GUIDs, random IDs break tests
+- One approval per behavior. Don't mix unrelated verifications
 
 ## Git Setup
 
@@ -79,14 +63,18 @@ verify_all_combinations(
 
 Commit all `.approved.*` files.
 
-## Deep References
+## When to Read More
 
-- [API Reference](references/python/api.md) - All verify functions and Options
-- [Testing Patterns](references/python/patterns.md) - Characterization tests, storyboards, multiple approvals
-- [Combination Testing](references/python/combinations.md) - Test all input combinations
-- [Scrubbers](references/python/scrubbers.md) - Handling timestamps, GUIDs, dynamic data
-- [Inline Approvals](references/python/inline.md) - Store approvals in docstrings
-- [Logging Verification](references/python/logging.md) - Test log output with SimpleLogger
-- [Setup & Configuration](references/python/setup.md) - pytest plugin, reporters
-- [Configuration](references/python/advanced.md) - Config files, default reporters
-- [Source Links](references/python/links.md) - Official repo, key source files
+**Need a specific verify function?** → [API Reference](references/python/api.md)
+
+**Testing legacy code or state machines?** → [Testing Patterns](references/python/patterns.md)
+
+**Testing many input combinations?** → [Combination Testing](references/python/combinations.md)
+
+**Dealing with timestamps, GUIDs, random values?** → [Scrubbers](references/python/scrubbers.md)
+
+**Want approvals in docstrings?** → [Inline Approvals](references/python/inline.md)
+
+**Verifying log output?** → [Logging Verification](references/python/logging.md)
+
+**Setting up reporters or config?** → [Setup & Configuration](references/python/setup.md)
