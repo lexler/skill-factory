@@ -90,9 +90,9 @@ approvals.verifyAndScrub(
 
 Commit all `.approved.*` files.
 
-## Deep References
+## Reference Files
 
-- [API Reference](references/nodejs/api.md) - All functions and Options
-- [Setup & Configuration](references/nodejs/setup.md) - reporters, config options
-- [Scrubbers](references/nodejs/scrubbers.md) - Handling dynamic data
-- [Inline Approvals](references/nodejs/inline.md) - Store approvals in code
+- [api.md](references/nodejs/api.md) - All verify functions, Options, combinations, Namer/Writer interfaces
+- [scrubbers.md](references/nodejs/scrubbers.md) - GUIDs, dates, regex patterns, combining scrubbers
+- [setup.md](references/nodejs/setup.md) - Mocha/Jest setup, reporters, CI config
+- [inline.md](references/nodejs/inline.md) - Not supported; alternatives (Jest snapshots, assertions)
