@@ -153,3 +153,11 @@ Supports: 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14
 PyCharm auto-removes trailing whitespace on save, causing approval files to mismatch.
 
 Fix: File → Settings → Editor → General → On Save → uncheck "Remove trailing spaces"
+
+### Test Passes Locally, Fails in CI
+
+Common causes:
+- **Line endings** - Windows vs Unix. Add `.gitattributes`: `*.approved.* text eol=lf`
+- **Timezones** - Date output differs. Use scrubbers for timestamps.
+- **Locale/encoding** - Set `PYTHONIOENCODING=utf-8` in CI
+- **Missing scrubber** - Environment-specific data (paths, hostnames) not scrubbed
