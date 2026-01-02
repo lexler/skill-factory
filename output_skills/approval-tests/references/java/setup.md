@@ -21,7 +21,7 @@ For full reporter list and Options methods, see [api.md](api.md).
 <dependency>
     <groupId>com.approvaltests</groupId>
     <artifactId>approvaltests</artifactId>
-    <version>24.3.0</version>
+    <version>24.9.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -29,7 +29,7 @@ For full reporter list and Options methods, see [api.md](api.md).
 ## Gradle
 
 ```groovy
-testImplementation 'com.approvaltests:approvaltests:24.3.0'
+testImplementation 'com.approvaltests:approvaltests:24.9.0'
 ```
 
 ## JUnit 5 Setup
