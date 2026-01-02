@@ -6,6 +6,7 @@
 - [Core Methods](#core-methods)
 - [JsonApprovals](#jsonapprovals)
 - [CombinationApprovals](#combinationapprovals)
+- [StoryBoard](#storyboard)
 - [Options Class](#options-class)
 - [Reporters](#reporters)
 - [Verifiable Interface](#verifiable-interface)
@@ -117,6 +118,50 @@ CombinationApprovals.verifyAllCombinations(
     },
     params1, params2
 );
+```
+
+## StoryBoard
+
+Captures state progression over multiple frames. Use for state machines, animations, multi-step workflows.
+
+```java
+import org.approvaltests.Approvals;
+import org.approvaltests.StoryBoard;
+
+StoryBoard story = new StoryBoard();
+story.add(game);
+story.addFrames(3, game::advance);
+Approvals.verify(story);
+```
+
+Output stacks frames vertically:
+
+```
+Initial:
+room: entrance
+inventory: []
+
+Frame #1:
+room: hallway
+inventory: []
+
+Frame #2:
+room: armory
+inventory: [sword]
+```
+
+With descriptions and context manager:
+
+```java
+import org.approvaltests.StoryBoardApprovals;
+
+try (VerifiableStoryBoard story = StoryBoardApprovals.verifyStoryboard()) {
+    story.addDescription("Game state progression");
+    story.add(game);
+    story.addFrame("After move", game.advance());
+    story.addDescriptionWithData("picked up", game.pickUp("sword"));
+    story.addFrames(2, game::advance);
+}
 ```
 
 ## Options Class
