@@ -49,20 +49,17 @@
 
 ## Missing Content
 
-- [ ] **Add "Signs You're Over-Engineering" section** - When Nullables are overkill:
-  - Wrapping already-testable code (pure functions, immutable data)
-  - Simple enough to use real thing (in-memory SQLite, temp files)
-  - Stub becoming as complex as the real thing
+- [x] **Add "Signs You're Over-Engineering" section** - Added after Anti-Patterns
 
-- [ ] **Add quick reference/cheat sheet** - Pattern names, when to use, 1-line examples. Could be `references/cheat-sheet.md`.
+- [x] ~~**Add quick reference/cheat sheet**~~ - Deleted; redundant with SKILL.md
 
-- [ ] **Add "Nullable vs Mock" comparison table** - Side-by-side showing same test written both ways.
+- [x] **Add "Nullable vs Mock" comparison table** - Added side-by-side code example in intro
 
 ---
 
 ## Anti-Patterns
 
-- [ ] **Expand "Constructor connects to infrastructure"** - Add the Zero-Impact Instantiation term and link to James Shore's principle. This is a foundational concept.
+- [x] **Expand "Constructor connects to infrastructure"** - Added Zero-Impact Instantiation term and link
 
 - [x] **Add "Stub lives in test file" anti-pattern** - Added to Anti-Patterns section
 

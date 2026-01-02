@@ -282,11 +282,12 @@ verify(logger).info("message");
 assert.deepEqual(logOutput.data, [{ level: "info", message: "message" }]);
 ```
 
-**Constructor connects to infrastructure** (violates Zero-Impact Instantiation)
-Problem: makes it impossible to decouple your logic from brittle slow infrastructure. 
+**Constructor connects to infrastructure** (Zero-Impact Instantiation)
+Problem: makes it impossible to decouple your logic from brittle slow infrastructure.
+Constructors should perform no work—no connections, no I/O, no side effects. Defer to explicit methods. See [infrastructure-wrappers.md](references/building/infrastructure-wrappers.md#zero-impact-instantiation).
 
 ```javascript
-// BAD: Constructor connects to database
+// BAD: Constructor connects to db
 constructor(connectionString) {
   this._db = new Database(connectionString);  // Immediate connection
 }
@@ -313,3 +314,8 @@ LoginClient.createNull({ email: "user@example.com", verified: true });
 **Stubs in test files** - Stubs should be embedded in production code alongside the wrapper (at the end of file, after production code), not scattered in test files. This keeps them maintained and discoverable. See [embedded-stubs.md](references/building/embedded-stubs.md).
 
 **Mocking your own code** - Only wrap third-party code and infrastructure. Your own classes don't need stubs—either make them Nullable directly, or null their dependencies. If you're writing a stub for your own class, you're probably doing it wrong.
+
+## Signs You're Over-Engineering
+
+- **Wrapping pure code** — pure functions and immutable data don't need Nullables; test them directly
+- **Stub is as complex as the real thing** — if your stub needs significant logic, reconsider the abstraction

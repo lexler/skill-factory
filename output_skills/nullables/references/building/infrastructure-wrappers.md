@@ -398,8 +398,4 @@ Not everything needs a wrapper. Create wrappers for:
 
 Skip wrappers when:
 - **The dependency is already testable** - Pure functions, immutable data structures
-- **The dependency is fast and deterministic** - Math utilities, string formatters
 - **You're wrapping a wrapper** - Don't wrap your own abstractions; make them Nullable directly
-- **Tests can use the real thing** - In-memory databases, local file operations in temp directories
-
-**Rule of thumb:** If using the real dependency in tests is fast, deterministic, and has no side effects, skip the wrapper.
