@@ -4,7 +4,16 @@
 
 Don't use markdown tables in SKILL.md or reference files. Use lists or prose instead.
 
-**Why:** Tables require rendering to read easily. When working in bash/terminal, raw markdown tables are hard to scan. Lists and prose are readable without a separate tool.
+Tables require rendering to read easily. In terminal, raw markdown tables are hard to scan.
+
+## Light Formatting
+
+Avoid heavy use of bold (`**text**`). Use sparingly for actual emphasis, not for every list item header.
+
+- Do: Plain list items with periods between parts
+- Not: **Bold header** - explanation for every item
+
+Bold everywhere creates visual noise and loses its emphasis effect.
 
 ## approval-tests: 2-Level Reference Depth is Intentional
 
