@@ -2,6 +2,15 @@
 
 Inline approvals store the expected output directly in the test's docstring instead of separate `.approved` files.
 
+## Contents
+
+- Basic Usage
+- InlineOptions
+- Parse Class
+- With Combinations
+- Preserving Whitespace
+- When to Use
+
 ## Basic Usage
 
 ```python
