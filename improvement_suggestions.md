@@ -9,9 +9,9 @@
 
 - [x] **Add "Paranoic Telemetry" principle** - Added in Testing Philosophy section
 
-- [ ] **Emphasize "Narrow Integration Tests" more** - Currently mentioned briefly in test-patterns.md. These are critical for verifying real paths work. Consider promoting to SKILL.md or making more prominent.
+- [x] **Emphasize "Narrow Integration Tests" more** - Expanded in Testing Techniques with explanation of why they matter
 
-- [ ] **Add "Collaborator-Based Isolation"** - Use dependencies' own tracking methods in assertions rather than hardcoding expectations. Subtle but powerful pattern.
+- [x] **Add "Collaborator-Based Isolation"** - Added to Testing Philosophy section
 
 ---
 

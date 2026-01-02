@@ -195,6 +195,7 @@ Nullables enable a different approach:
 - **Sociable, not solitary** — tests use real dependencies; only infrastructure is nulled
 - **Overlapping coverage** — when tests share real code, bugs cause multiple failures, pinpointing the problem
 - **Paranoic Telemetry** — assume everything fails; test error paths, timeouts, and network failures extensively
+- **Collaborator-Based Isolation** — use dependencies' own tracking methods in assertions rather than hardcoding expectations; tests stay resilient when implementation changes
 
 ### Testing Techniques
 
@@ -202,7 +203,7 @@ See [test-patterns.md](references/test-patterns.md) for details and examples:
 
 - **Arrange-Act-Assert**: Structure tests as setup, execute, verify
 - **Signature Shielding**: Helper functions (like `run()` above) protect tests from constructor changes
-- **Narrow Integration Tests**: Test wrappers against real systems in isolation
+- **Narrow Integration Tests**: Test wrappers against real systems in isolation — sociable tests verify logic, but you need a few tests hitting real infrastructure to verify the wrapper actually works
 - **Testing Sequences**: Response arrays for retries, pagination
 - **Testing Time-Dependent Code**: Nulled Clock with `advance()`
 - **Behavior Simulation**: `simulateX()` methods for event-driven code
