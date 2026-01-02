@@ -2,6 +2,15 @@
 
 Test all combinations of input parameters with a single approval file.
 
+## Contents
+
+- [Why Use Combinations?](#why-use-combinations)
+- [verify_all_combinations()](#verify_all_combinations)
+- [verify_all_combinations_with_labeled_input()](#verify_all_combinations_with_labeled_input)
+- [verify_best_covering_pairs()](#verify_best_covering_pairs)
+- [When to Use](#when-to-use)
+- [Tips](#tips)
+
 ## Why Use Combinations?
 
 Instead of writing N×M tests for N×M input combinations:

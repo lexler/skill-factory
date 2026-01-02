@@ -1,5 +1,16 @@
 # Python ApprovalTests API
 
+## Contents
+
+- [Imports](#imports)
+- [Core Functions](#core-functions)
+- [Combination Testing](#combination-testing)
+- [Options Class](#options-class)
+- [Storyboard](#storyboard)
+- [MarkdownTable](#markdowntable)
+- [Command Line Testing](#command-line-testing)
+- [Logging Verification](#logging-verification)
+
 ## Imports
 
 ```python
