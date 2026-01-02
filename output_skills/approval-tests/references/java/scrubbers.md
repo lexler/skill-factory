@@ -46,10 +46,20 @@ Pass an example date to `getScrubberFor()`:
 
 - `23:30:00` - Time only
 - `2024-12-17` - ISO date
-- `2020-09-10T08:07:89Z` - ISO 8601
-- `Tue May 13 16:30:00 2014` - Day Mon DD HH:MM:SS YYYY
-- `May 13, 2014 11:30:00 PM PST` - Full with timezone
-- And 12+ more formats supported
+- `2020-09-10T08:07Z` - ISO 8601 short
+- `2020-09-10T08:07:89Z` - ISO 8601 with seconds
+- `2020-09-10T01:23:45.678Z` - ISO 8601 with milliseconds
+- `2024-12-18T14:04:46.746130Z` - ISO 8601 with nanoseconds
+- `20210505T091112Z` - Compact ISO format
+- `2014/05/13 16:30:59.786` - Slash-separated with ms
+- `2025-05-15 16:57:04.599` - Datetime with space
+- `Tue May 13 16:30:00` - Day Mon DD HH:MM:SS
+- `Wed Nov 17 22:28:33 EET 2021` - With timezone name
+- `Tue May 13 16:30:00 -0800 2014` - With timezone offset
+- `13 May 2014 23:50:49,999` - DD Mon YYYY HH:MM:SS,ms
+- `May 13, 2014 11:30:00 PM PST` - Mon DD, YYYY HH:MM:SS AM/PM TZ
+- `13/05/2014 23:50:49` - DD/MM/YYYY with separators (., -, /)
+- `Wed, 21 Oct 2015 07:28:00 GMT` - RFC 2822
 
 #### Custom Date Format
 

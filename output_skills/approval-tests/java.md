@@ -104,3 +104,5 @@ Commit all `.approved.*` files.
 - [Setup & Configuration](references/java/setup.md) - JUnit integration, reporters
 - [Scrubbers](references/java/scrubbers.md) - Handling dynamic data
 - [Inline Approvals](references/java/inline.md) - Store approvals in code
+- [Console Output](references/java/logging.md) - Verify System.out/err output
+- [Advanced Patterns](references/java/advanced.md) - Multiple approvals, parametrized tests, configuration
