@@ -2,11 +2,7 @@
 
 ## Structure Issues
 
-- [x] **Add STARTER_CHARACTER to SKILL.md** - Added 📸 (snapshot).
-
-- [ ] **Flatten reference depth** - Current structure is 2 levels deep: `SKILL.md → python.md → references/python/*.md`. Best practices say "one level deep from SKILL.md". Consider having SKILL.md link directly to Python reference files, making `python.md` an index-style overview.
-
-- [ ] **Consolidate duplicated patterns** - `references/patterns/testing-patterns.md` and `references/python/advanced.md` overlap on topics like NamerFactory, multiple approvals, and logging. Python users don't need the cross-language patterns file; fold Python-specific content into one place.
+- [x] **Consolidate duplicated patterns** - Created `references/python/patterns.md` and `references/python/combinations.md`. Trimmed `advanced.md` to just configuration. Updated `python.md` links.
 
 - [ ] **Remove Java/Node.js cross-references from Python flow** - The `links.md` file has all three languages. When focused on Python, Claude doesn't need to see Java/Node.js source locations. Consider splitting into language-specific link files or embedding links directly in language files.
 
