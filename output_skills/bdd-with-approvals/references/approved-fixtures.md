@@ -1,10 +1,10 @@
 # Approved Fixtures
 
 ## Problem
-Generating both tests and code with the AI and not checking is risky, but the AI is also prone to generating lots of tests quickly. Reviewing many AI-generated tests quickly becomes impractical, especially when assertions are complex.
+Reviewing many tests becomes impractical when assertions are complex. Traditional assertions require reading code to understand what's being validated.
 
 ## Pattern
-Design tests around approval files that combine input and expected output in a domain-specific easy-to-validate format. This is a special case of the Constrained Tests pattern.
+Design tests around approval files that combine input and expected output in a domain-specific easy-to-validate format.
 
 Validate the test execution logic once. After that, adding new test cases only requires reviewing fixtures.
 

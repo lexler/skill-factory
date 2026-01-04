@@ -3,14 +3,15 @@ name: bdd-with-approvals
 description: Scannable BDD tests written in domain language. Use when doing BDD.
 ---
 
-STARTER_CHARACTER = 🧪📋
-
 # BDD with Approval Tests
 
 ## The Shift
 
-Tests at implementation level are noisy and hard to validate, especially when AI writes them at super speeds and developer tries to guide it on higher level. 
+Gherkin couples to implementation through step definitions—when things change, those wrappers break. Tests often end up at implementation level, hard to validate quickly.
+
 BDD with approvals expresses behavior at domain level. The fixture file IS the spec. A human looks at it and immediately sees: correct or not.
+
+For the approval testing technique itself (verify, scrubbers, combinations), see `/approval-tests`. For nulled infrastructure in system tests, see `/nullables`.
 
 ## Approved Fixtures
 
@@ -38,7 +39,7 @@ See [references/approved-fixtures.md](references/approved-fixtures.md) for examp
 
 **One-time per domain:**
 1. Parser - extracts input from fixture format
-2. Formatter - converts actual output to fixture format
+2. Formatter (printer) - converts actual output to fixture format
 3. Single test file discovers and runs all fixtures
 
 Keep parser/formatter simple. Format should be close to natural representation.
@@ -49,11 +50,15 @@ Keep parser/formatter simple. Format should be close to natural representation.
 
 Design for human eyes, not machine parsing. Match the domain's natural representation—how you'd explain it on a whiteboard.
 
+**What makes formats scannable:**
+- Columnar layouts with visual alignment
+- Consistent structure across all cases
+- Whitespace that groups related elements
+
 **Avoid:**
 - Dense JSON (hard to scan)
 - Single-line formats (no visual structure)
 - Formats requiring mental parsing
-- Over-engineering the parser
 
 ## Approved Logs
 

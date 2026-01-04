@@ -1,9 +1,7 @@
 # Approved Logs
 
 ## Problem
-Bridging the gap between observing a bug and documenting it in a test. Reproducing production bugs in test environments is difficult, and writing tests from scratch during debugging is slow. With AI coding, explaining bugs can be harder than showing evidence - logs remove ambiguity between mental models.
-
-This is a special case of the Constrained Tests pattern.
+Bridging the gap between observing a bug and documenting it in a test. Reproducing production bugs in test environments is difficult, and writing tests from scratch during debugging is slow.
 
 ## Pattern
 Turn production logs into regression tests immediately.
