@@ -1,7 +1,9 @@
 # Approved Logs
 
 ## Problem
-Bridging the gap between observing a bug and documenting it in a test. Reproducing production bugs in test environments is difficult, and writing tests from scratch during debugging is slow.
+Bridging the gap between observing a bug and documenting it in a test. Reproducing production bugs in test environments is difficult, and writing tests from scratch during debugging is slow. With AI coding, explaining bugs can be harder than showing evidence - logs remove ambiguity between mental models.
+
+This is a special case of the Constrained Tests pattern.
 
 ## Pattern
 Turn production logs into regression tests immediately.
@@ -15,11 +17,11 @@ When a bug appears:
 
 Requires structured logging throughout the system. If not present, start adding it as bugs surface.
 
-Minimize entry points—use separate test directories per entry point or design logs to make copy boundaries obvious.
+Minimize entry points - use separate test directories per entry point or design logs to make copy boundaries obvious.
 
 Unlike Approved Fixtures (optimized for validation ease), Approved Logs optimize for bug reproduction speed. They may feel cryptic without system familiarity but turn bug evidence into tests instantly.
 
-## Examples
+## Example
 
 **Typical: Structured JSON logs**
 
