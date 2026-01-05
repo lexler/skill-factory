@@ -26,17 +26,18 @@ This keeps context lean while making rich knowledge available on demand.
 
 ## Using Your Skill
 
-**Global** (all projects) — symlink to `~/.claude/skills/`:
+This repo includes a `./skills` helper script for globl installation.
+
+**Global** (all projects) — use the script to symlink to `~/.claude/skills/`:
 
 ```bash
-ln -s $(pwd)/output_skills/my-skill ~/.claude/skills/my-skill
+./skills toggle    # interactive picker
+./skills status    # check what's installed
 ```
 
-Edits to `output_skills/` apply immediately.
+Edits to `output_skills/` apply immediately since it's a symlink.
 
-**Local** (single project) — copy the skill folder to `.claude/skills/` in your project.
-
-Use global for personal workflows. Use local to share skills with your team via version control.
+**Local** (single project) — copy the skill folder to your project's `.claude/skills/` or create a symlink in your project yourself.
 
 ## Updating Best Practices
 
