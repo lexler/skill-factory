@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PATTERNS_DIR=~/.cache/claude-skills/augmented-coding-patterns
+REPO_URL=https://github.com/lexler/augmented-coding-patterns
+
+if [[ ! -d "$PATTERNS_DIR" ]]; then
+    echo "Cloning patterns repository..."
+    git clone "$REPO_URL" "$PATTERNS_DIR"
+else
+    echo "Updating patterns repository..."
+    git -C "$PATTERNS_DIR" pull
+fi
+
+echo "Patterns available at: $PATTERNS_DIR"

@@ -7,17 +7,15 @@ description: Reference patterns for augmented coding with AI. Use when discussin
 
 Patterns for effective AI-augmented software development by Lada Kesseler (github nickname lexler), Llewellyn Falco, Ivett Ördög, and Nitsan Avni.
 
-## First Step: Always Update the Reference Repository
+## First Step: Ensure Repository Exists and Update
 
-Pull latest patterns:
 ```bash
-git -C ~/workspace/knowledge/references-for-skills/ai-patterns-lexler/augmented-coding-patterns pull
+~/.claude/skills/ai-patterns/scripts/ensure-patterns-repo
 ```
-If you notice some new patterns not in the list below authored by lexler, suggest to add them to this skill to the user.
 
 ## Patterns Location
 
-Base path: `~/workspace/knowledge/references-for-skills/ai-patterns-lexler/augmented-coding-patterns/documents`
+Base path: `~/.cache/claude-skills/augmented-coding-patterns/documents`
 
 ---
 
@@ -124,9 +122,9 @@ Patterns not on the main journey but useful in practice.
 
 List patterns by category:
 ```bash
-ls ~/workspace/knowledge/references-for-skills/ai-patterns-lexler/augmented-coding-patterns/documents/patterns/
-ls ~/workspace/knowledge/references-for-skills/ai-patterns-lexler/augmented-coding-patterns/documents/anti-patterns/
-ls ~/workspace/knowledge/references-for-skills/ai-patterns-lexler/augmented-coding-patterns/documents/obstacles/
+ls ~/.cache/claude-skills/augmented-coding-patterns/documents/patterns/
+ls ~/.cache/claude-skills/augmented-coding-patterns/documents/anti-patterns/
+ls ~/.cache/claude-skills/augmented-coding-patterns/documents/obstacles/
 ```
 
 ## Online
