@@ -15,7 +15,7 @@ Ensure `playground/` exists and is in `.gitignore`. All iteration files go there
 
 ## Process
 
-### 1. Clarify Goal (if the user hasn't defined it for you already earlier in the converastion)
+### 1. Clarify Goal (if the user hasn't defined it for you already earlier in the conversation)
 
 Ask the user:
 - What are you refining and what is the goal of refinement?
@@ -54,5 +54,5 @@ If deeper issues or questions surfaced, present them to the user as well.
 - **Read back forces fresh eyes**: Reading from file breaks the "I just wrote this" blindness
 - **No "good enough"**: Every detail matters. Formatting, word choice, structure - all of it
 - **Consider the unconsidered**: What angles haven't we explored? What would someone else see? Is there something that the user haven't even considered, too? (you can surface it as questions at the end)
-- **Files force reality**: Writing to files prevents "pretend" iteration in conversation
+- **Files forces iterative improvement**: Writing to files prevents "pretend" iteration in conversation. Real iteration gets to much better results.
 - **Earn the stop**: Run the exhaustive check. If you find nothing, you've earned stopping.

@@ -70,7 +70,7 @@ Prefix with '!' to execute bash and inject output into context:
 allowed-tools: Bash(git:*)
 ---
 
-Current changes: !`git diff --staged`
+Git version: !`git --version`
 ```
 
 The `allowed-tools` frontmatter is required when using bash execution.
