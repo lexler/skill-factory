@@ -17,31 +17,37 @@ Skills are NOT slash commands - those are user-invoked prompts.
 
 ## Steps
 
-### 1. Learn Skill Patterns
+### 1. Update Documentation
+Run the update script to fetch the latest Anthropic skill docs:
+```bash
+./update-docs
+```
+
+### 2. Learn Skill Patterns
 Read the official documentation in `docs/knowledge/anthropic-skill-docs/`:
 - `overview.md` - Core concepts and architecture
 - `skills.md` - Implementation patterns
 - `best-practices.md` - Guidelines and pitfalls
 
-### 2. Clarify the Goal
+### 3. Clarify the Goal
 Ask the user:
 - What specific task should Claude be able to do?
 - Think about what does Claude NOT already know that this skill needs to provide. Show it as a suggestion to the user.
 - Are there examples that should be included as reference material? You can search online or ask for the user input.
 
-### 3. Propose Name and Description
+### 4. Propose Name and Description
 Based on what the user described, SUGGEST:
 - A skill name (the essence of what it does, extremely succinct, lowercase with hyphens)
 - A description (what it does + trigger words users would say)
 
 Present both for user approval before proceeding.
 
-### 4. Research (if needed)
+### 5. Research (if needed)
 If the domain is unfamiliar:
 - Gather domain knowledge first
 - Identify patterns, terminology, and common workflows
 
-### 5. Design Structure
+### 6. Design Structure
 
 **Skill anatomy:**
 ```
@@ -58,7 +64,7 @@ Decide scope:
 
 **Do NOT include:** README.md, CHANGELOG.md, INSTALLATION_GUIDE.md, or other auxiliary documentation.
 
-### 6. Write SKILL.md
+### 7. Write SKILL.md
 
 **Frontmatter:**
 ```yaml
@@ -79,7 +85,7 @@ description: [What it does]. Use when [trigger phrases user would say].
 - Try to avoid leading language ("When you want to...", "If you need...")
 - Don't add hand-holding phrasing in attempt to provide hand-holding guidance. 
 
-### 7. Add Supporting Files (if multi-file)
+### 8. Add Supporting Files (if multi-file)
 
 **References:** Detailed docs, loaded only when needed. Keep SKILL.md lean.
 
@@ -90,7 +96,7 @@ description: [What it does]. Use when [trigger phrases user would say].
 
 **One level deep means link chains, not folders.** SKILL.md should link directly to content files - avoid SKILL.md → index.md → actual-content.md chains. Organizing references into subfolders (`references/architecture/`, `references/building/`) is fine as long as SKILL.md links directly to each file.
 
-### 8. Review Against Best Practices
+### 9. Review Against Best Practices
 Re-read `docs/knowledge/anthropic-skill-docs/best-practices.md` and `skills.md` (troubleshooting section). Compare to what you created:
 - Does the description include clear trigger words?
 - Is the body concise? Remove anything Claude already knows.
@@ -99,7 +105,7 @@ Re-read `docs/knowledge/anthropic-skill-docs/best-practices.md` and `skills.md` 
 
 Suggest improvements before proceeding.
 
-### 9. Install Skill
+### 10. Install Skill
 Ask user: **Global skill or project skill?**
 
 **Global (symlink, personal, all projects):**
@@ -116,13 +122,13 @@ Check status with `./skills status` or `./skills local status`.
 
 Tell user to restart Claude Code to load the skill.
 
-### 10. Test
+### 11. Test
 - Restart Claude Code to load the skill
 - Ask Claude to do a task that should trigger the skill
 - Verify: Does it trigger? Does Claude follow instructions correctly?
 - Try edge cases
 
-### 11. Iterate
+### 12. Iterate
 - Skill doesn't trigger → improve description with better trigger words
 - Claude misses steps → make instructions more prominent
 - Too verbose → remove what Claude already knows
