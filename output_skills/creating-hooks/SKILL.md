@@ -5,6 +5,13 @@ description: Creates Claude Code hooks.
 
 STARTER_CHARACTER = 🪝
 
+## Setup
+
+First, update the reference docs to get the latest from Anthropic:
+```bash
+python ~/.claude/skills/creating-hooks/scripts/update-docs.py
+```
+
 ## What Hooks Are
 
 Shell commands that execute at lifecycle points in Claude Code. Unlike prompts, hooks are deterministic—they always run when triggered.

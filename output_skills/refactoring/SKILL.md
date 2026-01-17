@@ -59,11 +59,9 @@ For each refactor:
    Prefer small granular commits. If applying the same refactoring pattern to multiple locations, change one location at a time and commit each separately.
 5. Provide a status update after each refactor
 
-If a refactor fails three times or no further refactoring is found, pause and check with the user.
-
 ## 3. Final Evaluation
 
-When you see no more obvious refactoring opportunities, say "🔍 Entering final evaluation".
+When you see no more obvious refactoring opportunities, say "🔍 Entering final evaluation."
 
 Shift focus: you've been implementing. Now become a critic. Your job is to find problems, not produce code.
 
@@ -71,7 +69,7 @@ Re-read Code Style guidelines. Look at each file in scope. Consider blind spots 
 
 For each file, find ONE thing that could be better. If you find something:
 1. Fix it using the same refactoring process (test, change, test, commit)
-2. Look again - fixing one thing often reveals the next
+2. Look again; fixing one thing often reveals the next
 
 Repeat until you find nothing more to improve.
 

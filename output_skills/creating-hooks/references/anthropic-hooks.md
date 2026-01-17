@@ -13,7 +13,7 @@ Claude Code hooks are configured in your [settings files](/en/settings):
 * `~/.claude/settings.json` - User settings
 * `.claude/settings.json` - Project settings
 * `.claude/settings.local.json` - Local project settings (not committed)
-* Enterprise managed policy settings
+* Managed policy settings
 
 <Note>
   Enterprise administrators can use `allowManagedHooksOnly` to block user, project, and plugin hooks. See [Hook configuration](/en/settings#hook-configuration).
@@ -146,6 +146,48 @@ ensuring they work regardless of Claude's current directory:
 
 See the [plugin components reference](/en/plugins-reference#hooks) for details on creating plugin hooks.
 
+### Hooks in Skills, Agents, and Slash Commands
+
+In addition to settings files and plugins, hooks can be defined directly in [Skills](/en/skills), [subagents](/en/sub-agents), and [slash commands](/en/slash-commands) using frontmatter. These hooks are scoped to the component's lifecycle and only run when that component is active.
+
+**Supported events**: `PreToolUse`, `PostToolUse`, and `Stop`
+
+**Example in a Skill**:
+
+```yaml  theme={null}
+---
+name: secure-operations
+description: Perform operations with security checks
+hooks:
+  PreToolUse:
+    - matcher: "Bash"
+      hooks:
+        - type: command
+          command: "./scripts/security-check.sh"
+---
+```
+
+**Example in an agent**:
+
+```yaml  theme={null}
+---
+name: code-reviewer
+description: Review code changes
+hooks:
+  PostToolUse:
+    - matcher: "Edit|Write"
+      hooks:
+        - type: command
+          command: "./scripts/run-linter.sh"
+---
+```
+
+Component-scoped hooks follow the same configuration format as settings-based hooks but are automatically cleaned up when the component finishes executing.
+
+**Additional option for skills and slash commands:**
+
+* `once`: Set to `true` to run the hook only once per session. After the first successful execution, the hook is removed. Note: This option is currently only supported for skills and slash commands, not for agents.
+
 ## Prompt-Based Hooks
 
 In addition to bash command hooks (`type: "command"`), Claude Code supports prompt-based hooks (`type: "prompt"`) that use an LLM to evaluate whether to allow or block an action. Prompt-based hooks are currently only supported for `Stop` and `SubagentStop` hooks, where they enable intelligent, context-aware decisions.
@@ -191,21 +233,15 @@ The LLM must respond with JSON containing:
 
 ```json  theme={null}
 {
-  "decision": "approve" | "block",
-  "reason": "Explanation for the decision",
-  "continue": false,  // Optional: stops Claude entirely
-  "stopReason": "Message shown to user",  // Optional: custom stop message
-  "systemMessage": "Warning or context"  // Optional: shown to user
+  "ok": true | false,
+  "reason": "Explanation for the decision"
 }
 ```
 
 **Response fields:**
 
-* `decision`: `"approve"` allows the action, `"block"` prevents it
-* `reason`: Explanation shown to Claude when decision is `"block"`
-* `continue`: (Optional) If `false`, stops Claude's execution entirely
-* `stopReason`: (Optional) Message shown when `continue` is false
-* `systemMessage`: (Optional) Additional message shown to the user
+* `ok`: `true` allows the action, `false` prevents it
+* `reason`: Required when `ok` is `false`. Explanation shown to Claude
 
 ### Supported hook events
 
@@ -227,7 +263,7 @@ Prompt-based hooks work with any hook event, but are most useful for:
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "You are evaluating whether Claude should stop working. Context: $ARGUMENTS\n\nAnalyze the conversation and determine if:\n1. All user-requested tasks are complete\n2. Any errors need to be addressed\n3. Follow-up work is needed\n\nRespond with JSON: {\"decision\": \"approve\" or \"block\", \"reason\": \"your explanation\"}",
+            "prompt": "You are evaluating whether Claude should stop working. Context: $ARGUMENTS\n\nAnalyze the conversation and determine if:\n1. All user-requested tasks are complete\n2. Any errors need to be addressed\n3. Follow-up work is needed\n\nRespond with JSON: {\"ok\": true} to allow stopping, or {\"ok\": false, \"reason\": \"your explanation\"} to continue working.",
             "timeout": 30
           }
         ]
@@ -247,7 +283,7 @@ Prompt-based hooks work with any hook event, but are most useful for:
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Evaluate if this subagent should stop. Input: $ARGUMENTS\n\nCheck if:\n- The subagent completed its assigned task\n- Any errors occurred that need fixing\n- Additional context gathering is needed\n\nReturn: {\"decision\": \"approve\" or \"block\", \"reason\": \"explanation\"}"
+            "prompt": "Evaluate if this subagent should stop. Input: $ARGUMENTS\n\nCheck if:\n- The subagent completed its assigned task\n- Any errors occurred that need fixing\n- Additional context gathering is needed\n\nReturn: {\"ok\": true} to allow stopping, or {\"ok\": false, \"reason\": \"explanation\"} to continue."
           }
         ]
       }
@@ -466,7 +502,37 @@ event-specific data:
 
 ### PreToolUse Input
 
-The exact schema for `tool_input` depends on the tool.
+The exact schema for `tool_input` depends on the tool. Here are examples for commonly hooked tools.
+
+#### Bash tool
+
+The Bash tool is the most commonly hooked tool for command validation:
+
+```json  theme={null}
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "permission_mode": "default",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "psql -c 'SELECT * FROM users'",
+    "description": "Query the users table",
+    "timeout": 120000
+  },
+  "tool_use_id": "toolu_01ABC123..."
+}
+```
+
+| Field               | Type    | Description                                   |
+| :------------------ | :------ | :-------------------------------------------- |
+| `command`           | string  | The shell command to execute                  |
+| `description`       | string  | Optional description of what the command does |
+| `timeout`           | number  | Optional timeout in milliseconds              |
+| `run_in_background` | boolean | Whether to run the command in background      |
+
+#### Write tool
 
 ```json  theme={null}
 {
@@ -483,6 +549,60 @@ The exact schema for `tool_input` depends on the tool.
   "tool_use_id": "toolu_01ABC123..."
 }
 ```
+
+| Field       | Type   | Description                        |
+| :---------- | :----- | :--------------------------------- |
+| `file_path` | string | Absolute path to the file to write |
+| `content`   | string | Content to write to the file       |
+
+#### Edit tool
+
+```json  theme={null}
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "permission_mode": "default",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Edit",
+  "tool_input": {
+    "file_path": "/path/to/file.txt",
+    "old_string": "original text",
+    "new_string": "replacement text"
+  },
+  "tool_use_id": "toolu_01ABC123..."
+}
+```
+
+| Field         | Type    | Description                                         |
+| :------------ | :------ | :-------------------------------------------------- |
+| `file_path`   | string  | Absolute path to the file to edit                   |
+| `old_string`  | string  | Text to find and replace                            |
+| `new_string`  | string  | Replacement text                                    |
+| `replace_all` | boolean | Whether to replace all occurrences (default: false) |
+
+#### Read tool
+
+```json  theme={null}
+{
+  "session_id": "abc123",
+  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "cwd": "/Users/...",
+  "permission_mode": "default",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Read",
+  "tool_input": {
+    "file_path": "/path/to/file.txt"
+  },
+  "tool_use_id": "toolu_01ABC123..."
+}
+```
+
+| Field       | Type   | Description                                |
+| :---------- | :----- | :----------------------------------------- |
+| `file_path` | string | Absolute path to the file to read          |
+| `offset`    | number | Optional line number to start reading from |
+| `limit`     | number | Optional number of lines to read           |
 
 ### PostToolUse Input
 
@@ -685,18 +805,24 @@ to Claude.
 
 Additionally, hooks can modify tool inputs before execution using `updatedInput`:
 
-* `updatedInput` allows you to modify the tool's input parameters before the tool executes.
-* This is most useful with `"permissionDecision": "allow"` to modify and approve tool calls.
+* `updatedInput` modifies the tool's input parameters before the tool executes
+* Combine with `"permissionDecision": "allow"` to modify the input and auto-approve the tool call
+* Combine with `"permissionDecision": "ask"` to modify the input and show it to the user for confirmation
+
+Hooks can also provide context to Claude using `additionalContext`:
+
+* `"hookSpecificOutput.additionalContext"` adds a string to Claude's context before the tool executes.
 
 ```json  theme={null}
 {
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
-    "permissionDecision": "allow"
+    "permissionDecision": "allow",
     "permissionDecisionReason": "My reason here",
     "updatedInput": {
       "field_to_modify": "new value"
-    }
+    },
+    "additionalContext": "Current environment: production. Proceed with caution."
   }
 }
 ```
