@@ -11,16 +11,16 @@ A set of vertical slices that fully describe a system's behavior. Each slice is 
 
 ```
                     ┌─────────────────────────────────────┐
-                    │          Event Model                 │
-                    │                                      │
+                    │          Event Model                │
+                    │                                     │
                     │  ┌───────────┐  ┌───────────┐       │
                     │  │  Slice 1  │  │  Slice 2  │  ...  │
                     │  │ STATE_    │  │ STATE_    │       │
                     │  │ CHANGE    │  │ VIEW      │       │
                     │  └───────────┘  └───────────┘       │
-                    │         │              ▲              │
-                    │         │  (events)    │              │
-                    │         └──────────────┘              │
+                    │         │              ▲            │
+                    │         │  (events)    │            │
+                    │         └──────────────┘            │
                     └─────────────────────────────────────┘
 ```
 
