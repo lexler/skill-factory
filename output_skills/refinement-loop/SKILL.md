@@ -53,6 +53,6 @@ If deeper issues or questions surfaced, present them to the user as well.
 
 - **Read back forces fresh eyes**: Reading from file breaks the "I just wrote this" blindness
 - **No "good enough"**: Every detail matters. Formatting, word choice, structure - all of it
-- **Consider the unconsidered**: What angles haven't we explored? What would someone else see? Is there something that the user haven't even considered, too? (you can surface it as questions at the end)
-- **Files forces iterative improvement**: Writing to files prevents "pretend" iteration in conversation. Real iteration gets to much better results.
+- **Consider the unconsidered**: What angles haven't we explored? What would someone else see? Is there something that the user hasn't even considered, too? (you can surface it as questions at the end)
+- **Files force iterative improvement**: Writing to files prevents "pretend" iteration in conversation. Real iteration gets to much better results.
 - **Earn the stop**: Run the exhaustive check. If you find nothing, you've earned stopping.

@@ -26,7 +26,7 @@ This keeps context lean while making rich knowledge available on demand.
 
 ## Using Your Skill
 
-This repo includes a `./skills` helper script for globl installation.
+This repo includes a `./skills` helper script for global installation.
 
 **Global** (all projects) — use the script to symlink to `~/.claude/skills/`:
 
