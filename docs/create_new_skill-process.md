@@ -38,7 +38,23 @@ Ask the user:
 ### 4. Propose Name and Description
 Based on what the user described, SUGGEST:
 - A skill name (the essence of what it does, extremely succinct, lowercase with hyphens)
-- A description (what it does + trigger words users would say)
+- A description for discovery (see guidance below)
+
+**Writing the description:**
+The description is the primary trigger mechanism — Claude Code uses it to decide when to activate a skill from potentially 100+ installed skills. It must be lean and precise.
+
+Distill the essential purpose. Don't echo the user's phrasing — capture the *gist* of what the skill is and when it should fire. Lead with what the skill does (third person), then include trigger context.
+
+Evaluate the description through each lens:
+- Gist: Does it capture what the skill IS, or is it echoing what the user said?
+- Name + description as a pair: Read them together. Does the description add signal beyond the name, or just restate it?
+- False positives: Could common words cause this to activate on unrelated tasks?
+- False negatives: Would someone who needs this skill use words not in the description?
+- Overfocus: Does mentioning a specific example make the skill seem narrower than it is?
+- Human scan: If a user sees this in a list of 50 skills, can they instantly tell what it does?
+- Every word earns its place: Read each word — if you remove it, does the description get worse? If not, remove it.
+
+Write the description to `playground/{skill-name}-description-0.md`. Then apply all lenses — read back from the file before each pass. If any lens leads to a change, write the new version to `playground/{skill-name}-description-{N+1}.md` and run all lenses again. Stop when you see nothing further to improve.
 
 Present both for user approval before proceeding.
 
@@ -70,11 +86,11 @@ Decide scope:
 ```yaml
 ---
 name: skill-name
-description: [What it does]. Use when [trigger phrases user would say].
+description: [What it does]. Use when [trigger context]. (drop the second part if it's redundant with the first)
 ---
 ```
 - Name: The essence of what the skill does. Lowercase, hyphens. Avoid verbose names.
-- Description: Third person, specific, includes trigger words. This is the primary triggering mechanism.
+- Description: Lean and precise. Third person. Lead with what the skill does, follow with trigger context. This is the primary triggering mechanism — revisit step 4 guidance if needed.
 
 **Body:**
 - Start with `STARTER_CHARACTER = [emoji]` — This signals when the skill is active. Pick an emoji that represents the skill's purpose as much as possible.

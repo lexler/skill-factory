@@ -1,6 +1,6 @@
 ---
 name: event-modeling
-description: Designs systems using Event Modeling — vertical slices with commands, events, read models, and specifications. Use when designing a new system, modeling domain behavior, planning vertical slices, discussing event sourcing, or analyzing an existing codebase's business processes.
+description: Designs systems using Event Modeling.
 ---
 
 STARTER_CHARACTER = 🗺️

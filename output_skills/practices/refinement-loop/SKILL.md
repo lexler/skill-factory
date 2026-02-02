@@ -1,6 +1,6 @@
 ---
 name: refinement-loop
-description: Iterative refinement through multiple passes. Use when the user asks to 'meditate on', 'distill', 'refine', or 'iterate on' something. Applies to tasks likes distilling ideas to their essence, progressively simplifying explanations, improving drafts through successive passes, or any work benefiting from repeated cycles of analysis and improvement.
+description: Iterative refinement through multiple passes. Use when the user asks to 'meditate on', 'distill', 'refine', or 'iterate on' something, or proactively when a problem benefits from multiple passes rather than a single attempt.
 ---
 
 # Refinement Loop
