@@ -172,6 +172,22 @@ def cli_uninstall(skill_name):
         sys.exit(1)
 
 
+def cli_install_all():
+    registry = discover_skills()
+    for name in sorted(registry):
+        if not is_installed(registry, name):
+            install_skill(registry, name)
+            print(f"Installed '{name}'")
+
+
+def cli_uninstall_all():
+    registry = discover_skills()
+    for name in sorted(registry):
+        if is_installed(registry, name):
+            uninstall_skill(name)
+            print(f"Uninstalled '{name}'")
+
+
 def cli_install_local(skill_name):
     registry = discover_skills()
     if install_skill_local(registry, skill_name):
@@ -199,6 +215,29 @@ def build_tui_lines(registry):
     return lines
 
 
+def render_display_lines(tui_lines, registry, skill_indices, selected_pos):
+    display = []
+    for i, (kind, value) in enumerate(tui_lines):
+        if kind == "header":
+            if display:
+                display.append(("blank", ""))
+            display.append(("header", f"  {value}/"))
+        else:
+            installed = is_installed(registry, value)
+            checkbox = "[x]" if installed else "[ ]"
+            is_selected = skill_indices[selected_pos] == i
+            prefix = "  → " if is_selected else "    "
+            display.append(("skill", f"{prefix}{checkbox} {value}", is_selected))
+    return display
+
+
+def find_selected_display_row(display):
+    for row, entry in enumerate(display):
+        if entry[0] == "skill" and entry[2]:
+            return row
+    return 0
+
+
 def interactive_mode(stdscr):
     curses.curs_set(0)
     curses.use_default_colors()
@@ -216,28 +255,35 @@ def interactive_mode(stdscr):
     tui_lines = build_tui_lines(registry)
     skill_indices = [i for i, (kind, _) in enumerate(tui_lines) if kind == "skill"]
     selected_pos = 0
+    scroll_offset = 0
+    header_rows = 3
+    footer_rows = 2
+    page_size = 5
 
     while True:
         stdscr.clear()
+        max_rows, max_cols = stdscr.getmaxyx()
+        visible_rows = max_rows - header_rows - footer_rows
+
         stdscr.addstr(0, 0, "Skills Manager (global)")
         stdscr.addstr(1, 0, "─" * 40)
 
-        row = 3
-        for i, (kind, value) in enumerate(tui_lines):
-            if kind == "header":
-                if row > 3:
-                    row += 1
-                stdscr.addstr(row, 0, f"  {value}/")
-                row += 1
-            else:
-                installed = is_installed(registry, value)
-                checkbox = "[x]" if installed else "[ ]"
-                is_selected = skill_indices[selected_pos] == i
-                prefix = "  → " if is_selected else "    "
-                stdscr.addstr(row, 0, f"{prefix}{checkbox} {value}")
-                row += 1
+        display = render_display_lines(tui_lines, registry, skill_indices, selected_pos)
+        selected_row = find_selected_display_row(display)
 
-        stdscr.addstr(row + 2, 0, "↑↓ navigate | SPACE toggle | q quit")
+        if selected_row < scroll_offset:
+            scroll_offset = selected_row
+        elif selected_row >= scroll_offset + visible_rows:
+            scroll_offset = selected_row - visible_rows + 1
+
+        visible_slice = display[scroll_offset:scroll_offset + visible_rows]
+        for row, entry in enumerate(visible_slice):
+            if entry[0] == "blank":
+                continue
+            stdscr.addstr(row + header_rows, 0, entry[1])
+
+        help_text = "↑↓ navigate | PgUp/PgDn scroll | SPACE toggle | a all | n none | q quit"
+        stdscr.addstr(max_rows - 1, 0, help_text[:max_cols - 1])
         stdscr.refresh()
 
         try:
@@ -251,6 +297,10 @@ def interactive_mode(stdscr):
             selected_pos -= 1
         elif key == curses.KEY_DOWN and selected_pos < len(skill_indices) - 1:
             selected_pos += 1
+        elif key == curses.KEY_PPAGE:
+            selected_pos = max(0, selected_pos - page_size)
+        elif key == curses.KEY_NPAGE:
+            selected_pos = min(len(skill_indices) - 1, selected_pos + page_size)
         elif key == ord(" "):
             idx = skill_indices[selected_pos]
             name = tui_lines[idx][1]
@@ -258,13 +308,25 @@ def interactive_mode(stdscr):
                 uninstall_skill(name)
             else:
                 install_skill(registry, name)
+        elif key == ord("a"):
+            for idx in skill_indices:
+                name = tui_lines[idx][1]
+                if not is_installed(registry, name):
+                    install_skill(registry, name)
+        elif key == ord("n"):
+            for idx in skill_indices:
+                name = tui_lines[idx][1]
+                if is_installed(registry, name):
+                    uninstall_skill(name)
 
 
 def print_usage():
     print("Usage:")
     print("  ./skills status              List global skills status")
     print("  ./skills install <name>      Install skill globally (symlink)")
+    print("  ./skills install-all         Install all skills globally")
     print("  ./skills uninstall <name>    Uninstall skill globally")
+    print("  ./skills uninstall-all       Uninstall all skills globally")
     print("  ./skills toggle              Interactive mode (TUI)")
     print("")
     print("  ./skills local status        List local skills status")
@@ -279,6 +341,10 @@ def main():
         print_usage()
     elif args[0] == "status":
         cli_status()
+    elif args[0] == "install-all":
+        cli_install_all()
+    elif args[0] == "uninstall-all":
+        cli_uninstall_all()
     elif args[0] == "install" and len(args) == 2:
         cli_install(args[1])
     elif args[0] == "uninstall" and len(args) == 2:
