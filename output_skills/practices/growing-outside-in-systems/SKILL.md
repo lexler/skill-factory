@@ -16,6 +16,8 @@ STARTER_CHARACTER = 🔴🟢
 
 Build features by driving design from the outside in. Every feature starts with a failing acceptance test. Design emerges through disciplined Red-Green-Refactor cycles. Infrastructure is deferred until the domain API is proven.
 
+Unlike inside-out TDD with mocks, this approach tests behavior at the boundary — not implementation details — making the suite refactor-friendly by design. See [methodology.md](references/methodology.md#why-outside-in-over-regular-tdd).
+
 For canonical terms used throughout, see [references/glossary.md](references/glossary.md).
 
 ---
@@ -143,7 +145,7 @@ Do not fight the tests. Reshape the code until the test is easy to write.
 - [glossary.md](references/glossary.md) — canonical terms
 - [folder-structure.md](references/folder-structure.md) — folder structure, private/public hexagon, cross-hexagon rules, adapter patterns, test seams
 - [testing-strategy.md](references/testing-strategy.md) — full testing matrix, acceptance/component test rules, contract test pattern
-- [methodology.md](references/methodology.md) — walking skeleton, emergent design deep-dive, listen to the tests, anti-patterns
+- [methodology.md](references/methodology.md) — why outside-in over regular TDD, walking skeleton, emergent design deep-dive, listen to the tests, anti-patterns
 
 ## Sources
 

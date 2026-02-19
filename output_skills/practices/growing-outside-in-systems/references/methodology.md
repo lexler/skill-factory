@@ -4,6 +4,7 @@ These illustrate the principles. Consider what fits your context.
 
 ## Contents
 
+- Why Outside-In over Regular TDD
 - Foundational Concepts
 - Source Material
 - The Walking Skeleton
@@ -12,6 +13,23 @@ These illustrate the principles. Consider what fits your context.
 - Reconciling Upfront Contracts with Emergence
 - The Sub-Second Feedback Loop
 - Anti-Patterns
+
+---
+
+## Why Outside-In over Regular TDD
+
+Regular (inside-out) TDD starts from units and mocks collaborators. This creates two compounding problems:
+
+1. **Tests couple to implementation details.** Mocks verify call sequences — which method was called, with which arguments, in which order. Every structural refactor breaks tests even when behavior is unchanged. The test suite becomes a liability, not an asset.
+
+2. **Mocks lie about correctness.** A mock verifies that your code *calls* a collaborator in a specific way. It says nothing about whether the collaborator actually behaves correctly under those calls. You can have a fully green mock-based suite and a broken system.
+
+Outside-In ATDD solves both:
+
+- **Tests specify behavior, not implementation.** Acceptance tests describe what the system does at its boundary. Refactor internals — rename, extract, restructure — as aggressively as you want. Tests only break when observable behavior breaks.
+- **In-memory fakes have real behavior.** A fake repository backed by a map actually stores and retrieves data. It can be shared across tests, reused across suites, and verified against the real adapter via contract tests. It outlives every refactor.
+- **Refactor-friendly by design.** The acceptance test is the contract. A passing suite means the system behaves correctly, regardless of internal structure. This is what makes continuous refactoring sustainable.
+- **Tests as living specifications.** Written at the right scope, acceptance tests read as feature descriptions. A new team member can understand what the system does by reading the test suite — without opening the implementation.
 
 ---
 
