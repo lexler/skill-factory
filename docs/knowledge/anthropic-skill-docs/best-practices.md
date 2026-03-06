@@ -20,7 +20,7 @@ The [context window](/docs/en/build-with-claude/context-windows) is a public goo
 
 Not every token in your Skill has an immediate cost. At startup, only the metadata (name and description) from all Skills is pre-loaded. Claude reads SKILL.md only when the Skill becomes relevant, and reads additional files only as needed. However, being concise in SKILL.md still matters: once Claude loads it, every token competes with conversation history and other context.
 
-**Default assumption**: Claude is already very smart
+**Default assumption:** Claude is already very smart
 
 Only add context Claude doesn't already have. Challenge each piece of information:
 - "Does Claude really need this explanation?"
@@ -116,15 +116,15 @@ python scripts/migrate.py --verify --backup
 Do not modify the command or add additional flags.
 ````
 
-**Analogy**: Think of Claude as a robot exploring a path:
-- **Narrow bridge with cliffs on both sides**: There's only one safe way forward. Provide specific guardrails and exact instructions (low freedom). Example: database migrations that must run in exact sequence.
-- **Open field with no hazards**: Many paths lead to success. Give general direction and trust Claude to find the best route (high freedom). Example: code reviews where context determines the best approach.
+**Analogy:** Think of Claude as a robot exploring a path:
+- **Narrow bridge with cliffs on both sides:** There's only one safe way forward. Provide specific guardrails and exact instructions (low freedom). Example: database migrations that must run in exact sequence.
+- **Open field with no hazards:** Many paths lead to success. Give general direction and trust Claude to find the best route (high freedom). Example: code reviews where context determines the best approach.
 
 ### Test with all models you plan to use
 
 Skills act as additions to models, so effectiveness depends on the underlying model. Test your Skill with all the models you plan to use it with.
 
-**Testing considerations by model**:
+**Testing considerations by model:**
 - **Claude Haiku** (fast, economical): Does the Skill provide enough guidance?
 - **Claude Sonnet** (balanced): Is the Skill clear and efficient?
 - **Claude Opus** (powerful reasoning): Does the Skill avoid over-explaining?
@@ -134,7 +134,7 @@ What works perfectly for Opus might need more detail for Haiku. If you plan to u
 ## Skill structure
 
 <Note>
-**YAML Frontmatter**: The SKILL.md frontmatter requires two fields:
+**YAML Frontmatter:** The SKILL.md frontmatter requires two fields:
 
 `name`:
 - Maximum 64 characters
@@ -157,18 +157,18 @@ Use consistent naming patterns to make Skills easier to reference and discuss. C
 
 Remember that the `name` field must use lowercase letters, numbers, and hyphens only.
 
-**Good naming examples (gerund form)**:
+**Good naming examples (gerund form):**
 - `processing-pdfs`
 - `analyzing-spreadsheets`
 - `managing-databases`
 - `testing-code`
 - `writing-documentation`
 
-**Acceptable alternatives**:
+**Acceptable alternatives:**
 - Noun phrases: `pdf-processing`, `spreadsheet-analysis`
 - Action-oriented: `process-pdfs`, `analyze-spreadsheets`
 
-**Avoid**:
+**Avoid:**
 - Vague names: `helper`, `utils`, `tools`
 - Overly generic: `documents`, `data`, `files`
 - Reserved words: `anthropic-helper`, `claude-tools`
@@ -374,7 +374,7 @@ Here's the actual information...
 
 For reference files longer than 100 lines, include a table of contents at the top. This ensures Claude can see the full scope of available information even when previewing with partial reads.
 
-**Example**:
+**Example:**
 ```markdown
 # API Reference
 
@@ -491,7 +491,7 @@ Clear steps prevent Claude from skipping critical validation. The checklist help
 
 ### Implement feedback loops
 
-**Common pattern**: Run validator → fix errors → repeat
+**Common pattern:** Run validator → fix errors → repeat
 
 This pattern greatly improves output quality.
 
@@ -568,12 +568,12 @@ The old patterns section provides historical context without cluttering the main
 
 Choose one term and use it throughout the Skill:
 
-**Good - Consistent**:
+**Good - Consistent:**
 - Always "API endpoint"
 - Always "field"
 - Always "extract"
 
-**Bad - Inconsistent**:
+**Bad - Inconsistent:**
 - Mix "API endpoint", "URL", "API route", "path"
 - Mix "field", "box", "element", "control"
 - Mix "extract", "pull", "get", "retrieve"
@@ -710,15 +710,15 @@ If workflows become large or complicated with many steps, consider pushing them 
 **Create evaluations BEFORE writing extensive documentation.** This ensures your Skill solves real problems rather than documenting imagined ones.
 
 **Evaluation-driven development:**
-1. **Identify gaps**: Run Claude on representative tasks without a Skill. Document specific failures or missing context
-2. **Create evaluations**: Build three scenarios that test these gaps
-3. **Establish baseline**: Measure Claude's performance without the Skill
-4. **Write minimal instructions**: Create just enough content to address the gaps and pass evaluations
-5. **Iterate**: Execute evaluations, compare against baseline, and refine
+1. **Identify gaps:** Run Claude on representative tasks without a Skill. Document specific failures or missing context
+2. **Create evaluations:** Build three scenarios that test these gaps
+3. **Establish baseline:** Measure Claude's performance without the Skill
+4. **Write minimal instructions:** Create just enough content to address the gaps and pass evaluations
+5. **Iterate:** Execute evaluations, compare against baseline, and refine
 
 This approach ensures you're solving actual problems rather than anticipating requirements that may never materialize.
 
-**Evaluation structure**:
+**Evaluation structure:**
 ```json
 {
   "skills": ["pdf-processing"],
@@ -738,29 +738,29 @@ This example demonstrates a data-driven evaluation with a simple testing rubric.
 
 ### Develop Skills iteratively with Claude
 
-The most effective Skill development process involves Claude itself. Work with one instance of Claude ("Claude A") to create a Skill that will be used by other instances ("Claude B"). Claude A helps you design and refine instructions, while Claude B tests them in real tasks. This works because Claude models understand both how to write effective agent instructions and what information agents need.
+The most effective Skill development process involves Claude itself. Work with one instance of Claude ("Claude A") to create a Skill that is used by other instances ("Claude B"). Claude A helps you design and refine instructions, while Claude B tests them in real tasks. This works because Claude models understand both how to write effective agent instructions and what information agents need.
 
 **Creating a new Skill:**
 
-1. **Complete a task without a Skill**: Work through a problem with Claude A using normal prompting. As you work, you'll naturally provide context, explain preferences, and share procedural knowledge. Notice what information you repeatedly provide.
+1. **Complete a task without a Skill:** Work through a problem with Claude A using normal prompting. As you work, you'll naturally provide context, explain preferences, and share procedural knowledge. Notice what information you repeatedly provide.
 
-2. **Identify the reusable pattern**: After completing the task, identify what context you provided that would be useful for similar future tasks.
+2. **Identify the reusable pattern:** After completing the task, identify what context you provided that would be useful for similar future tasks.
 
-   **Example**: If you worked through a BigQuery analysis, you might have provided table names, field definitions, filtering rules (like "always exclude test accounts"), and common query patterns.
+   **Example:** If you worked through a BigQuery analysis, you might have provided table names, field definitions, filtering rules (like "always exclude test accounts"), and common query patterns.
 
-3. **Ask Claude A to create a Skill**: "Create a Skill that captures this BigQuery analysis pattern we just used. Include the table schemas, naming conventions, and the rule about filtering test accounts."
+3. **Ask Claude A to create a Skill:** "Create a Skill that captures this BigQuery analysis pattern we just used. Include the table schemas, naming conventions, and the rule about filtering test accounts."
 
    <Tip>
-   Claude models understand the Skill format and structure natively. You don't need special system prompts or a "writing skills" skill to get Claude to help create Skills. Simply ask Claude to create a Skill and it will generate properly structured SKILL.md content with appropriate frontmatter and body content.
+   Claude models understand the Skill format and structure natively. You don't need special system prompts or a "writing skills" skill to get Claude to help create Skills. Simply ask Claude to create a Skill and it generates properly structured SKILL.md content with appropriate frontmatter and body content.
    </Tip>
 
-4. **Review for conciseness**: Check that Claude A hasn't added unnecessary explanations. Ask: "Remove the explanation about what win rate means - Claude already knows that."
+4. **Review for conciseness:** Check that Claude A hasn't added unnecessary explanations. Ask: "Remove the explanation about what win rate means - Claude already knows that."
 
-5. **Improve information architecture**: Ask Claude A to organize the content more effectively. For example: "Organize this so the table schema is in a separate reference file. We might add more tables later."
+5. **Improve information architecture:** Ask Claude A to organize the content more effectively. For example: "Organize this so the table schema is in a separate reference file. We might add more tables later."
 
-6. **Test on similar tasks**: Use the Skill with Claude B (a fresh instance with the Skill loaded) on related use cases. Observe whether Claude B finds the right information, applies rules correctly, and handles the task successfully.
+6. **Test on similar tasks:** Use the Skill with Claude B (a fresh instance with the Skill loaded) on related use cases. Observe whether Claude B finds the right information, applies rules correctly, and handles the task successfully.
 
-7. **Iterate based on observation**: If Claude B struggles or misses something, return to Claude A with specifics: "When Claude used this Skill, it forgot to filter by date for Q4. Should we add a section about date filtering patterns?"
+7. **Iterate based on observation:** If Claude B struggles or misses something, return to Claude A with specifics: "When Claude used this Skill, it forgot to filter by date for Q4. Should we add a section about date filtering patterns?"
 
 **Iterating on existing Skills:**
 
@@ -769,19 +769,19 @@ The same hierarchical pattern continues when improving Skills. You alternate bet
 - **Testing with Claude B** (the agent using the Skill to perform real work)
 - **Observing Claude B's behavior** and bringing insights back to Claude A
 
-1. **Use the Skill in real workflows**: Give Claude B (with the Skill loaded) actual tasks, not test scenarios
+1. **Use the Skill in real workflows:** Give Claude B (with the Skill loaded) actual tasks, not test scenarios
 
-2. **Observe Claude B's behavior**: Note where it struggles, succeeds, or makes unexpected choices
+2. **Observe Claude B's behavior:** Note where it struggles, succeeds, or makes unexpected choices
 
-   **Example observation**: "When I asked Claude B for a regional sales report, it wrote the query but forgot to filter out test accounts, even though the Skill mentions this rule."
+   **Example observation:** "When I asked Claude B for a regional sales report, it wrote the query but forgot to filter out test accounts, even though the Skill mentions this rule."
 
-3. **Return to Claude A for improvements**: Share the current SKILL.md and describe what you observed. Ask: "I noticed Claude B forgot to filter test accounts when I asked for a regional report. The Skill mentions filtering, but maybe it's not prominent enough?"
+3. **Return to Claude A for improvements:** Share the current SKILL.md and describe what you observed. Ask: "I noticed Claude B forgot to filter test accounts when I asked for a regional report. The Skill mentions filtering, but maybe it's not prominent enough?"
 
-4. **Review Claude A's suggestions**: Claude A might suggest reorganizing to make rules more prominent, using stronger language like "MUST filter" instead of "always filter", or restructuring the workflow section.
+4. **Review Claude A's suggestions:** Claude A might suggest reorganizing to make rules more prominent, using stronger language like "MUST filter" instead of "always filter", or restructuring the workflow section.
 
-5. **Apply and test changes**: Update the Skill with Claude A's refinements, then test again with Claude B on similar requests
+5. **Apply and test changes:** Update the Skill with Claude A's refinements, then test again with Claude B on similar requests
 
-6. **Repeat based on usage**: Continue this observe-refine-test cycle as you encounter new scenarios. Each iteration improves the Skill based on real agent behavior, not assumptions.
+6. **Repeat based on usage:** Continue this observe-refine-test cycle as you encounter new scenarios. Each iteration improves the Skill based on real agent behavior, not assumptions.
 
 **Gathering team feedback:**
 
@@ -789,16 +789,16 @@ The same hierarchical pattern continues when improving Skills. You alternate bet
 2. Ask: Does the Skill activate when expected? Are instructions clear? What's missing?
 3. Incorporate feedback to address blind spots in your own usage patterns
 
-**Why this approach works**: Claude A understands agent needs, you provide domain expertise, Claude B reveals gaps through real usage, and iterative refinement improves Skills based on observed behavior rather than assumptions.
+**Why this approach works:** Claude A understands agent needs, you provide domain expertise, Claude B reveals gaps through real usage, and iterative refinement improves Skills based on observed behavior rather than assumptions.
 
 ### Observe how Claude navigates Skills
 
 As you iterate on Skills, pay attention to how Claude actually uses them in practice. Watch for:
 
-- **Unexpected exploration paths**: Does Claude read files in an order you didn't anticipate? This might indicate your structure isn't as intuitive as you thought
-- **Missed connections**: Does Claude fail to follow references to important files? Your links might need to be more explicit or prominent
-- **Overreliance on certain sections**: If Claude repeatedly reads the same file, consider whether that content should be in the main SKILL.md instead
-- **Ignored content**: If Claude never accesses a bundled file, it might be unnecessary or poorly signaled in the main instructions
+- **Unexpected exploration paths:** Does Claude read files in an order you didn't anticipate? This might indicate your structure isn't as intuitive as you thought
+- **Missed connections:** Does Claude fail to follow references to important files? Your links might need to be more explicit or prominent
+- **Overreliance on certain sections:** If Claude repeatedly reads the same file, consider whether that content should be in the main SKILL.md instead
+- **Ignored content:** If Claude never accesses a bundled file, it might be unnecessary or poorly signaled in the main instructions
 
 Iterate based on these observations rather than assumptions. The 'name' and 'description' in your Skill's metadata are particularly critical. Claude uses these when deciding whether to trigger the Skill in response to the current task. Make sure they clearly describe what the Skill does and when it should be used.
 
@@ -808,8 +808,8 @@ Iterate based on these observations rather than assumptions. The 'name' and 'des
 
 Always use forward slashes in file paths, even on Windows:
 
-- ✓ **Good**: `scripts/helper.py`, `reference/guide.md`
-- ✗ **Avoid**: `scripts\helper.py`, `reference\guide.md`
+- ✓ **Good:** `scripts/helper.py`, `reference/guide.md`
+- ✗ **Avoid:** `scripts\helper.py`, `reference\guide.md`
 
 Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.
 
@@ -838,8 +838,9 @@ The sections below focus on Skills that include executable scripts. If your Skil
 
 When writing scripts for Skills, handle error conditions rather than punting to Claude.
 
-**Good example: Handle errors explicitly**:
-```python
+**Good example: Handle errors explicitly:**
+
+```python nocheck
 def process_file(path):
     """Process a file, creating it if it doesn't exist."""
     try:
@@ -857,8 +858,9 @@ def process_file(path):
         return ""
 ```
 
-**Bad example: Punt to Claude**:
-```python
+**Bad example: Punt to Claude:**
+
+```python nocheck
 def process_file(path):
     # Just fail and let Claude figure it out
     return open(path).read()
@@ -866,8 +868,9 @@ def process_file(path):
 
 Configuration parameters should also be justified and documented to avoid "voodoo constants" (Ousterhout's law). If you don't know the right value, how will Claude determine it?
 
-**Good example: Self-documenting**:
-```python
+**Good example: Self-documenting:**
+
+```python nocheck
 # HTTP requests typically complete within 30 seconds
 # Longer timeout accounts for slow connections
 REQUEST_TIMEOUT = 30
@@ -877,8 +880,9 @@ REQUEST_TIMEOUT = 30
 MAX_RETRIES = 3
 ```
 
-**Bad example: Magic numbers**:
-```python
+**Bad example: Magic numbers:**
+
+```python nocheck
 TIMEOUT = 47  # Why 47?
 RETRIES = 5  # Why 5?
 ```
@@ -887,7 +891,7 @@ RETRIES = 5  # Why 5?
 
 Even if Claude could write a script, pre-made scripts offer advantages:
 
-**Benefits of utility scripts**:
+**Benefits of utility scripts:**
 - More reliable than generated code
 - Save tokens (no need to include code in context)
 - Save time (no code generation required)
@@ -897,13 +901,13 @@ Even if Claude could write a script, pre-made scripts offer advantages:
 
 The diagram above shows how executable scripts work alongside instruction files. The instruction file (forms.md) references the script, and Claude can execute it without loading its contents into context.
 
-**Important distinction**: Make clear in your instructions whether Claude should:
+**Important distinction:** Make clear in your instructions whether Claude should:
 - **Execute the script** (most common): "Run `analyze_form.py` to extract fields"
 - **Read it as reference** (for complex logic): "See `analyze_form.py` for the field extraction algorithm"
 
 For most utility scripts, execution is preferred because it's more reliable and efficient. See the [Runtime environment](#runtime-environment) section below for details on how script execution works.
 
-**Example**:
+**Example:**
 ````markdown
 ## Utility scripts
 
@@ -961,26 +965,26 @@ Claude's vision capabilities help understand layouts and structures.
 
 When Claude performs complex, open-ended tasks, it can make mistakes. The "plan-validate-execute" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it.
 
-**Example**: Imagine asking Claude to update 50 form fields in a PDF based on a spreadsheet. Without validation, Claude might reference non-existent fields, create conflicting values, miss required fields, or apply updates incorrectly.
+**Example:** Imagine asking Claude to update 50 form fields in a PDF based on a spreadsheet. Without validation, Claude might reference non-existent fields, create conflicting values, miss required fields, or apply updates incorrectly.
 
-**Solution**: Use the workflow pattern shown above (PDF form filling), but add an intermediate `changes.json` file that gets validated before applying changes. The workflow becomes: analyze → **create plan file** → **validate plan** → execute → verify.
+**Solution:** Use the workflow pattern shown above (PDF form filling), but add an intermediate `changes.json` file that gets validated before applying changes. The workflow becomes: analyze → **create plan file** → **validate plan** → execute → verify.
 
 **Why this pattern works:**
-- **Catches errors early**: Validation finds problems before changes are applied
-- **Machine-verifiable**: Scripts provide objective verification
-- **Reversible planning**: Claude can iterate on the plan without touching originals
-- **Clear debugging**: Error messages point to specific problems
+- **Catches errors early:** Validation finds problems before changes are applied
+- **Machine-verifiable:** Scripts provide objective verification
+- **Reversible planning:** Claude can iterate on the plan without touching originals
+- **Clear debugging:** Error messages point to specific problems
 
-**When to use**: Batch operations, destructive changes, complex validation rules, high-stakes operations.
+**When to use:** Batch operations, destructive changes, complex validation rules, high-stakes operations.
 
-**Implementation tip**: Make validation scripts verbose with specific error messages like "Field 'signature_date' not found. Available fields: customer_name, order_total, signature_date_signed" to help Claude fix issues.
+**Implementation tip:** Make validation scripts verbose with specific error messages like "Field 'signature_date' not found. Available fields: customer_name, order_total, signature_date_signed" to help Claude fix issues.
 
 ### Package dependencies
 
 Skills run in the code execution environment with platform-specific limitations:
 
-- **claude.ai**: Can install packages from npm and PyPI and pull from GitHub repositories
-- **Claude API**: Has no network access and no runtime package installation
+- **claude.ai:** Can install packages from npm and PyPI and pull from GitHub repositories
+- **Claude API:** Has no network access and no runtime package installation
 
 List required packages in your SKILL.md and verify they're available in the [code execution tool documentation](/docs/en/agents-and-tools/tool-use/code-execution-tool).
 
@@ -992,22 +996,22 @@ Skills run in a code execution environment with filesystem access, bash commands
 
 **How Claude accesses Skills:**
 
-1. **Metadata pre-loaded**: At startup, the name and description from all Skills' YAML frontmatter are loaded into the system prompt
-2. **Files read on-demand**: Claude uses bash Read tools to access SKILL.md and other files from the filesystem when needed
-3. **Scripts executed efficiently**: Utility scripts can be executed via bash without loading their full contents into context. Only the script's output consumes tokens
-4. **No context penalty for large files**: Reference files, data, or documentation don't consume context tokens until actually read
+1. **Metadata pre-loaded:** At startup, the name and description from all Skills' YAML frontmatter are loaded into the system prompt
+2. **Files read on-demand:** Claude uses bash Read tools to access SKILL.md and other files from the filesystem when needed
+3. **Scripts executed efficiently:** Utility scripts can be executed via bash without loading their full contents into context. Only the script's output consumes tokens
+4. **No context penalty for large files:** Reference files, data, or documentation don't consume context tokens until actually read
 
-- **File paths matter**: Claude navigates your skill directory like a filesystem. Use forward slashes (`reference/guide.md`), not backslashes
-- **Name files descriptively**: Use names that indicate content: `form_validation_rules.md`, not `doc2.md`
-- **Organize for discovery**: Structure directories by domain or feature
+- **File paths matter:** Claude navigates your skill directory like a filesystem. Use forward slashes (`reference/guide.md`), not backslashes
+- **Name files descriptively:** Use names that indicate content: `form_validation_rules.md`, not `doc2.md`
+- **Organize for discovery:** Structure directories by domain or feature
   - Good: `reference/finance.md`, `reference/sales.md`
   - Bad: `docs/file1.md`, `docs/file2.md`
-- **Bundle comprehensive resources**: Include complete API docs, extensive examples, large datasets; no context penalty until accessed
-- **Prefer scripts for deterministic operations**: Write `validate_form.py` rather than asking Claude to generate validation code
-- **Make execution intent clear**:
+- **Bundle comprehensive resources:** Include complete API docs, extensive examples, large datasets; no context penalty until accessed
+- **Prefer scripts for deterministic operations:** Write `validate_form.py` rather than asking Claude to generate validation code
+- **Make execution intent clear:**
   - "Run `analyze_form.py` to extract fields" (execute)
   - "See `analyze_form.py` for the extraction algorithm" (read as reference)
-- **Test file access patterns**: Verify Claude can navigate your directory structure by testing with real requests
+- **Test file access patterns:** Verify Claude can navigate your directory structure by testing with real requests
 
 **Example:**
 
@@ -1028,9 +1032,9 @@ For complete details on the technical architecture, see [How Skills work](/docs/
 
 If your Skill uses MCP (Model Context Protocol) tools, always use fully qualified tool names to avoid "tool not found" errors.
 
-**Format**: `ServerName:tool_name`
+**Format:** `ServerName:tool_name`
 
-**Example**:
+**Example:**
 ```markdown
 Use the BigQuery:bigquery_schema tool to retrieve table schemas.
 Use the GitHub:create_issue tool to create issues.
