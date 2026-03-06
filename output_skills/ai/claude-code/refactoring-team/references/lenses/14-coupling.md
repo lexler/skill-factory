@@ -8,20 +8,18 @@ What does each unit depend on, and is that dependency necessary?
 
 ## How to Spot
 
-- Train wrecks: `a.getB().getC().doThing()` — reaching through objects to get at something deep
-- Shotgun surgery: one conceptual change requires edits across many files
-- Inappropriate intimacy: classes that dig into each other's internals
-- Framework or library details leaking into domain logic
-- Middle man: a class that only delegates, adding indirection without value
-- Circular dependencies between modules
-- A function that imports a large module but only uses one small piece of it
+- Reaching through objects: `a.getB().getC().doThing()` — this unit knows its collaborators' internals
+- One change, many files: a single conceptual change forces edits scattered across the codebase
+- One file, many reasons to change: a module that changes whenever *anything* changes
+- Pass-through: parameters or data flowing through a function untouched, coupling it to both caller and callee
 
 ## Process
 
-For each file, ask:
-1. What does this depend on? List the imports and the objects it reaches into
-2. For each dependency — is it necessary, or could this unit do its job with less knowledge?
-3. Where does one change force changes elsewhere?
+Trace the ripple in both directions:
+- Outward: if I changed this unit, what else would break?
+- Inward: what forces *this* unit to change? How many unrelated reasons does it have to change?
+
+If the ripple crosses many boundaries in either direction, the coupling is too tight.
 
 ## Trade-off
 
@@ -29,4 +27,4 @@ Some coupling is necessary — zero coupling means the code does nothing. The qu
 
 ## Go Deeper
 
-What other coupling exists? Where else does a change in one place force changes in another?
+What coupling is still invisible? Where do framework details leak into domain logic? Where do modules depend on each other in circles?
