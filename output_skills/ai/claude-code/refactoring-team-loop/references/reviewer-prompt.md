@@ -54,4 +54,4 @@ Update after each transition. This survives context compaction.
 
 ## When All Lenses Exhausted
 
-The final-review lens handles wrap-up: re-running lenses, writing the log, and declaring completion. Follow its reviewer guide.
+The final-review lens handles wrap-up: re-running lenses and writing the log. Follow its reviewer guide. After writing REFACTORING-LOG.md, go idle — the manager will handle next steps.

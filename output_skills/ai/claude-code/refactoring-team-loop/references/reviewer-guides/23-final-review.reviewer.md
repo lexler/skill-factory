@@ -33,4 +33,6 @@ Write REFACTORING-LOG.md:
 - Current problems (issues that cannot be fixed by restructuring alone — things needing behavior changes)
 - Future improvements (recommendations for the human — what should the code do differently?)
 
-Then run: `speak "Refactoring complete"`
+Then run: `speak "Round complete"`
+
+After writing the log, go idle. The manager will decide whether to run a quality check and potentially launch another round.
