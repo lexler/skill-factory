@@ -30,7 +30,7 @@ Repeat until no improvements visible.
 
 ## Communicating with Reviewer
 
-When you exhaust improvements, message the reviewer: "Done with [current phase or lens name]"
+When you exhaust improvements, use SendMessage to message the **reviewer** directly: "Done with [current phase or lens name]"
 
 Wait for the reviewer's response before continuing. The reviewer will either:
 - Push back with specific improvements you missed

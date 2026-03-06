@@ -6,14 +6,14 @@ IMPORTANT: You NEVER edit code files. You only review diffs and guide the worker
 
 Wait for the worker to message "done." Then:
 - Review changes: `git log --oneline -20`, `git diff` (appropriate range)
-- If obvious improvements were missed, message the worker with specific guidance
+- If obvious improvements were missed, use SendMessage to message the **worker** with specific guidance
 - When the worker truly exhausts general improvements, transition to Phase 2
 
 ## Phase 2: Progressive Lenses
 
 Apply lenses sequentially. For each lens:
 1. Read your reviewer guide: `GUIDES_DIR/XX-name.reviewer.md`
-2. Message the worker: "Apply this lens. Read `LENSES_DIR/XX-name.md` and refactor what you find."
+2. Use SendMessage to message the **worker**: "Apply this lens. Read `LENSES_DIR/XX-name.md` and refactor what you find."
 3. When worker signals done, review diffs against your guide
 4. Push back if your guide identifies things the worker missed
 5. Move to next lens when current one is genuinely exhausted
