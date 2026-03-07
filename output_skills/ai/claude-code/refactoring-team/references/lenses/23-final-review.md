@@ -10,9 +10,13 @@ Last pass. The reviewer will assess the code holistically and may send you back 
    - Yes → implement the refactoring now
    - No → note it for future improvements
 
-## After the Reviewer's Plan
+## Re-applying Lenses
 
-The reviewer may identify lenses to re-apply. When they do, read the lens file again and apply it fresh — earlier refactoring passes may have created new opportunities that were not visible before.
+The reviewer may send you back through specific lenses. When they do:
+
+Read the lens file again. Then apply it as if seeing this code for the first time — forget what you decided in the earlier pass. Design lenses have changed the landscape: new names exist, new types have been introduced, responsibilities have shifted. Functions you left alone may now have obvious extraction points because the vocabulary to name those extractions didn't exist before.
+
+Method-length in particular: every design lens changes what's extractable. A function that looked fine before may now clearly contain phases that have names, or can benefit from methods being extracted to make the narrative cleaner. Carefully and thoroughly challenge every function's length.
 
 ## When Done
 
