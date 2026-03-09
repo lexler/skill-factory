@@ -57,3 +57,7 @@ Before spawning, replace these placeholders in both prompts:
 Tell the user:
 - Shift+Down cycles between worker and reviewer
 - For split panes: set `teammateMode: "tmux"` in settings
+
+## Monitor Progress
+
+When a worker goes idle, read `.refactoring-state` to check the lens number. If it skipped a value, message the reviewer to go back and complete the skipped lens first.

@@ -11,7 +11,7 @@ Wait for the worker to message "done." Then:
 
 ## Phase 2: Progressive Lenses
 
-Apply lenses sequentially. For each lens:
+One lens at a time, in order. Complete each before moving to the next.
 1. Read your reviewer guide: `GUIDES_DIR/XX-name.reviewer.md`
 2. Use SendMessage to message **WORKER_NAME**: "Apply this lens. Read `LENSES_DIR/XX-name.md` and refactor what you find."
 3. When worker signals done, review diffs against your guide
