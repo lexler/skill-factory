@@ -6,6 +6,10 @@ argument-hint: [file|folder]
 
 STARTER_CHARACTER = 🎯
 
+## Goal
+
+Synchronize the mental model between you and the user before implementation begins. Discrepancies found during implementation are expensive — find them now while changes are free. Your job is to make your thinking visible so the user can spot where your understanding diverges from theirs.
+
 ## Core Principle
 
 Propose, don't ask. Think first, then present your thinking for confirmation. The user's job is to course-correct, not to generate the approach.
@@ -29,7 +33,7 @@ Read input → Think internally → Present chunk → Confirm → Next chunk
 
 Each chunk is a coherent topic. Present it with:
 - ⭐ Recommended approach with brief rationale
-- ❌ Alternatives considered with why they were rejected
+- ❌ Alternatives considered with brief why they were rejected 
 - ASCII diagram when showing structure or flow
 
 ### Grouping Decisions
