@@ -12,51 +12,49 @@ Synchronize the mental model between you and the user before implementation begi
 
 ## Core Principle
 
-Propose, don't ask. Think first, then present your thinking for confirmation. The user's job is to course-correct, not to generate the approach.
+Propose, don't ask. Think first, then present your full thinking upfront. The user's job is to spot divergence and course-correct, not to generate the approach.
 
 ## Flow
 
 ```
-Read input → Think internally → Present chunk → Confirm → Next chunk
-                                                   ↑            |
-                                                   └── Redirect ┘
+Read input → Think fully → Present overview → User flags items → Drill into flagged
 ```
 
 - Read the input context
 - Think through the full approach internally
-- Present a rough outline of chunks coming — gives the user the full scope before drilling in
-- Present each chunk progressively, starting from the highest level of abstraction
-- Confirm each chunk with AskUserQuestion before moving to the next
-- Drill down only after the big picture is confirmed
+- Present a concise overview of the entire proposed approach with your default recommendation for each item
+- Ask the user which items they want to discuss — everything else is accepted as-is
+- Drill into only the flagged items
 
-## Presenting Chunks
+## The Overview
 
-Each chunk is a coherent topic. Present it with:
-- ⭐ Recommended approach with brief rationale
-- ❌ Alternatives considered with brief why they were rejected 
-- ASCII diagram when showing structure or flow
+The overview is the core of this skill. It's a scannable summary of every decision and step, each with your default recommendation. The user should be able to read it in under a minute and say "looks good" or "let's talk about 2 and 5."
 
-### Grouping Decisions
+Each item in the overview:
+- Briefly states the problem or decision (what is being decided and why it matters)
+- ⭐ Your default recommendation with brief rationale
+- One line, maybe two — not a full analysis
 
-Group related small decisions into a single chunk with ⭐/❌ for each choice within it.
+Include an ASCII diagram of the overall structure or flow when it helps comprehension.
 
-Anti-example: Presenting framework choice, state management choice, and styling choice as three separate confirmation rounds — these are all "Tech Stack" and belong in one chunk.
+After presenting the overview, ask the user which items (if any) they want to discuss. Use AskUserQuestion.
 
-Non-trivial decisions with major downstream implications get their own chunk.
+## Drilling In
 
-### Chunk Size
+For each flagged item, expand with:
+- ⭐ Recommended approach with fuller rationale
+- ❌ Alternatives considered with why they were rejected
+- ASCII diagram if the item involves structure or flow
 
-Scannable in one read. If it needs scrolling, split it.
+Confirm the item with AskUserQuestion before moving to the next flagged item.
 
-## Handling Redirects
-
-When the user rejects a chunk, downstream design may change. Don't present pre-computed chunks that depend on the rejected one. Rethink from the redirect point forward.
+When the user rejects a recommendation, check whether downstream items in the overview are affected. If so, flag which ones need revisiting.
 
 ## Anti-patterns
 
+- Jumping to recommendations without stating the problem (user needs to understand WHAT before HOW)
+- Forcing the user through N confirmation rounds when most items are fine (overview-then-flag avoids this)
+- Presenting the full detailed analysis for every item upfront (save depth for flagged items only)
 - Asking open-ended questions instead of proposing (the user invoked this to see YOUR thinking)
-- Presenting the entire design at once (defeats progressive confirmation)
-- Moving to the next chunk without explicit confirmation
-- Presenting trivial decisions one at a time
 - Skipping ASCII diagrams for structural or flow topics
-- Continuing with pre-planned chunks after a redirect without reconsidering
+- Continuing with pre-planned details after a redirect without reconsidering downstream impact
