@@ -36,7 +36,9 @@ Confirm with AskUserQuestion before going deeper.
 
 ### 3. Straightforward Details
 
-Decisions where there's really only one reasonable approach. Present as a quick batch list — no ⭐/❌ needed since there are no real alternatives. The user confirms or flags exceptions.
+Decisions where there's really only one reasonable approach. No ⭐/❌ needed since there are no real alternatives. The user confirms or flags exceptions.
+
+Group items by topic. When a group involves structure, files, or relationships, anchor it with a small ASCII diagram so the user can see what the items refer to. Present one group at a time, confirm, move to the next group.
 
 Each item: one line stating the decision. Save the "why" — it's obvious.
 
@@ -59,6 +61,7 @@ When the user rejects a recommendation, check whether downstream items are affec
 ## Anti-patterns
 
 - Jumping to detail-level decisions before establishing the big picture
+- Flat-listing many decisions without grouping by topic (user loses context)
 - Presenting the full detailed analysis for every item (save depth for non-obvious items only)
 - Asking open-ended questions instead of proposing (the user invoked this to see YOUR thinking)
 - Skipping ASCII diagrams for structural or flow topics
