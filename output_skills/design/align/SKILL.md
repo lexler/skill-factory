@@ -62,10 +62,6 @@ When the user rejects a recommendation, check whether downstream items are affec
 
 When the user corrects something, re-present the full updated version (diagram, section, whatever was corrected) before asking to proceed. Don't just show the delta. The user needs to see the corrected whole — it often triggers additional corrections they wouldn't have noticed otherwise.
 
-## Using AskUserQuestion
-
-Two options only: accept, or type what to adjust. The free-text option IS the correction mechanism — the user types their feedback directly into it. Never add separate "needs adjustment," "type something," or "chat about this" options — these are the same intent split three ways.
-
 ## Anti-patterns
 
 - Jumping to detail-level decisions before establishing the big picture
