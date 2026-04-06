@@ -1,0 +1,46 @@
+{
+  "skill_name": "c4-diagrams",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're building an online bookstore. Customers browse books, place orders, and track deliveries. We integrate with Stripe for payments and SendGrid for email notifications. The frontend is a React SPA, backend is a Node.js API with a PostgreSQL database. Generate C4 diagrams in Structurizr DSL.",
+      "expected_output": "A complete workspace.dsl file with system context and container views, correct elements and relationships",
+      "files": [],
+      "expectations": [
+        "Output contains a valid Structurizr workspace block with model and views sections",
+        "Model defines a person element for Customer",
+        "Model defines containers: SPA (React), API (Node.js), Database (PostgreSQL)",
+        "Model defines external software systems for Stripe and SendGrid",
+        "Views include both a systemContext and a container view",
+        "Relationships have descriptive labels beyond just 'uses'"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Create a C4 container diagram in Mermaid for our system: we have a mobile app (React Native), an API gateway (Kong), three microservices (User Service in Go, Order Service in Java/Spring, Inventory Service in Python/FastAPI), a PostgreSQL database for orders, MongoDB for inventory, and Redis for caching. External integrations: Twilio for SMS and Stripe for payments.",
+      "expected_output": "A Mermaid C4Container diagram with all containers, external systems, and relationships",
+      "files": [],
+      "expectations": [
+        "Output contains a C4Container diagram block",
+        "Contains all 3 microservices as Container elements with correct technology labels",
+        "Contains data stores using ContainerDb for PostgreSQL and MongoDB",
+        "Contains external systems Twilio and Stripe as System_Ext",
+        "Uses a System_Boundary or Boundary to group containers",
+        "Relationships connect mobile app through API gateway to microservices"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Draw me an ASCII C4 system context diagram. Our system is a patient scheduling platform used by doctors and receptionists. It integrates with an EHR system (Epic) for medical records and uses Twilio for appointment reminders via SMS.",
+      "expected_output": "An ASCII system context diagram showing the scheduling platform, two user roles, and two external systems with labeled relationships",
+      "files": [],
+      "expectations": [
+        "Diagram shows the Patient Scheduling Platform as the central element",
+        "Shows both user roles: Doctor and Receptionist as separate elements",
+        "Shows external systems: Epic EHR and Twilio",
+        "Relationships have descriptive labels explaining what flows between elements",
+        "Box alignment passes check_ascii_alignment.py verification"
+      ]
+    }
+  ]
+}

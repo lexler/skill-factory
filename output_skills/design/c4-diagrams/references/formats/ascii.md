@@ -118,6 +118,7 @@ A boundary box wrapping its containers. Every line within the box must be the sa
 - Use box-drawing characters: `┌`, `┐`, `└`, `┘` for corners, `─` for horizontal, `│` for vertical
 - Use `──>` for horizontal arrows, `│` with `v` for vertical arrows
 - After drawing a diagram, pipe it through `uv run scripts/check_ascii_alignment.py` to verify all boxes are aligned. Fix any issues before presenting the diagram.
+- Verify that vertical arrow lines (`│` and `v`) align with the box edge they connect to. A `v` arrow entering a box should land on the same column as a character within the box's top edge, not off to the side.
 - Put relationship labels on a separate line next to the arrow, not inline
 - Use brackets for technology: `[Postgres]`, `[React]`
 - Use parentheses for people: `(Customer)`, `(Admin)`

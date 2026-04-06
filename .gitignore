@@ -80,3 +80,4 @@ out/
 Thumbs.db
 playground/
 workspace/
+*-workspace/
