@@ -96,9 +96,17 @@ When each subagent completes, capture timing data from the task notification (`t
 
 ### 4. Grade
 
-For each run, use the grader agent protocol from `docs/knowledge/anthropic-skill-creator/agents/grader.md`. The grader evaluates each assertion against the outputs, extracts and verifies claims, and critiques the assertions themselves. Save results to `grading.json`.
+Grading happens in two passes per run. The two-pass structure separates "find problems" from "judge assertions" so the grader can't quietly downgrade defects when scoring.
 
-For assertions that can be checked programmatically (file exists, contains expected string, valid JSON), write and run a script instead of having the grader eyeball it.
+**Pass 1 — Defect finding.** Before grading any assertions, spawn a defect-finding agent for each run. Its sole job is to find every problem in the output: syntax errors, wrong values, missing elements, non-standard usage, inconsistencies, anything that looks off. The agent has no incentive to be charitable — it's not judging anything, just cataloguing. Save the result to `defects.md` in the run directory. The prompt should be something like:
+
+> Read the output files at <path> and the transcript at <transcript-path>. Find every defect, error, inconsistency, or non-standard usage. Be paranoid — list anything that looks wrong or suspicious, even minor. Group findings by severity (clear errors vs questionable choices). Do not judge whether the output is "good enough" — just enumerate problems.
+
+**Pass 2 — Assertion grading.** For each run, use the grader agent protocol from `docs/knowledge/anthropic-skill-creator/agents/grader.md`, but pass the `defects.md` from Pass 1 as additional input. Tell the grader: for each assertion, check whether any defect from `defects.md` contradicts it; if yes, the assertion fails. Save results to `grading.json`.
+
+This makes charity expensive: the grader would have to ignore evidence already on the table. Pass 1 surfaces problems without judgment; Pass 2 cannot avoid them.
+
+For assertions that can be checked programmatically (file exists, contains expected string, valid JSON), write and run a script instead of having the grader eyeball it. Mechanical checks bypass both passes.
 
 ### 5. Launch the viewer
 
