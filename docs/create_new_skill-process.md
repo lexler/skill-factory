@@ -54,7 +54,7 @@ Evaluate the description through each lens:
 - Human scan: If a user sees this in a list of 50 skills, can they instantly tell what it does?
 - Every word earns its place: Read each word — if you remove it, does the description get worse? If not, remove it.
 
-Write the description to `playground/{skill-name}-description-0.md`. Then apply all lenses — read back from the file before each pass. If any lens leads to a change, write the new version to `playground/{skill-name}-description-{N+1}.md` and run all lenses again. Stop when you see nothing further to improve.
+Each iteration of the description goes to its own file: `playground/{skill-name}-description-{N}.md`. Write your first draft, then apply all lenses — read back from the file before each pass. If any lens leads to a change, write the new version to the next `{N}` and run all lenses again. Each iteration gets its own file so the trail stays intact. Stop when you see nothing further to improve.
 
 Present both for user approval before proceeding.
 

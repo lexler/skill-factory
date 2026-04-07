@@ -18,10 +18,12 @@ Run `./update-docs` to fetch the latest skill-creator infrastructure. The eval s
 
 ### 1. Write Test Prompts
 
-Write 2-3 realistic test prompts — the kind of thing a real user would actually say when they need this skill. Not abstract descriptions, but concrete requests with context, file names, specifics.
+Write realistic test prompts — the kind of thing a real user would actually say when they need this skill. Not abstract descriptions, but concrete requests with context, file names, specifics.
 
 Bad: `"Process this data"`
 Good: `"I have a CSV in ~/reports/q4-sales.csv with columns for region, revenue, and headcount. Can you add a profit-margin percentage column?"`
+
+**Coverage check before finalizing prompts:** read the skill's description and SKILL.md. Identify the dimensions along which the skill varies — output formats, input types, modes, distinct workflows, branches in the process. Every dimension needs at least one prompt for each meaningful value. Prompts that all exercise the same path leave most of the skill untested.
 
 Save to `evals/evals.json` inside the skill directory:
 
@@ -100,11 +102,14 @@ For assertions that can be checked programmatically (file exists, contains expec
 
 This step is not optional — the user needs to see the results before any conclusions are drawn.
 
+Launch the viewer using `nohup` and the Bash tool's `run_in_background: true` parameter so it survives the shell exiting:
+
 ```bash
-python docs/knowledge/anthropic-skill-creator/eval-viewer/generate_review.py \
+nohup python docs/knowledge/anthropic-skill-creator/eval-viewer/generate_review.py \
   {skill-name}-workspace/iteration-1 \
   --skill-name "{name}" \
-  --benchmark {skill-name}-workspace/iteration-1/benchmark.json
+  --benchmark {skill-name}-workspace/iteration-1/benchmark.json \
+  > /tmp/viewer-{skill-name}.log 2>&1
 ```
 
 This opens a browser at localhost with two tabs:
@@ -112,6 +117,8 @@ This opens a browser at localhost with two tabs:
 - Benchmark: quantitative comparison between with-skill and baseline
 
 Tell the user the viewer is open and wait for them to review and come back.
+
+**Do not relaunch the viewer on the same port** — `generate_review.py` kills any existing process on the requested port at startup, so a second launch terminates the first. If the user asks to "reopen" the viewer, check if it's still running first (`curl -s http://localhost:3117 > /dev/null && echo running`); if it is, just remind them of the URL.
 
 For iteration 2+, pass `--previous-workspace` pointing at the previous iteration.
 
