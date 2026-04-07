@@ -35,7 +35,6 @@ skill-factory/
     │   └── bdd-with-approvals/
     ├── design/
     │   ├── align/
-    │   ├── c4-diagrams/
     │   ├── collaborative-design/
     │   ├── event-modeling/
     │   └── hexagonal-architecture/
