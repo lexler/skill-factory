@@ -89,6 +89,7 @@ After creating any diagram, verify:
 - No vague labels ("Uses", "Connects to") — be specific about what flows
 - Acronyms either universally understood or explained in legend
 - Notation consistent (colors, shapes, line styles mean the same thing across the diagram)
+- For ASCII diagrams: run `uv run ${CLAUDE_SKILL_DIR}/scripts/check_ascii_alignment.py <file>` to validate box alignment. Fix any issues before presenting.
 
 ## Anti-Patterns
 

@@ -1,0 +1,73 @@
+{
+  "skill_name": "c4-diagrams",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm trying to document our payment processing system. Here's what we have: a React frontend where customers check out, a Node.js API that handles order logic, a PostgreSQL database for orders and inventory, and we integrate with Stripe for payments and SendGrid for order confirmation emails. Can you create a C4 container diagram for this? Use Structurizr DSL.",
+      "expected_output": "A valid Structurizr DSL workspace with a container diagram showing the payment system's internal containers (React frontend, Node.js API, PostgreSQL database) and external systems (Stripe, SendGrid), with specific relationship labels and technology annotations.",
+      "expectations": [
+        "Output contains a valid Structurizr DSL workspace block with model and views sections",
+        "The model defines a person representing the customer",
+        "The model defines containers for the React frontend, Node.js API, and PostgreSQL database — each with technology specified",
+        "Stripe and SendGrid are modeled as external software systems, not containers inside the main system",
+        "Relationships have specific intent labels, not just 'Uses' — e.g., 'Submits orders to', 'Stores order data in', 'Processes payments via'",
+        "Inter-container relationships include technology/protocol labels like JSON/HTTPS, JDBC, or similar",
+        "The views section includes a container view for the payment system",
+        "The diagram has a title that includes 'Container' and the system name",
+        "The output includes styles or at least mentions how to render the DSL (e.g., structurizr.com/dsl)"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We're designing a new internal tool for our company. It's a support ticket system — support agents will use a web app to manage tickets, customers will submit tickets through our public website and via email. We want to use a message queue to decouple the ingestion from processing. We'll need a database and probably a notification service to alert agents of new high-priority tickets. Help me think through the architecture. Draw C4 diagrams at the right levels to work through this design.",
+      "expected_output": "C4 diagrams at multiple levels (at minimum system context and container) that help work through the design, with proper notation, element labeling, and specific relationship descriptions.",
+      "expectations": [
+        "A System Context diagram is produced showing the ticket system, its users (support agents, customers), and any external systems",
+        "A Container diagram is produced showing the internal architecture (web app, message queue, database, notification service, and any other containers identified)",
+        "Each diagram has a title stating its type and scope",
+        "People are distinguished by role — support agents and customers are separate, not collapsed into a generic 'User'",
+        "Containers have technology suggestions (even if tentative, they should propose concrete choices rather than leaving technology blank)",
+        "The message queue is represented as a container with appropriate technology suggestion",
+        "Relationship labels describe intent specifically — not 'Uses' but 'Submits tickets via', 'Reads tickets from', 'Publishes new ticket events to', etc.",
+        "The diagrams help reason about the design — they're not just transcribing what the user said but also surfacing architectural decisions"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Can you create a Mermaid C4 diagram of our microservice setup? We have an API Gateway (Kong), three backend services: User Service (Go), Order Service (Java/Spring Boot), and Inventory Service (Python/FastAPI). Each service has its own database — User has PostgreSQL, Order has MySQL, Inventory has MongoDB. Services communicate via gRPC. There's also a RabbitMQ message broker for async events between services. The whole thing is used by a mobile app and a web app.",
+      "expected_output": "A valid Mermaid C4Container diagram with correct syntax, all containers with technology labels, boundaries, and specific relationship labels including protocols.",
+      "expectations": [
+        "Output uses the C4Container Mermaid diagram type",
+        "All six containers are present: API Gateway, User Service, Order Service, Inventory Service, and the mobile and web apps (or they appear as persons/external depending on scope interpretation)",
+        "Each database is represented with ContainerDb syntax, not plain Container",
+        "Each container and database includes its technology in the element declaration",
+        "The system boundary groups the internal services together, with the mobile and web apps outside or as separate actors",
+        "Service-to-service relationships specify gRPC as the protocol",
+        "Service-to-database relationships specify the appropriate protocol (JDBC, driver, etc.)",
+        "RabbitMQ is present as a container (queue type) with relationships showing which services publish/consume",
+        "Relationship labels are specific about what flows — not generic 'Uses' labels",
+        "The diagram includes a title"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I need a quick system context diagram for our analytics platform. It's used by data analysts and product managers. The platform pulls data from our main PostgreSQL production database, from a Salesforce CRM, and from Google Analytics. It also exports reports to a Slack workspace. Can you draw this in ASCII? I want to paste it into a PR description.",
+      "expected_output": "An ASCII C4 system context diagram showing the analytics platform, its users (data analysts, product managers), and external systems (production database, Salesforce, Google Analytics, Slack), with clear labels and a legend.",
+      "expectations": [
+        "The output is a text-based ASCII diagram, not Mermaid or Structurizr syntax",
+        "The analytics platform is shown as the central element",
+        "Data analysts and product managers appear as separate people/roles, not collapsed into one",
+        "All four external systems are present: production database, Salesforce CRM, Google Analytics, Slack",
+        "External systems are visually distinguished from the main system (e.g., dashed borders or explicit 'Ext. System' labels)",
+        "Relationship labels describe what flows and in which direction — e.g., 'Pulls sales data from', 'Exports reports to', not just 'Uses'",
+        "The diagram has a title stating it's a System Context diagram for the analytics platform",
+        "A legend or key is included explaining the notation used",
+        "The diagram is reasonably readable as plain text — box alignment doesn't need to be pixel-perfect but the layout should be clear"
+      ],
+      "files": []
+    }
+  ]
+}
