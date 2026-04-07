@@ -71,14 +71,14 @@ Spawn all runs in parallel.
 **With-skill runs**: Tell the agent to read the skill first, then execute the task. Include:
 - The skill path
 - The task prompt
-- The output directory: `workspace/{category}/{skill-name}/iteration-1/eval-{ID}/with_skill/run-{N}/outputs/`
+- The output directory: `{skill-name}-workspace/iteration-1/eval-{ID}/with_skill/run-{N}/outputs/`
 - A request to save a transcript (every step, test, prediction, refactoring) to `transcript.md` in the run directory — the grader needs this
 
-**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `workspace/{category}/{skill-name}/iteration-1/eval-{ID}/without_skill/run-{N}/outputs/`. Also request a transcript.
+**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `{skill-name}-workspace/iteration-1/eval-{ID}/without_skill/run-{N}/outputs/`. Also request a transcript.
 
 Running both shows whether the skill actually adds value vs what Claude can do on its own. Multiple runs show whether that value is consistent or just lucky.
 
-While runs execute, write an `eval_metadata.json` for each test case:
+While runs execute, write an `eval_metadata.json` in each eval directory (e.g., `{skill-name}-workspace/iteration-1/eval-{ID}/eval_metadata.json`). The viewer uses this to display the prompt — without it, the prompt shows as "(No prompt found)":
 ```json
 {
   "eval_id": 1,
@@ -90,39 +90,32 @@ While runs execute, write an `eval_metadata.json` for each test case:
 
 When each subagent completes, capture timing data from the task notification (`total_tokens`, `duration_ms`) and save to `timing.json` in the run directory. This data is only available at notification time.
 
-### 4. Grade and Review
+### 4. Grade
 
-Once all runs complete:
-
-**Grade**: For each run, use the grader agent protocol from `docs/knowledge/anthropic-skill-creator/agents/grader.md`. The grader evaluates each assertion against the outputs, extracts and verifies claims, and critiques the assertions themselves. Save results to `grading.json`.
+For each run, use the grader agent protocol from `docs/knowledge/anthropic-skill-creator/agents/grader.md`. The grader evaluates each assertion against the outputs, extracts and verifies claims, and critiques the assertions themselves. Save results to `grading.json`.
 
 For assertions that can be checked programmatically (file exists, contains expected string, valid JSON), write and run a script instead of having the grader eyeball it.
 
-**Aggregate**: Run the benchmark aggregation:
-```bash
-python -m scripts.aggregate_benchmark workspace/{category}/{skill-name}/iteration-1 --skill-name {name}
-```
-(Run from the `docs/knowledge/anthropic-skill-creator/` directory.)
+### 5. Launch the viewer
 
-This produces `benchmark.json` with pass_rate, time, and tokens for each configuration (with_skill vs without_skill), including mean ± stddev.
+This step is not optional — the user needs to see the results before any conclusions are drawn.
 
-**Analyze**: Review benchmark data for patterns the aggregate stats might hide. See `docs/knowledge/anthropic-skill-creator/agents/analyzer.md` for what to look for — non-discriminating assertions, high-variance evals, time/token tradeoffs.
-
-**Launch the viewer**:
 ```bash
 python docs/knowledge/anthropic-skill-creator/eval-viewer/generate_review.py \
-  workspace/{category}/{skill-name}/iteration-1 \
+  {skill-name}-workspace/iteration-1 \
   --skill-name "{name}" \
-  --benchmark workspace/{category}/{skill-name}/iteration-1/benchmark.json
+  --benchmark {skill-name}-workspace/iteration-1/benchmark.json
 ```
 
-The viewer has two tabs:
-- Outputs: browse each test case, see the output, leave feedback
+This opens a browser at localhost with two tabs:
+- Outputs: browse each test case with its prompt, see the output, leave feedback
 - Benchmark: quantitative comparison between with-skill and baseline
 
-Tell the user to review and come back when done.
+Tell the user the viewer is open and wait for them to review and come back.
 
-### 5. Improve and Re-run
+For iteration 2+, pass `--previous-workspace` pointing at the previous iteration.
+
+### 6. Improve and Re-run
 
 Read `feedback.json` from the viewer. Empty feedback means the output was fine. Focus on test cases where the user had complaints.
 
@@ -131,7 +124,7 @@ When improving the skill based on feedback:
 - Read the transcripts, not just outputs — if Claude wasted time on unproductive steps, trim the instructions causing it
 - Explain *why* behind instructions rather than rigid MUSTs
 
-Re-run all test cases into `iteration-2/`, including baselines. For iteration 2+, pass `--previous-workspace` to the viewer so the user can compare versions.
+Re-run all test cases into `iteration-2/`, including baselines. Relaunch the viewer (step 5).
 
 Loop until the user is satisfied or feedback is all empty.
 
@@ -141,7 +134,7 @@ This is worth the extra time when improvement is ambiguous. Skip it when regular
 
 Protocol: `docs/knowledge/anthropic-skill-creator/agents/comparator.md` and `docs/knowledge/anthropic-skill-creator/agents/analyzer.md`.
 
-### 6. Optimize Description (optional)
+### 7. Optimize Description (optional)
 
 After the skill's quality is solid, offer to optimize the description for better triggering accuracy. The description is what Claude uses to decide whether to activate the skill.
 
@@ -183,4 +176,4 @@ skill-name/
   ...
 ```
 
-Workspace directories live in `workspace/` at the repo root, mirroring the `output_skills/` category structure (e.g., `workspace/testing/tdd/`). They are gitignored and can be deleted after iteration is complete.
+Workspace directories are created as siblings to the skill directory, named `{skill-name}-workspace/` (e.g., `output_skills/testing/tdd-workspace/`). They are gitignored (`*-workspace/`) and not picked up by the skills install script (no SKILL.md inside).

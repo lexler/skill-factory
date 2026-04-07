@@ -28,17 +28,39 @@ skill-factory/
 │   ├── map.md                          # This file - repository structure
 │   └── project.md                      # Project-specific information
 └── output_skills/                      # Created skills organized by category
-    ├── testing/                        # tdd, nullables, approval-tests, bdd-with-approvals
-    ├── design/                         # hexagonal-architecture, event-modeling, collaborative-design
-    ├── practices/                      # refactoring, refinement-loop
-    ├── ai/                             # ai-patterns, creating-process-files
-    │   └── claude-code/                # creating-hooks
-    └── developer-tools/                # writing-bash-scripts, using-uv, git-worktrees
-├── workspace/                          # Eval workspaces (gitignored), mirrors output_skills/ structure
+    ├── testing/
+    │   ├── tdd/
+    │   ├── nullables/
+    │   ├── approval-tests/
+    │   └── bdd-with-approvals/
+    ├── design/
+    │   ├── align/
+    │   ├── c4-diagrams/
+    │   ├── collaborative-design/
+    │   ├── event-modeling/
+    │   └── hexagonal-architecture/
+    ├── practices/
+    │   ├── growing-outside-in-systems/
+    │   ├── refactoring/
+    │   └── refinement-loop/
+    ├── ai/
+    │   ├── ai-patterns/
+    │   ├── creating-process-files/
+    │   └── claude-code/                # subfolder for Claude Code-specific skills
+    │       ├── creating-hooks/
+    │       ├── launching-agent-teams/
+    │       ├── refactoring-team/
+    │       └── writing-statuslines/
+    └── developer-tools/
+        ├── git-worktrees/
+        ├── using-uv/
+        └── writing-bash-scripts/
 ```
+
+Eval workspaces are created as siblings to skill directories, named `{skill-name}-workspace/` (e.g., `c4-diagrams-workspace/`). They are gitignored and not tracked.
 
 ## Purpose
 
-- **docs/**: Contains all instructional material the agent uses to create skills
-- **output_skills/**: Stores completed skills, each in a category subfolder
-- **CLAUDE.md**: Provides context to the agent about this repository's purpose
+- **docs/**: All instructional material and fetched dependencies for creating and evaluating skills
+- **output_skills/**: Completed skills, each in a category subfolder. Symlinked to `~/.claude/skills/` via the `./skills` script
+- **CLAUDE.md**: Project instructions — overrides the Anthropic skill-creator plugin
