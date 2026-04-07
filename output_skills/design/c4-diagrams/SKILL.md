@@ -56,16 +56,12 @@ Ask the user which format they prefer. If no preference stated, choose based on 
 
 ## Notation Rules
 
-These apply to ALL diagram types and ALL formats.
-
 **Every diagram must have:**
 - A title stating the diagram type and scope (e.g., "Container diagram for Payment Service")
-- A key/legend explaining any notation (shapes, colors, line styles)
 
 **Every element must have:**
 - A name
 - Its type explicitly stated (Person, Software System, Container, Component)
-- A short description of its responsibility
 
 **Every container and component must also have:**
 - Technology explicitly stated (e.g., "Spring Boot", "PostgreSQL", "React SPA")
@@ -75,7 +71,10 @@ These apply to ALL diagram types and ALL formats.
 - Have a label describing the intent, not just "Uses" — say what it does ("Sends orders to", "Reads credentials from", "Queries customer data via")
 - Include technology/protocol for inter-container communication ("JSON/HTTPS", "JDBC", "gRPC")
 
-**Diagrams should be self-contained** — comprehensible without external narrative.
+**Descriptions and legends are format-dependent:**
+- Structurizr DSL — descriptions go in element definitions, render as tooltips
+- Mermaid — descriptions go in element parameters, render below the name
+- ASCII — keep boxes minimal (name + technology only). No descriptions inside boxes, no legend block. The conventions are simple enough to be self-evident.
 
 ## Review Checklist
 

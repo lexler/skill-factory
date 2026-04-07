@@ -1,187 +1,130 @@
 # ASCII C4 Diagrams
 
-Text-based diagrams that work everywhere: inline documentation, chat, code review comments, terminals. No rendering tools needed.
+For inline diagrams in code, commit messages, terminal output, or anywhere rich rendering isn't available.
 
-These illustrate conventions. Adapt the layout to fit your specific diagram.
+There is no standard ASCII format for C4. These conventions prioritize readability over decoration.
 
-## Box Drawing Characters
+## Core Principle
 
-Use Unicode box-drawing characters, not `+`, `-`, `|`:
+ASCII diagrams are structured text with visual hints, not pixel art. Keep them simple. Boxes hold the name and technology — nothing else.
 
-- Corners: `┌` `┐` `└` `┘`
-- Walls: `│` (vertical), `─` (horizontal)
-- Arrows: `▶` `◀` `▲` `▼` for arrowheads, `│` `─` for arrow shafts
+## Elements
 
-Do NOT use `+` for corners or `|` for walls.
-
-## Element Representation
-
-### People
+Boxes with corners. Name on the first line, technology in brackets on the second:
 
 ```
-   .--.
-   |  |
-   '--'
-  Person
- [Role/desc]
+┌──────────────────┐
+│ API Application  │
+│ [Spring Boot]    │
+└──────────────────┘
 ```
 
-### Software Systems, Containers, Components
-
-Boxes with name, type, technology, and description:
+People as simple labels in parentheses:
 
 ```
-┌───────────────────────────────────┐
-│    Internet Banking System        │
-│       [Software System]           │
-│                                   │
-│  Allows customers to manage       │
-│  their bank accounts              │
-└───────────────────────────────────┘
+(Customer)
 ```
 
-```
-┌───────────────────────────────────┐
-│        API Application            │
-│   [Container: Spring Boot]        │
-│                                   │
-│  Provides banking functionality   │
-│  via JSON/HTTPS API               │
-└───────────────────────────────────┘
-```
-
-### External Elements
-
-Distinguish external elements with dashed borders or explicit labels:
-
-```
-┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
-  Mainframe System
-  [Ext. Software System]
-
-  Core banking functionality
-└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
-```
-
-### Databases
-
-```
-┌───────────────────────────┐
-│       Database            │
-│ [Container: PostgreSQL]   │
-│                           │
-│ Stores account data       │
-└───────────────────────────┘
-```
-
-Mark with `[Container: PostgreSQL]` — the type label is enough to convey it's a database.
+Do not draw multi-line ASCII person figures. Do not put descriptions inside boxes — the diagram is not the place for prose.
 
 ## Relationships
 
-### Horizontal arrows
+Horizontal arrows: `───▶` and `◀───`
+Vertical arrows: `│` with `▼` or `▲` at the end
+
+Labels on a separate line next to the arrow:
 
 ```
-┌─────────┐  "Makes API calls to"  ┌─────────┐
-│   SPA   │───────────────────────▶│   API   │
-│ [React] │      JSON/HTTPS        │[Spring] │
-└─────────┘                        └─────────┘
+(Customer)
+    │
+    │  manages accounts
+    ▼
+┌──────────────────┐
+│ Banking System   │
+└──────────────────┘
 ```
 
-### Vertical arrows
+## System Boundaries
+
+A boundary box wrapping its containers. Every line within the box must be the same character width — verify this after drawing.
 
 ```
-┌─────────┐
-│   SPA   │
-│ [React] │
-└─────────┘
-     │
-     │ "Makes API calls to"
-     │ JSON/HTTPS
-     ▼
-┌─────────┐
-│   API   │
-│[Spring] │
-└─────────┘
+┌────────────────────────────────────────────┐
+│ Internet Banking System                    │
+│                                            │
+│  ┌──────────┐   ┌────────┐   ┌──────────┐  │
+│  │ Web App  │──▶│ SPA    │──▶│ API      │  │
+│  │ [Spring] │   │ [React]│   │ [Spring] │  │
+│  └──────────┘   └────────┘   └────┬─────┘  │
+│                                   │        │
+│                                   ▼        │
+│                            ┌──────────┐    │
+│                            │ Database │    │
+│                            │[Postgres]│    │
+│                            └──────────┘    │
+└────────────────────────────────────────────┘
 ```
 
-### Arrow direction
-
-Arrow points in the direction of the dependency or data flow. Label sits alongside the shaft, not at the head.
-
-## Boundaries
-
-Use labeled borders to group elements:
+## Complete System Context Example
 
 ```
-┌══════════════════════════════════════════════┐
-║        Internet Banking System               │
-│                                              │
-│   ┌────────┐    ┌────────┐    ┌────────┐    │
-│   │  SPA   │───▶│  API   │───▶│   DB   │    │
-│   │ React  │    │ Spring │    │ PgSQL  │    │
-│   └────────┘    └────────┘    └────────┘    │
-│                                              │
-└══════════════════════════════════════════════┘
+                  (Customer)
+                      │
+               manages accounts
+                      │
+                      ▼
+             ┌────────────────┐
+             │ Internet       │
+             │ Banking System │
+             └───────┬────────┘
+                     │
+            ┌────────┴────────┐
+            │                 │
+            ▼                 ▼
+   ┌─────────────────┐  ┌───────────────┐
+   │ Mainframe       │  │ Email System  │
+   │ Banking System  │  │               │
+   └─────────────────┘  └───────────────┘
 ```
 
-## System Context Example
+## Complete Container Example
 
 ```
-System Context diagram for Internet Banking System
-
-   .--.                ┌──────────────────────────────┐
-   |  |                │   Internet Banking System    │
-   '--'  ──"Uses"────▶ │     [Software System]        │
- Customer              │                              │
-                       │ Allows customers to manage   │
-                       │ their bank accounts           │
-                       └──────────┬───────────┬────────┘
-                                  │           │
-                "Gets account     │           │  "Sends emails via"
-                 data from"      │           │   SMTP
-                 XML/HTTPS        │           │
-                                  ▼           ▼
-              ┌ ─ ─ ─ ─ ─ ─ ─ ┐  ┌ ─ ─ ─ ─ ─ ─ ─ ┐
-                Mainframe          E-mail System
-                [Ext. System]      [Ext. System]
-              └ ─ ─ ─ ─ ─ ─ ─ ┘  └ ─ ─ ─ ─ ─ ─ ─ ┘
-
-Legend:
-  ┌───┐  Internal system
-  ┌ ─ ┐  External system
-  ──▶    Relationship (direction of dependency/data flow)
+                       (Customer)
+                        │     │
+             visits     │     │  manages accounts
+                        ▼     ▼
+┌─────────────────────────────────────────────────────┐
+│ Internet Banking System                             │
+│                                                     │
+│  ┌──────────┐    ┌─────────┐    ┌────────────────┐  │
+│  │ Web App  │───▶│ SPA     │───▶│ API            │  │
+│  │ [Spring] │    │ [React] │    │ [Spring Boot]  │  │
+│  └──────────┘    └─────────┘    └───────┬────────┘  │
+│                                         │           │
+│                                         ▼           │
+│                                  ┌────────────┐     │
+│                                  │ Database   │     │
+│                                  │ [Postgres] │     │
+│                                  └────────────┘     │
+└─────────────────────────────────────────────────────┘
+                  │                    │
+                  ▼                    ▼
+        ┌─────────────────┐   ┌───────────────┐
+        │ Mainframe       │   │ Email System  │
+        │ Banking System  │   │               │
+        └─────────────────┘   └───────────────┘
 ```
 
-## Validation
+## Guidelines
 
-After creating any ASCII diagram, run the alignment checker to verify all boxes have consistent line widths:
-
-```bash
-uv run ${CLAUDE_SKILL_DIR}/scripts/check_ascii_alignment.py <diagram-file>
-```
-
-The script checks that every box opened with `┌` has its right wall `│` aligned on all lines down to the closing `└`. Fix any reported misalignments before presenting the diagram.
-
-If the diagram is inline in a markdown file with code blocks, the script handles that too.
-
-## Layout Guidelines
-
-- Place the primary element or initiator at the top or left
-- Flow generally top-to-bottom or left-to-right
-- Keep relationship labels close to the arrow they describe
-- Use consistent box widths within a diagram
-- Every line inside a box must have `│` at the same column as `┐` — run the validator to catch drift
-- For complex diagrams, prioritize readable flow over compact layout
-
-## Title and Legend
-
-Always include at the top:
-
-```
-System Context diagram for Internet Banking System
-
-Legend:
-  ┌───┐  Internal system
-  ┌ ─ ┐  External system
-  ──▶    Relationship (direction of dependency/data flow)
-```
+- Use Unicode box-drawing characters: `┌`, `┐`, `└`, `┘` for corners, `─` for horizontal, `│` for vertical. Do not mix styles (no `+---+`, no `=====`).
+- Use Unicode arrow characters: `▶` `◀` `▲` `▼` for arrowheads. Horizontal arrows: `───▶`. Vertical arrows: `│` with `▼` or `▲` at the end.
+- After drawing a diagram, pipe it through `uv run ${CLAUDE_SKILL_DIR}/scripts/check_ascii_alignment.py` to verify all boxes are aligned. Fix any issues before presenting the diagram.
+- Verify that vertical arrow lines (`│` and `▼`) align with the box edge they connect to. A `▼` arrow entering a box should land on a column inside the box's top edge, not off to the side.
+- Put relationship labels on a separate line next to the arrow, not inline
+- Use brackets for technology: `[Postgres]`, `[React]`
+- Use parentheses for people: `(Customer)`, `(Admin)`
+- Choose the layout direction (vertical or horizontal) that best fits the relationships being shown
+- When a diagram gets too complex, simplify — drop less important relationships or split into multiple diagrams
+- Do not include legends. The conventions are simple enough to be self-evident.
