@@ -72,6 +72,8 @@ AI is non-deterministic — a single run can be an outlier. Multiple runs let yo
 
 Spawn all runs in parallel.
 
+Each eval has two configurations: **with_skill** (the skill is loaded) and **without_skill** (no skill, just plain Claude on the same prompt). Each configuration runs N times (per the user's run-count choice).
+
 **With-skill runs**: Tell the agent to read the skill first, then execute the task. Include:
 - The skill path
 - The task prompt
@@ -82,7 +84,9 @@ Spawn all runs in parallel.
 
 Running both shows whether the skill actually adds value vs what Claude can do on its own. Multiple runs show whether that value is consistent or just lucky.
 
-Before spawning runs, write an `eval_metadata.json` in each eval directory (e.g., `{skill-name}-workspace/iteration-1/eval-{ID}/eval_metadata.json`). The eval viewer reads this file to display the prompt — without it, the viewer shows "(No prompt found)" and the results are hard to review:
+Before spawning runs, write an `eval_metadata.json` for each eval. The viewer reads this to display the prompt — without it, the viewer shows "(No prompt found)" and results are hard to review.
+
+The schema:
 ```json
 {
   "eval_id": 1,
@@ -90,6 +94,16 @@ Before spawning runs, write an `eval_metadata.json` in each eval directory (e.g.
   "prompt": "The exact task prompt given to the agent",
   "assertions": ["assertion 1", "assertion 2"]
 }
+```
+
+Write the file once at the eval level, then create symlinks from each config directory so the viewer's parent-lookup finds it for both `with_skill/run-N/` and `without_skill/run-N/` runs:
+
+```bash
+echo '{ ... }' > {skill-name}-workspace/iteration-1/eval-{ID}/eval_metadata.json
+mkdir -p {skill-name}-workspace/iteration-1/eval-{ID}/with_skill
+mkdir -p {skill-name}-workspace/iteration-1/eval-{ID}/without_skill
+ln -sf ../eval_metadata.json {skill-name}-workspace/iteration-1/eval-{ID}/with_skill/eval_metadata.json
+ln -sf ../eval_metadata.json {skill-name}-workspace/iteration-1/eval-{ID}/without_skill/eval_metadata.json
 ```
 
 When each subagent completes, capture timing data from the task notification (`total_tokens`, `duration_ms`) and save to `timing.json` in the run directory. This data is only available at notification time.
