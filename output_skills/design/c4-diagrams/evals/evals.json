@@ -6,15 +6,15 @@
       "prompt": "I'm trying to document our payment processing system. Here's what we have: a React frontend where customers check out, a Node.js API that handles order logic, a PostgreSQL database for orders and inventory, and we integrate with Stripe for payments and SendGrid for order confirmation emails. Can you create a C4 container diagram for this? Use Structurizr DSL.",
       "expected_output": "A valid Structurizr DSL workspace with a container diagram showing the payment system's internal containers (React frontend, Node.js API, PostgreSQL database) and external systems (Stripe, SendGrid), with specific relationship labels and technology annotations.",
       "expectations": [
-        "Output contains a valid Structurizr DSL workspace block with model and views sections",
+        "Output contains a Structurizr DSL workspace block with model and views sections (verify by structure: workspace { model { ... } views { ... } })",
         "The model defines a person representing the customer",
-        "The model defines containers for the React frontend, Node.js API, and PostgreSQL database — each with technology specified",
-        "Stripe and SendGrid are modeled as external software systems, not containers inside the main system",
-        "Relationships have specific intent labels, not just 'Uses' — e.g., 'Submits orders to', 'Stores order data in', 'Processes payments via'",
-        "Inter-container relationships include technology/protocol labels like JSON/HTTPS, JDBC, or similar",
-        "The views section includes a container view for the payment system",
-        "The diagram has a title that includes 'Container' and the system name",
-        "The output includes styles or at least mentions how to render the DSL (e.g., structurizr.com/dsl)"
+        "The model defines containers for the React frontend, Node.js API, and PostgreSQL database — each with technology specified in the technology slot of the container declaration",
+        "Stripe and SendGrid are modeled as external software systems at the workspace/model level, not as containers inside the payment system softwareSystem block",
+        "Relationship labels are specific verb phrases describing what flows — none of the labels is the bare word 'Uses', 'Reads', 'Writes', or 'Connects'",
+        "Inter-container relationship declarations include a technology/protocol value in the second string slot (e.g., 'JSON/HTTPS', 'JDBC', 'REST') — empty or missing protocol slot fails this assertion",
+        "The views section includes a container view scoped to the payment system softwareSystem",
+        "Either the workspace name, the softwareSystem name, or the container view's description contains both the word 'Container' and the system name",
+        "The output includes a styles block OR a comment/note explaining how to render the DSL (e.g., paste into structurizr.com/dsl)"
       ],
       "files": []
     },
@@ -27,10 +27,13 @@
         "A Container diagram is produced showing the internal architecture (web app, message queue, database, notification service, and any other containers identified)",
         "Each diagram has a title stating its type and scope",
         "People are distinguished by role — support agents and customers are separate, not collapsed into a generic 'User'",
-        "Containers have technology suggestions (even if tentative, they should propose concrete choices rather than leaving technology blank)",
-        "The message queue is represented as a container with appropriate technology suggestion",
-        "Relationship labels describe intent specifically — not 'Uses' but 'Submits tickets via', 'Reads tickets from', 'Publishes new ticket events to', etc.",
-        "The diagrams help reason about the design — they're not just transcribing what the user said but also surfacing architectural decisions"
+        "Every container has a concrete technology suggestion (a specific named tech like 'Node.js', 'Postgres', 'RabbitMQ' — role descriptors like 'background worker process' do not satisfy this; disjunctions like 'RabbitMQ / SQS' do)",
+        "The message queue is represented as a container with a named queue technology",
+        "Relationship labels are specific verb phrases describing what flows — none of the labels is the bare word 'Uses', 'Reads', 'Writes', or 'Connects'",
+        "Both submission channels mentioned in the prompt (web form AND email) have a complete end-to-end path on the diagrams from the customer all the way to the ticket database — neither is dropped or implied",
+        "Arrow direction matches the verb in each label (e.g., 'polls X from' arrow points from poller to source; 'publishes events to' arrow points from publisher to broker)",
+        "Container technology choices are coherent with their stated relationships (e.g., a Node.js container does not have a JDBC arrow to a database; a Python container does not have an Express component; cross-stack contradictions fail this assertion)",
+        "If the diagrams use both prose narration and visual arrows for the same flow, the prose and the arrows agree about who initiates and who responds (e.g., prose saying 'Email Provider delivers' must not pair with an arrow labeled 'polls inbound email from')"
       ],
       "files": []
     },
@@ -39,16 +42,17 @@
       "prompt": "Can you create a Mermaid C4 diagram of our microservice setup? We have an API Gateway (Kong), three backend services: User Service (Go), Order Service (Java/Spring Boot), and Inventory Service (Python/FastAPI). Each service has its own database — User has PostgreSQL, Order has MySQL, Inventory has MongoDB. Services communicate via gRPC. There's also a RabbitMQ message broker for async events between services. The whole thing is used by a mobile app and a web app.",
       "expected_output": "A valid Mermaid C4Container diagram with correct syntax, all containers with technology labels, boundaries, and specific relationship labels including protocols.",
       "expectations": [
-        "Output uses the C4Container Mermaid diagram type",
-        "All six containers are present: API Gateway, User Service, Order Service, Inventory Service, and the mobile and web apps (or they appear as persons/external depending on scope interpretation)",
-        "Each database is represented with ContainerDb syntax, not plain Container",
-        "Each container and database includes its technology in the element declaration",
-        "The system boundary groups the internal services together, with the mobile and web apps outside or as separate actors",
-        "Service-to-service relationships specify gRPC as the protocol",
-        "Service-to-database relationships specify the appropriate protocol (JDBC, driver, etc.)",
-        "RabbitMQ is present as a container (queue type) with relationships showing which services publish/consume",
-        "Relationship labels are specific about what flows — not generic 'Uses' labels",
-        "The diagram includes a title"
+        "Output uses the C4Container Mermaid diagram type (the first non-comment line is `C4Container`)",
+        "All entities mentioned in the prompt are represented: API Gateway, User Service, Order Service, Inventory Service, and the mobile and web apps — modeled either as containers inside the system boundary or as external actors, either is acceptable",
+        "Each database is represented with ContainerDb (not plain Container) — User Service's PostgreSQL, Order Service's MySQL, and Inventory Service's MongoDB all use ContainerDb",
+        "Each container and database includes its technology in the second-to-last argument of the element declaration",
+        "A System_Boundary or Boundary block groups the internal services together",
+        "Service-to-service relationship declarations include 'gRPC' in the protocol/technology slot",
+        "Service-to-database relationship declarations include a real driver or wire-protocol name in the protocol slot (e.g., 'JDBC', 'libpq', 'MongoDB Wire Protocol') — fabricated combined names like 'SQL/TCP' do not satisfy this",
+        "RabbitMQ is represented with ContainerQueue (not plain Container), with separate publish edges from publishers and deliver/consume edges to consumers",
+        "Relationship labels are specific verb phrases describing what flows — none of the labels is the bare word 'Uses', 'Reads', 'Writes', or 'Connects'",
+        "Service-to-database relationship labels distinguish reads from writes specifically (e.g., 'reads X from' / 'writes Y to' / 'persists X to') rather than collapsing both into 'reads/writes' or 'reads from and writes to'",
+        "The diagram includes a title declaration"
       ],
       "files": []
     },
@@ -78,17 +82,21 @@
       "expectations": [
         "The output is a text-based ASCII diagram, not Mermaid or Structurizr syntax",
         "The diagram has a title naming this as a Container diagram for the skill-factory (or similar)",
-        "The skill author (a person) is shown using the system",
-        "Claude Code is shown as an external system that consumes installed skills",
+        "The skill author (a person) is shown",
+        "Claude Code is shown outside the system boundary as an external system (the framing — consumer of installed skills, authoring environment, etc. — is the author's choice)",
         "GitHub and/or claude.com (or platform.claude.com) appear as external systems for fetching documentation and the skill-creator",
         "The ~/.claude/skills/ filesystem location appears as an external dependency or destination",
         "The skills CLI (./skills) is shown as a container with its responsibility (managing skill installation/symlinking)",
         "The update-docs wrapper or fetch scripts are shown as a container with their responsibility (fetching upstream docs)",
         "The output_skills directory is shown as a container or data store (where authored skills live)",
         "The docs/knowledge directory is shown as a container or data store (where fetched dependencies live)",
-        "Inter-container relationships have labels describing what flows — not just 'Uses' or 'Reads'",
+        "Relationship labels are specific verb phrases describing what flows — none of the labels is the bare word 'Uses', 'Reads', 'Writes', or 'Connects'",
+        "Inter-container relationship declarations include a protocol/technology annotation in brackets when applicable (e.g., [HTTPS], [filesystem], [subprocess], [GitHub REST]) per the skill's container.md rule",
         "The diagram reflects the actual code structure (containers and relationships are grounded in files Claude actually read), not a hallucinated architecture",
-        "Box alignment passes the check_ascii_alignment.py script"
+        "Box alignment passes the check_ascii_alignment.py script with exit code 0",
+        "The diagram uses Unicode box-drawing characters (┌─┐│└─┘) consistently — does not mix in ASCII +---+ or other styles",
+        "People are notated as parenthesized labels like (Skill Author), not as multi-line ASCII person figures or full boxes; parentheses are used for people only, not as labels for containers",
+        "The diagram is a single coherent figure — containers are not split into disjoint fragments appended below the main figure as a workaround for boundary or alignment constraints"
       ],
       "files": []
     }
