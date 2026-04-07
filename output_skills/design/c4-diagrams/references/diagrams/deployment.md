@@ -27,6 +27,28 @@ A deployment node is where a container instance runs:
 
 Deployment nodes can nest: a physical server contains a VM, which contains a Docker host, which contains container instances.
 
+## Nesting Example
+
+Deployment nodes form a containment hierarchy. A typical AWS-hosted system might nest like this:
+
+```
+AWS Region [us-east-1]
+  └── VPC
+       ├── Public Subnet
+       │    └── Application Load Balancer
+       │         └── Routes traffic to ECS Cluster
+       └── Private Subnet
+            ├── ECS Cluster
+            │    ├── Web App Service [2x ECS Tasks]
+            │    │    └── Web App Container [Node.js]
+            │    └── API Service [3x ECS Tasks]
+            │         └── API Container [Spring Boot]
+            └── RDS Instance
+                 └── Database [PostgreSQL 15]
+```
+
+The same nesting can be drawn with C4 boundary boxes in any format. The key is that the parent deployment node visually contains its children, and container instances live at the leaves.
+
 ## What to Include
 
 - Deployment nodes with technology labels
