@@ -81,12 +81,11 @@ Ask the user which format they prefer. If no preference stated, choose based on 
 After creating any diagram, verify:
 
 - Title present, states diagram type and scope
-- Key/legend present
-- Every element has name, type, and description
+- Every element has name and type (descriptions where the format supports them — see Notation Rules)
 - Technology labeled on containers, components, and inter-container relationships
 - Relationship labels describe intent and match arrow direction
 - No vague labels ("Uses", "Connects to") — be specific about what flows
-- Acronyms either universally understood or explained in legend
+- Acronyms either universally understood or explained
 - Notation consistent (colors, shapes, line styles mean the same thing across the diagram)
 - For ASCII diagrams: run `uv run ${CLAUDE_SKILL_DIR}/scripts/check_ascii_alignment.py <file>` to validate box alignment. Fix any issues before presenting.
 

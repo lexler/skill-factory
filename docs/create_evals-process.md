@@ -58,6 +58,8 @@ Think about assertions in these categories:
 
 Write assertions that are hard to satisfy without actually doing the work correctly. An assertion like "output file exists" is too weak — a wrong file still passes. Better: "output file contains column headers matching the input schema."
 
+**Prefer mechanical validators over LLM judgment.** If the skill produces output in a format with an existing parser, linter, or compiler, write an assertion that runs that tool and checks the exit code. A mechanical "the parser accepts this" check is far stronger than a graded "this looks valid" — the LLM grader can be charitable, but a parser cannot. Look for validators that exist for the output format the skill produces, and call them in assertions when available.
+
 The grader agent will also critique weak assertions and suggest improvements, so the first draft doesn't need to be perfect.
 
 ### 3. Run Quality Evals
