@@ -1,0 +1,34 @@
+output_skills/learning/socratic-learning/references/knowledge-base.md
+  s_f9e3965edc7b26::t_4cf0cd172fa277 1-39
+output_skills/learning/socratic-learning/SKILL.md
+  s_f9e3965edc7b26::t_b49501261e446c 10-11,15-17,19,21
+  s_f9e3965edc7b26::t_04ccbfad33c696 1-9,12-14,27-29,31-67,69-78
+  s_f9e3965edc7b26::t_b7a83d48828d62 22-23
+  s_f9e3965edc7b26::t_0a23ad14da2efc 30
+  s_f9e3965edc7b26::t_7abfc3b01c0c20 18,20
+  s_f9e3965edc7b26::t_32910f7182544d 68
+  s_f9e3965edc7b26::t_626692d832a746 24-26
+output_skills/learning/socratic-learning/evals/evals.json
+  s_f9e3965edc7b26::t_e2fcb846a687da 1-14,17-29,32-40,42-43,46-49
+  s_f9e3965edc7b26::t_02aec02def8b55 15-16
+  s_f9e3965edc7b26::t_2c74d140ea7ec5 41,44-45
+output_skills/learning/socratic-learning/references/teaching-method.md
+  s_f9e3965edc7b26::t_93c76c4cb8e841 14-17,19
+  s_f9e3965edc7b26::t_d53ecf36a8db5f 1-13,18,20-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "ae1bd23b0185f66ec7b64834e3a97e6eb90ddccc",
+  "prompts": {},
+  "sessions": {
+    "s_f9e3965edc7b26": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8ca40c17-c4c3-4664-812a-13abb48cceeb",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
