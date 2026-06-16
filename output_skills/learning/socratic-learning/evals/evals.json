@@ -1,0 +1,49 @@
+{
+  "skill_name": "socratic-learning",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to actually understand how Kafka consumer group rebalancing works — not just a summary I'll forget tomorrow. I'm a backend dev, comfortable with distributed systems basics but I've never operated Kafka in production. Help me really learn it.",
+      "expected_output": "Claude facilitates a structured learning session: frames the goal and learner, gathers real sources, assesses current knowledge, then teaches Socratically one question at a time — rather than dumping an explanation.",
+      "files": [],
+      "expectations": [
+        "Claude does NOT open with a lecture or summary explaining how consumer group rebalancing works",
+        "Claude confirms or refines the learning goal and acknowledges the learner's stated background before teaching",
+        "Claude gathers or proposes gathering real source material (searches, papers, docs, talks) rather than teaching purely from its own memory",
+        "Claude runs or proposes an assessment of the learner's current knowledge before delivering teaching content",
+        "When teaching begins, Claude asks one question at a time and waits for an answer rather than posing several questions at once or answering its own question",
+        "Claude frames the interaction as a sustained, multi-step learning journey, not a single-response answer",
+        "The response is terse and low-noise: it opens with the '🦉 Tutor mode' label, with no warm-up flattery, no restating of the request, and no padding or long hedging"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I've saved the 'Designing Data-Intensive Applications' chapter on replication as a PDF and bookmarked two blog posts on leaderless replication. Can you teach me replication properly using these? I want to come out genuinely understanding the tradeoffs.",
+      "expected_output": "Claude treats the learner's provided material as the spine of the knowledge base, verifies it can actually access the content, frames goal and learner, assesses, then teaches Socratically from the material.",
+      "files": [],
+      "expectations": [
+        "Claude treats the user-provided material (the PDF and blog posts) as the basis for teaching rather than ignoring it in favor of its own knowledge",
+        "Claude asks for or confirms access to the actual content before teaching from it, rather than fabricating what the chapter or posts say",
+        "Claude raises whether the material fits or how it will be handled before relying on all of it",
+        "Claude establishes the learning goal and learner context before teaching",
+        "Claude assesses the learner's current understanding before delivering the learning content",
+        "Claude teaches by questioning one step at a time rather than summarizing the chapter's contents back to the learner",
+        "The response is terse and low-noise: it opens with the '🦉 Tutor mode' label, with no warm-up flattery, no restating of the request, and no padding or long hedging"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Be my tutor for eventual consistency. Teach it to me.",
+      "expected_output": "Claude holds the Socratic discipline: no monologue, one question at a time, provokes the learner's thinking before revealing concepts, and gives Perfection-Game-style feedback rather than just correcting.",
+      "files": [],
+      "expectations": [
+        "Claude does not respond with a monologue or lecture explaining eventual consistency",
+        "Claude hands the turn back to the learner — the response ends on a question or prompt for the learner, not on Claude's own explanation (multiple framing or clarifying questions are fine; answering its own question or lecturing is not)",
+        "Claude provokes the learner's own thinking first (asks what they know, poses a scenario, or offers an analogy to react to) before revealing the concept",
+        "Claude orients the session around finding out what the learner already knows before teaching new material",
+        "Claude stays in the questioning teacher role rather than sliding into delivering the full explanation unprompted",
+        "The response is terse and low-noise: it opens with the '🦉 Tutor mode' label, with no warm-up flattery, no restating of the request, and no padding or long hedging"
+      ]
+    }
+  ]
+}
