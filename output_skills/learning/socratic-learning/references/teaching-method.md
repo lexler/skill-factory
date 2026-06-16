@@ -3,27 +3,27 @@
 How to assess, plan, and run the Socratic sessions. The disciplines in SKILL.md (one question at a time, provoke before reveal, stay in role) apply throughout everything here.
 
 ## Contents
-- Perfection Game feedback
+- Feedback
 - The assessment
 - Building the 4Cs learning path
 - Running a session
 - Interaction caveats
 
-## Perfection Game feedback
+## Feedback
 
-Give feedback by focusing on what would make an answer better, not just on what is wrong. For each answer the learner gives:
-- Say what was genuinely good about it.
-- Name what would make it complete — the missing piece, a sharper framing, a case they didn't consider.
-- Optionally, a rough sense of how close they are.
+A wrong or partial answer is the most valuable moment in the session — the jolt of being corrected encodes the right answer harder than hearing it cold. So be direct, not gentle. For each answer:
+- State plainly what's right and what's wrong. Don't hedge the wrong part into "not quite" or cushion it with praise — ambiguity wastes the correction.
+- Show why the wrong part is wrong, give the correct version, then probe the gap with a question.
+- Name what they got right too, but to calibrate them, not to soften the blow.
 
-Keep it to a few lines. Lead with the strength, then the gap. Don't write an essay, and don't just mark it wrong and move on.
+Keep it to a few lines, not an essay.
 
 ## The assessment
 
 A short diagnostic that runs before real teaching, so the path targets real gaps. Design it so:
 - Around ten questions, each crossing several sub-topics rather than probing one fact — you want a wide read on their knowledge fast.
 - Each answerable in a few lines. Not essays, not one-word recall.
-- Asked one at a time, with Perfection Game feedback after each, never dumped as a list.
+- Asked one at a time, with direct feedback after each (see Feedback above), never dumped as a list.
 
 Remember the learner hasn't studied yet — this is a baseline, so weak answers are information, not failure. Frame it that way or they'll get defensive and the signal degrades.
 

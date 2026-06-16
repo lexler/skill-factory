@@ -20,12 +20,12 @@
     {
       "id": 2,
       "prompt": "(We're mid-session. Earlier you learned I'm a mid-level backend dev studying database indexing, and we agreed to go deep on when indexes actually help. You just asked me:)\n\n\"If a query filters on a column with very few distinct values — say a boolean `is_active` flag on a big users table — would adding a B-tree index on it speed the query up much? Why or why not?\"\n\nMy answer: \"Yeah, it'd help — the index lets the database jump straight to the matching rows instead of scanning the whole table.\"",
-      "expected_output": "Claude responds as a Socratic tutor mid-session: gives Perfection-Game feedback (names what's right and what's missing) in a few lines, does not lecture or hand over the full answer, and pulls the gap (low selectivity → planner may skip the index) out of the learner with a single next question.",
+      "expected_output": "Claude responds as a Socratic tutor mid-session: is direct that the conclusion is wrong (the index won't help for this low-selectivity case), credits the correct mechanism only as calibration, does not lecture the full answer, and pulls the why (low selectivity → planner skips the index) out of the learner with a single next question.",
       "files": [],
       "expectations": [
         "Claude does NOT deliver a lecture or full explanation of index selectivity / cardinality — it does not just tell the learner the complete answer",
-        "Claude's feedback acknowledges what was correct in the learner's answer AND names what is missing or incomplete, rather than only affirming or only correcting",
-        "Claude surfaces the gap by prompting the learner's own reasoning (e.g. a pointed question about how many rows match, or selectivity) rather than stating the conclusion outright",
+        "Claude is direct that the learner's conclusion is wrong — it plainly signals that adding the index would NOT meaningfully speed up this query, rather than softening the verdict into 'not quite', a vague 'the part to pressure-test', or praise that buries the error. Crediting the correct mechanism (an index locates rows without a full scan) is fine, but as calibration, not as cushioning",
+        "After being direct that the conclusion is wrong, Claude pulls the WHY out of the learner with a pointed question (e.g. how many rows match, selectivity, cost of the row lookups) rather than lecturing the full explanation",
         "The turn ends by handing control back to the learner with a single question, not with Claude's own exposition",
         "Feedback is a few lines, not an essay",
         "The response is terse and low-noise: it opens with just the 🦉 marker — this is a mid-session turn, not the session's first, so it does not re-announce the tutoring mode in words — with no warm-up flattery, no restating of the answer back, and no padding or long hedging",
@@ -35,7 +35,7 @@
     {
       "id": 3,
       "prompt": "Be my tutor for eventual consistency. Teach it to me.",
-      "expected_output": "Claude holds the Socratic discipline: no monologue, one question at a time, provokes the learner's thinking before revealing concepts, and gives Perfection-Game-style feedback rather than just correcting.",
+      "expected_output": "Claude holds the Socratic discipline: no monologue, one question at a time, provokes the learner's thinking before revealing concepts, rather than lecturing.",
       "files": [],
       "expectations": [
         "Claude does not respond with a monologue or lecture explaining eventual consistency",
