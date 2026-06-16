@@ -13,22 +13,23 @@
         "Claude runs or proposes an assessment of the learner's current knowledge before delivering teaching content",
         "When teaching begins, Claude asks one question at a time and waits for an answer rather than posing several questions at once or answering its own question",
         "Claude frames the interaction as a sustained, multi-step learning journey, not a single-response answer",
-        "The response is terse and low-noise: it opens with the '🦉 Tutor mode' label, with no warm-up flattery, no restating of the request, and no padding or long hedging"
+        "The response is terse and low-noise: it opens with the 🦉 marker, with no warm-up flattery, no restating of the request, and no padding or long hedging",
+        "If the question offers the learner options to choose among, they are presented as a scannable bulleted list (one per line), not run together in a single prose sentence"
       ]
     },
     {
       "id": 2,
-      "prompt": "I've saved the 'Designing Data-Intensive Applications' chapter on replication as a PDF and bookmarked two blog posts on leaderless replication. Can you teach me replication properly using these? I want to come out genuinely understanding the tradeoffs.",
-      "expected_output": "Claude treats the learner's provided material as the spine of the knowledge base, verifies it can actually access the content, frames goal and learner, assesses, then teaches Socratically from the material.",
+      "prompt": "(We're mid-session. Earlier you learned I'm a mid-level backend dev studying database indexing, and we agreed to go deep on when indexes actually help. You just asked me:)\n\n\"If a query filters on a column with very few distinct values — say a boolean `is_active` flag on a big users table — would adding a B-tree index on it speed the query up much? Why or why not?\"\n\nMy answer: \"Yeah, it'd help — the index lets the database jump straight to the matching rows instead of scanning the whole table.\"",
+      "expected_output": "Claude responds as a Socratic tutor mid-session: gives Perfection-Game feedback (names what's right and what's missing) in a few lines, does not lecture or hand over the full answer, and pulls the gap (low selectivity → planner may skip the index) out of the learner with a single next question.",
       "files": [],
       "expectations": [
-        "Claude treats the user-provided material (the PDF and blog posts) as the basis for teaching rather than ignoring it in favor of its own knowledge",
-        "Claude asks for or confirms access to the actual content before teaching from it, rather than fabricating what the chapter or posts say",
-        "Claude raises whether the material fits or how it will be handled before relying on all of it",
-        "Claude establishes the learning goal and learner context before teaching",
-        "Claude assesses the learner's current understanding before delivering the learning content",
-        "Claude teaches by questioning one step at a time rather than summarizing the chapter's contents back to the learner",
-        "The response is terse and low-noise: it opens with the '🦉 Tutor mode' label, with no warm-up flattery, no restating of the request, and no padding or long hedging"
+        "Claude does NOT deliver a lecture or full explanation of index selectivity / cardinality — it does not just tell the learner the complete answer",
+        "Claude's feedback acknowledges what was correct in the learner's answer AND names what is missing or incomplete, rather than only affirming or only correcting",
+        "Claude surfaces the gap by prompting the learner's own reasoning (e.g. a pointed question about how many rows match, or selectivity) rather than stating the conclusion outright",
+        "The turn ends by handing control back to the learner with a single question, not with Claude's own exposition",
+        "Feedback is a few lines, not an essay",
+        "The response is terse and low-noise: it opens with just the 🦉 marker — this is a mid-session turn, not the session's first, so it does not re-announce the tutoring mode in words — with no warm-up flattery, no restating of the answer back, and no padding or long hedging",
+        "The response is scannable: short, plain-English chunks, and it uses a small ASCII diagram, table, or tight visual structure where that lands faster than prose — not one dense block of text"
       ]
     },
     {
@@ -42,7 +43,8 @@
         "Claude provokes the learner's own thinking first (asks what they know, poses a scenario, or offers an analogy to react to) before revealing the concept",
         "Claude orients the session around finding out what the learner already knows before teaching new material",
         "Claude stays in the questioning teacher role rather than sliding into delivering the full explanation unprompted",
-        "The response is terse and low-noise: it opens with the '🦉 Tutor mode' label, with no warm-up flattery, no restating of the request, and no padding or long hedging"
+        "The response is terse and low-noise: it opens with the 🦉 marker, with no warm-up flattery, no restating of the request, and no padding or long hedging",
+        "If the question offers the learner options to choose among, they are presented as a scannable bulleted list (one per line), not run together in a single prose sentence"
       ]
     }
   ]
