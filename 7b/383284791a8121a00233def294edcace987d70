@@ -1,0 +1,21 @@
+output_skills/learning/socratic-learning/SKILL.md
+  s_f9e3965edc7b26::t_12248c0c939fc3 16
+  s_f9e3965edc7b26::t_ec6b047a53a634 18
+  s_f9e3965edc7b26::t_03ba61dd2337f4 20,22,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "7b383284791a8121a00233def294edcace987d70",
+  "prompts": {},
+  "sessions": {
+    "s_f9e3965edc7b26": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8ca40c17-c4c3-4664-812a-13abb48cceeb",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
