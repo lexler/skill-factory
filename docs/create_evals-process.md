@@ -74,13 +74,22 @@ Spawn all runs in parallel.
 
 Each eval has two configurations: **with_skill** (the skill is loaded) and **without_skill** (no skill, just plain Claude on the same prompt). Each configuration runs N times (per the user's run-count choice).
 
+**First, mint the iteration directory — never reuse one.** Don't hand-pick `iteration-1` or write into a directory that already holds outputs. The viewer pins each `feedback.json` review to a run by id and directory, so re-running into an existing directory silently re-attaches stale feedback to regenerated outputs. Always create a fresh one:
+
+```bash
+ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace)
+# prints e.g. output_skills/testing/tdd-workspace/iteration-3
+```
+
+`next_iteration.py` scans for existing `iteration-N` and creates the next number, never overwriting. Use the printed path — written `$ITER` below — everywhere these steps reference an iteration directory. Old iterations stay intact, so their feedback stays welded to the outputs it described.
+
 **With-skill runs**: Tell the agent to read the skill first, then execute the task. Include:
 - The skill path
 - The task prompt
-- The output directory: `{skill-name}-workspace/iteration-1/eval-{ID}/with_skill/run-{N}/outputs/`
+- The output directory: `$ITER/eval-{ID}/with_skill/run-{N}/outputs/`
 - A request to save a transcript (every step, test, prediction, refactoring) to `transcript.md` in the run directory — the grader needs this
 
-**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `{skill-name}-workspace/iteration-1/eval-{ID}/without_skill/run-{N}/outputs/`. Also request a transcript.
+**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `$ITER/eval-{ID}/without_skill/run-{N}/outputs/`. Also request a transcript.
 
 Running both shows whether the skill actually adds value vs what Claude can do on its own. Multiple runs show whether that value is consistent or just lucky.
 
@@ -99,11 +108,11 @@ The schema:
 Write the file once at the eval level, then create symlinks from each config directory so the viewer's parent-lookup finds it for both `with_skill/run-N/` and `without_skill/run-N/` runs:
 
 ```bash
-echo '{ ... }' > {skill-name}-workspace/iteration-1/eval-{ID}/eval_metadata.json
-mkdir -p {skill-name}-workspace/iteration-1/eval-{ID}/with_skill
-mkdir -p {skill-name}-workspace/iteration-1/eval-{ID}/without_skill
-ln -sf ../eval_metadata.json {skill-name}-workspace/iteration-1/eval-{ID}/with_skill/eval_metadata.json
-ln -sf ../eval_metadata.json {skill-name}-workspace/iteration-1/eval-{ID}/without_skill/eval_metadata.json
+echo '{ ... }' > $ITER/eval-{ID}/eval_metadata.json
+mkdir -p $ITER/eval-{ID}/with_skill
+mkdir -p $ITER/eval-{ID}/without_skill
+ln -sf ../eval_metadata.json $ITER/eval-{ID}/with_skill/eval_metadata.json
+ln -sf ../eval_metadata.json $ITER/eval-{ID}/without_skill/eval_metadata.json
 ```
 
 When each subagent completes, capture timing data from the task notification (`total_tokens`, `duration_ms`) and save to `timing.json` in the run directory. This data is only available at notification time.
@@ -130,9 +139,9 @@ Launch the viewer using `nohup` and the Bash tool's `run_in_background: true` pa
 
 ```bash
 nohup python docs/knowledge/anthropic-skill-creator/eval-viewer/generate_review.py \
-  {skill-name}-workspace/iteration-1 \
+  $ITER \
   --skill-name "{name}" \
-  --benchmark {skill-name}-workspace/iteration-1/benchmark.json \
+  --benchmark $ITER/benchmark.json \
   > /tmp/viewer-{skill-name}.log 2>&1
 ```
 
@@ -144,7 +153,7 @@ Tell the user the viewer is open and wait for them to review and come back.
 
 **Do not relaunch the viewer on the same port** — `generate_review.py` kills any existing process on the requested port at startup, so a second launch terminates the first. If the user asks to "reopen" the viewer, check if it's still running first (`curl -s http://localhost:3117 > /dev/null && echo running`); if it is, just remind them of the URL.
 
-For iteration 2+, pass `--previous-workspace` pointing at the previous iteration.
+For iteration 2+, pass `--previous-workspace` pointing at the previous iteration dir (the `iteration-(N-1)` sibling of `$ITER`) — this is the intended way to carry the prior round's outputs and feedback forward as context.
 
 ### 6. Improve and Re-run
 
@@ -155,7 +164,7 @@ When improving the skill based on feedback:
 - Read the transcripts, not just outputs — if Claude wasted time on unproductive steps, trim the instructions causing it
 - Explain *why* behind instructions rather than rigid MUSTs
 
-Re-run all test cases into `iteration-2/`, including baselines. Relaunch the viewer (step 5).
+Mint a fresh iteration directory for the re-run — `ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace)` — never reuse or overwrite the previous one (its outputs and feedback must stay intact). Re-run all test cases into the new `$ITER`, including baselines, and relaunch the viewer (step 5) with `--previous-workspace` pointing at the prior iteration.
 
 Loop until the user is satisfied or feedback is all empty.
 
