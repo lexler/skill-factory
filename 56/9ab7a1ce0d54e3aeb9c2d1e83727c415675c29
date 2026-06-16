@@ -1,0 +1,29 @@
+scripts/test_next_iteration.py
+  s_f9e3965edc7b26::t_c2fb13420c30e0 1-69
+docs/create_evals-process.md
+  s_f9e3965edc7b26::t_56c23555ef204a 142,144
+  s_f9e3965edc7b26::t_e23743a544a58d 92
+  s_f9e3965edc7b26::t_243ed024d49833 156
+  s_f9e3965edc7b26::t_38ddb46114f9cc 167
+  s_f9e3965edc7b26::t_1b62c6bba3a11b 77-85
+  s_f9e3965edc7b26::t_9c47f316ca0738 89
+  s_f9e3965edc7b26::t_5c5392da6eacdb 111-115
+scripts/next_iteration.py
+  s_f9e3965edc7b26::t_ac75d46a65df08 1-49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "569ab7a1ce0d54e3aeb9c2d1e83727c415675c29",
+  "prompts": {},
+  "sessions": {
+    "s_f9e3965edc7b26": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8ca40c17-c4c3-4664-812a-13abb48cceeb",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
