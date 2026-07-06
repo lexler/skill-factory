@@ -3,3 +3,4 @@ set -euo pipefail
 
 uv run scripts/fetch_anthropic_skill_docs.py
 uv run scripts/fetch_skill_creator.py
+uv run scripts/patch_eval_viewer.py

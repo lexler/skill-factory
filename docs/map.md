@@ -12,6 +12,8 @@ skill-factory/
 │   ├── fetch_skill_creator.py          # Fetch latest skill-creator from GitHub
 │   ├── next_iteration.py               # Mint fresh iteration-N dir in an eval workspace
 │   ├── test_next_iteration.py          # Tests for next_iteration.py
+│   ├── patch_eval_viewer.py            # Re-apply local viewer fix (inline text for extensionless outputs) after update-docs
+│   ├── test_patch_eval_viewer.py       # Tests for patch_eval_viewer.py
 │   └── export-refactoring-attempt      # Export a refactoring attempt for review
 ├── docs/                               # All knowledge about creating skills
 │   ├── knowledge/

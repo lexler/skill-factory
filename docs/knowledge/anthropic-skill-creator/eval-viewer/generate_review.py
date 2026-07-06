@@ -196,12 +196,20 @@ def embed_file(path: Path) -> dict:
             "data_b64": b64,
         }
     else:
-        # Binary / unknown — base64 download link
         try:
             raw = path.read_bytes()
-            b64 = base64.b64encode(raw).decode("ascii")
         except OSError:
             return {"name": path.name, "type": "error", "content": "(Error reading file)"}
+        # Extensionless scripts and other unknown files that decode as text
+        # render inline instead of hiding behind a download link
+        try:
+            content = raw.decode("utf-8")
+            if "\x00" not in content:
+                return {"name": path.name, "type": "text", "content": content}
+        except UnicodeDecodeError:
+            pass
+        # Binary — base64 download link
+        b64 = base64.b64encode(raw).decode("ascii")
         return {
             "name": path.name,
             "type": "binary",
