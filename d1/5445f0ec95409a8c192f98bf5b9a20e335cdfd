@@ -1,0 +1,27 @@
+docs/map.md
+  s_a45dcf8926fe60::t_4ba51e88e8f06c 15-16
+update-docs
+  s_a45dcf8926fe60::t_f019c867bd737d 6
+scripts/test_patch_eval_viewer.py
+  s_a45dcf8926fe60::t_99ffb4f07fab4b 1-71
+scripts/patch_eval_viewer.py
+  s_a45dcf8926fe60::t_e367567b4957a5 1-94
+docs/knowledge/anthropic-skill-creator/eval-viewer/generate_review.py
+  s_a45dcf8926fe60::t_19ab444c864c1d 203-212
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d15445f0ec95409a8c192f98bf5b9a20e335cdfd",
+  "prompts": {},
+  "sessions": {
+    "s_a45dcf8926fe60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8b518ed6-e1cc-4e3b-adeb-3bf43e522fc4",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
