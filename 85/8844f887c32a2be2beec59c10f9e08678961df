@@ -1,0 +1,24 @@
+docs/create_evals-process.md
+  s_a45dcf8926fe60::t_9eb12ef0f7a691 98
+  s_a45dcf8926fe60::t_43c5972686732b 229-234
+  s_a45dcf8926fe60::t_79d6cbbe7bfa5c 119-123
+  s_a45dcf8926fe60::t_844fe6956713d5 88-89,93
+docs/create_new_skill-process.md
+  s_a45dcf8926fe60::t_dc9c5987cfa096 116-121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "858844f887c32a2be2beec59c10f9e08678961df",
+  "prompts": {},
+  "sessions": {
+    "s_a45dcf8926fe60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8b518ed6-e1cc-4e3b-adeb-3bf43e522fc4",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
