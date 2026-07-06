@@ -4,10 +4,15 @@
 skill-factory/
 ├── CLAUDE.md                           # Agent instructions for this project
 ├── update-docs                         # Bash wrapper to update documentation
+├── skills                              # Install script: symlink/copy skills into ~/.claude/skills or project
+├── playground/                         # Throw-away exploratory code (gitignored)
 ├── scripts/                            # Automation scripts
 │   ├── sources.txt                     # URLs to fetch docs from
 │   ├── fetch_anthropic_skill_docs.py   # Fetch latest Anthropic docs
-│   └── fetch_skill_creator.py          # Fetch latest skill-creator from GitHub
+│   ├── fetch_skill_creator.py          # Fetch latest skill-creator from GitHub
+│   ├── next_iteration.py               # Mint fresh iteration-N dir in an eval workspace
+│   ├── test_next_iteration.py          # Tests for next_iteration.py
+│   └── export-refactoring-attempt      # Export a refactoring attempt for review
 ├── docs/                               # All knowledge about creating skills
 │   ├── knowledge/
 │   │   ├── anthropic-skill-docs/       # Official Anthropic skill documentation
@@ -35,13 +40,17 @@ skill-factory/
     │   └── bdd-with-approvals/
     ├── design/
     │   ├── align/
+    │   ├── c4-diagrams/
     │   ├── collaborative-design/
     │   ├── event-modeling/
     │   └── hexagonal-architecture/
+    ├── learning/
+    │   └── socratic-learning/
     ├── practices/
     │   ├── growing-outside-in-systems/
     │   ├── refactoring/
-    │   └── refinement-loop/
+    │   ├── refinement-loop/
+    │   └── small-steps/                # draft, no SKILL.md yet
     ├── ai/
     │   ├── ai-patterns/
     │   ├── creating-process-files/
@@ -52,7 +61,9 @@ skill-factory/
     │       └── writing-statuslines/
     └── developer-tools/
         ├── git-worktrees/
+        ├── playwright-cli/
         ├── using-uv/
+        ├── using-yaks/                 # draft, no SKILL.md yet
         └── writing-bash-scripts/
 ```
 

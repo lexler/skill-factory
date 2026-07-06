@@ -88,10 +88,13 @@ ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace
 - The task prompt
 - The output directory: `$ITER/eval-{ID}/with_skill/run-{N}/outputs/`
 - A request to save a transcript (every step, test, prediction, refactoring) to `transcript.md` in the run directory — the grader needs this
+- A request to save `metrics.json` (tool-call counts per tool, total steps, files created, errors encountered — schema in `docs/knowledge/anthropic-skill-creator/references/schemas.md`) and `user_notes.md` (anything the agent was uncertain about, worked around, or thinks needs human review) into the outputs directory. The grader reads both; without them, the benchmark's execution metrics stay empty.
 
-**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `$ITER/eval-{ID}/without_skill/run-{N}/outputs/`. Also request a transcript.
+**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `$ITER/eval-{ID}/without_skill/run-{N}/outputs/`. Request the same transcript, `metrics.json`, and `user_notes.md`.
 
-Running both shows whether the skill actually adds value vs what Claude can do on its own. Multiple runs show whether that value is consistent or just lucky.
+**Baseline for an existing skill**: When the evals target changes to a skill that already worked (iteration on an installed skill), the question is "did my change help", not "is a skill useful". Snapshot the pre-change version (`cp -r <skill-path> <workspace>/skill-snapshot/`) before editing, and run the baseline agents against the snapshot instead of skill-less. Save those runs to `old_skill/` in place of `without_skill/`. Caveat: `aggregate_benchmark.py` discovers configs alphabetically and computes delta as first-minus-second, so with `old_skill`/`with_skill` the delta is old-minus-new — read the sign accordingly (or swap the summary when reporting).
+
+Running both shows whether the skill actually adds value vs the baseline. Multiple runs show whether that value is consistent or just lucky.
 
 Before spawning runs, write an `eval_metadata.json` for each eval. The viewer reads this to display the prompt — without it, the viewer shows "(No prompt found)" and results are hard to review.
 
@@ -115,7 +118,11 @@ ln -sf ../eval_metadata.json $ITER/eval-{ID}/with_skill/eval_metadata.json
 ln -sf ../eval_metadata.json $ITER/eval-{ID}/without_skill/eval_metadata.json
 ```
 
-When each subagent completes, capture timing data from the task notification (`total_tokens`, `duration_ms`) and save to `timing.json` in the run directory. This data is only available at notification time.
+When each subagent completes, capture timing data from the task notification and save to `timing.json` in the run directory. This data is only available at notification time. Include all three fields — `aggregate_benchmark.py` reads `total_duration_seconds`, so omitting it produces a benchmark with zero times:
+
+```json
+{"total_tokens": 84852, "duration_ms": 23332, "total_duration_seconds": 23.3}
+```
 
 ### 4. Grade
 
@@ -131,7 +138,22 @@ This makes charity expensive: the grader would have to ignore evidence already o
 
 For assertions that can be checked programmatically (file exists, contains expected string, valid JSON), write and run a script instead of having the grader eyeball it. Mechanical checks bypass both passes.
 
-### 5. Launch the viewer
+### 5. Aggregate and Analyze
+
+Once every run has a `grading.json`, build the benchmark — never hand-write `benchmark.json` (the viewer depends on exact field names, and hand-built files drift):
+
+```bash
+cd docs/knowledge/anthropic-skill-creator
+python -m scripts.aggregate_benchmark <absolute-path-to-$ITER> --skill-name {name}
+```
+
+This writes `$ITER/benchmark.json` and `benchmark.md` with pass rate, time, and tokens per configuration (mean ± stddev) plus the delta.
+
+Then spawn an analyst agent — the "Analyzing Benchmark Results" section of `docs/knowledge/anthropic-skill-creator/agents/analyzer.md`. It reads `benchmark.json` and surfaces what the aggregates hide: assertions that pass in both configurations (non-discriminating — they measure nothing), assertions that always fail (broken or beyond capability), high-variance evals (flaky), and time/token cost versus pass-rate gain. Write its observations into the benchmark's `notes` array so they show up in the viewer's Benchmark tab.
+
+The analyst pass is where weak evals get caught. A skill that costs +180s and +24k tokens for +1% pass rate looks fine in raw outputs — only the notes make that visible.
+
+### 6. Launch the viewer
 
 This step is not optional — the user needs to see the results before any conclusions are drawn.
 
@@ -155,7 +177,7 @@ Tell the user the viewer is open and wait for them to review and come back.
 
 For iteration 2+, pass `--previous-workspace` pointing at the previous iteration dir (the `iteration-(N-1)` sibling of `$ITER`) — this is the intended way to carry the prior round's outputs and feedback forward as context.
 
-### 6. Improve and Re-run
+### 7. Improve and Re-run
 
 Read `feedback.json` from the viewer. Empty feedback means the output was fine. Focus on test cases where the user had complaints.
 
@@ -164,7 +186,7 @@ When improving the skill based on feedback:
 - Read the transcripts, not just outputs — if Claude wasted time on unproductive steps, trim the instructions causing it
 - Explain *why* behind instructions rather than rigid MUSTs
 
-Mint a fresh iteration directory for the re-run — `ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace)` — never reuse or overwrite the previous one (its outputs and feedback must stay intact). Re-run all test cases into the new `$ITER`, including baselines, and relaunch the viewer (step 5) with `--previous-workspace` pointing at the prior iteration.
+Mint a fresh iteration directory for the re-run — `ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace)` — never reuse or overwrite the previous one (its outputs and feedback must stay intact). Re-run all test cases into the new `$ITER`, including baselines, re-aggregate and analyze (step 5), and relaunch the viewer (step 6) with `--previous-workspace` pointing at the prior iteration.
 
 Loop until the user is satisfied or feedback is all empty.
 
@@ -174,7 +196,7 @@ This is worth the extra time when improvement is ambiguous. Skip it when regular
 
 Protocol: `docs/knowledge/anthropic-skill-creator/agents/comparator.md` and `docs/knowledge/anthropic-skill-creator/agents/analyzer.md`.
 
-### 7. Optimize Description (optional)
+### 8. Optimize Description (optional)
 
 After the skill's quality is solid, offer to optimize the description for better triggering accuracy. The description is what Claude uses to decide whether to activate the skill.
 
