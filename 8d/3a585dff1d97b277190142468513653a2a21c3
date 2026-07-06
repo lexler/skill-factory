@@ -1,0 +1,26 @@
+docs/create_evals-process.md
+  s_a45dcf8926fe60::t_8ea6496beb36c3 199
+  s_a45dcf8926fe60::t_ff3cbc7d035f34 121-125
+  s_a45dcf8926fe60::t_5785cb795f9cb5 91,93,95-97
+  s_a45dcf8926fe60::t_3221c54748aaac 141-156
+  s_a45dcf8926fe60::t_e5d141888565c1 180
+  s_a45dcf8926fe60::t_772a707df5063c 189
+docs/map.md
+  s_a45dcf8926fe60::t_0f8e2cd1555839 7-8,12-15,43,47-48,52-53,64,66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8d3a585dff1d97b277190142468513653a2a21c3",
+  "prompts": {},
+  "sessions": {
+    "s_a45dcf8926fe60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8b518ed6-e1cc-4e3b-adeb-3bf43e522fc4",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
