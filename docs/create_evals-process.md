@@ -49,6 +49,8 @@ Schema reference: `docs/knowledge/anthropic-skill-creator/references/schemas.md`
 
 For each test prompt, write assertions — verifiable statements about what the output should contain or how Claude should behave. Add them to the `expectations` array in `evals/evals.json`.
 
+Assertions are written before any runs happen, deliberately (Anthropic's flow drafts them while runs are in progress). Assertions written after seeing outputs drift toward describing what was produced instead of what success requires.
+
 Think about assertions in these categories:
 
 - Correctness: Does the output contain the right information? ("The summary includes all three key findings from the source document")
@@ -87,6 +89,7 @@ ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace
 - The skill path
 - The task prompt
 - The output directory: `$ITER/eval-{ID}/with_skill/run-{N}/outputs/`
+- Which outputs to save — name the deliverable the user cares about (e.g., "the final .dsl file", "the generated test suite"), so the agent saves the right thing instead of guessing
 - A request to save a transcript (every step, test, prediction, refactoring) to `transcript.md` in the run directory — the grader needs this
 - A request to save `metrics.json` (tool-call counts per tool, total steps, files created, errors encountered — schema in `docs/knowledge/anthropic-skill-creator/references/schemas.md`) and `user_notes.md` (anything the agent was uncertain about, worked around, or thinks needs human review) into the outputs directory. The grader reads both; without them, the benchmark's execution metrics stay empty.
 
@@ -118,6 +121,8 @@ ln -sf ../eval_metadata.json $ITER/eval-{ID}/with_skill/eval_metadata.json
 ln -sf ../eval_metadata.json $ITER/eval-{ID}/without_skill/eval_metadata.json
 ```
 
+(With an `old_skill` baseline, symlink into `old_skill/` instead of `without_skill/`.)
+
 When each subagent completes, capture timing data from the task notification and save to `timing.json` in the run directory. This data is only available at notification time. Include all three fields — `aggregate_benchmark.py` reads `total_duration_seconds`, so omitting it produces a benchmark with zero times:
 
 ```json
@@ -132,7 +137,7 @@ Grading happens in two passes per run. The two-pass structure separates "find pr
 
 > Read the output files at <path> and the transcript at <transcript-path>. Find every defect, error, inconsistency, or non-standard usage. Be paranoid — list anything that looks wrong or suspicious, even minor. Group findings by severity (clear errors vs questionable choices). Do not judge whether the output is "good enough" — just enumerate problems.
 
-**Pass 2 — Assertion grading.** For each run, use the grader agent protocol from `docs/knowledge/anthropic-skill-creator/agents/grader.md`, but pass the `defects.md` from Pass 1 as additional input. Tell the grader: for each assertion, check whether any defect from `defects.md` contradicts it; if yes, the assertion fails. Save results to `grading.json`.
+**Pass 2 — Assertion grading.** For each run, use the grader agent protocol from `docs/knowledge/anthropic-skill-creator/agents/grader.md`, but pass the `defects.md` from Pass 1 as additional input. Tell the grader: for each assertion, check whether any defect from `defects.md` contradicts it; if yes, the assertion fails. Save results to `grading.json`. The `expectations` entries must use exactly the fields `text`, `passed`, `evidence` — the viewer and aggregator depend on these names and silently show empty results on variants like `name`/`met`/`details`.
 
 This makes charity expensive: the grader would have to ignore evidence already on the table. Pass 1 surfaces problems without judgment; Pass 2 cannot avoid them.
 
@@ -175,6 +180,8 @@ Tell the user the viewer is open and wait for them to review and come back.
 
 **Do not relaunch the viewer on the same port** — `generate_review.py` kills any existing process on the requested port at startup, so a second launch terminates the first. If the user asks to "reopen" the viewer, check if it's still running first (`curl -s http://localhost:3117 > /dev/null && echo running`); if it is, just remind them of the URL.
 
+When the eval loop is finished (user satisfied, no more iterations), kill the viewer so the server doesn't linger: `lsof -ti :3117 | xargs kill`.
+
 For iteration 2+, pass `--previous-workspace` pointing at the previous iteration dir (the `iteration-(N-1)` sibling of `$ITER`) — this is the intended way to carry the prior round's outputs and feedback forward as context.
 
 ### 7. Improve and Re-run
@@ -208,6 +215,15 @@ Should-not-trigger queries: near-misses that share keywords but need something d
 
 All queries should be realistic — include file paths, personal context, abbreviations, typos, mixed case. Not abstract one-liners.
 
+Save the eval set to the workspace as a JSON array — this exact shape is what `run_loop` reads:
+
+```json
+[
+  {"query": "the user prompt", "should_trigger": true},
+  {"query": "another prompt", "should_trigger": false}
+]
+```
+
 **Review with user**: Present the queries for review. The user can edit, add, remove, toggle should/shouldn't trigger.
 
 **Run optimization**: The optimization loop splits queries 60% train / 40% held-out test, evaluates the current description (3 runs per query), proposes improvements using extended thinking, and iterates up to 5 times:
@@ -221,6 +237,8 @@ python -m scripts.run_loop \
   --verbose
 ```
 (Run from the `docs/knowledge/anthropic-skill-creator/` directory.)
+
+For `--model`, use the model ID powering the current session (it's in your system prompt) — the triggering test should match what the user actually experiences. The loop takes many minutes: run it in the background and tail its output periodically to report which iteration it's on and the scores.
 
 Best description is selected by test score (not train score) to avoid overfitting.
 
