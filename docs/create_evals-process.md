@@ -68,13 +68,19 @@ The grader agent will also critique weak assertions and suggest improvements, so
 
 ### 3. Run Quality Evals
 
-AI is non-deterministic — a single run can be an outlier. Multiple runs let you compare distributions, not data points. Use AskUserQuestion to ask the user how many runs per configuration, with these options:
-- Quick (1 run each, 2 agents per prompt) — fast, lowest token cost, good for early iterations
-- Standard (3 runs each, 6 agents per prompt) — reliable signal, moderate token cost
-- Thorough (5 runs each, 10 agents per prompt) — high confidence, highest token cost
-- Custom — user picks the number
+AI is non-deterministic — a single run can be an outlier, and repetition is where findings become convincing (a 3-for-3 failure against the baseline's 0-for-3 is signal; 1-for-1 is an anecdote). But repetition costs agents, so size the eval instead of defaulting to a fixed number.
 
-Spawn all runs in parallel, but expect a concurrency ceiling: spawning ~18 agents at once has hit fork/pane limits. Spawn in batches of about 9, retry the failures, and for follow-up work (grading) reuse finished idle agents via messages instead of spawning fresh ones.
+**Recommend a sizing to the user, with your reasoning.** Weigh:
+- How subtle is the expected delta? A style-guide skill with lint checks shows its effect in 1-2 runs; a skill nudging judgment on variable output needs 3+.
+- How much do outputs naturally vary between runs?
+- How expensive is one run? (long multi-step tasks earn fewer repetitions)
+- Exploration or regression? First look at a new skill → cheap; pre-release confidence on a mature skill → thorough.
+
+Baselines can be fewer than with-skill runs — they're context, not the thing under test. Present the recommendation and let the user override; don't offer a bare menu of numbers.
+
+**Pilot before you fan out.** Run ONE complete pass first — one eval, one config, one run, all the way through grading and artifact checks. The pilot is where the pipeline's stupid mistakes surface (a broken probe, missing metadata, a path bug) while they cost one agent instead of eighteen. Scale is for repeating something that already works. When the pilot is clean, spawn the rest.
+
+When you do fan out, expect a concurrency ceiling: spawning ~18 agents at once has hit fork/pane limits. Spawn in batches of about 9, retry the failures, and for follow-up work (grading) reuse finished idle agents via messages instead of spawning fresh ones.
 
 Each eval has two configurations: **with_skill** (the skill is loaded) and **without_skill** (no skill, just plain Claude on the same prompt). Each configuration runs N times (per the user's run-count choice).
 
@@ -139,7 +145,9 @@ After all runs complete, check `git status` for stray files outside the workspac
 
 ### 4. Grade
 
-Grading happens in two passes per run. The two-pass structure separates "find problems" from "judge assertions" so the grader can't quietly downgrade defects when scoring.
+Grading depth scales with the output, like run count does. Simple outputs covered mostly by mechanical checks need one grader pass over the few judgment assertions. Use the full two-pass structure below when outputs are complex enough that grader charity is a real risk — long documents, multi-file results, subtle correctness questions.
+
+Full grading happens in two passes per run. The two-pass structure separates "find problems" from "judge assertions" so the grader can't quietly downgrade defects when scoring.
 
 **Pass 1 — Defect finding.** Before grading any assertions, spawn a defect-finding agent for each run. Its sole job is to find every problem in the output: syntax errors, wrong values, missing elements, non-standard usage, inconsistencies, anything that looks off. The agent has no incentive to be charitable — it's not judging anything, just cataloguing. Save the result to `defects.md` in the run directory. The prompt should be something like:
 
