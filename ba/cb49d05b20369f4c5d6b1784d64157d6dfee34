@@ -1,0 +1,24 @@
+output_skills/developer-tools/playwright-cli/SKILL.md
+  s_400d4aedf9005d::t_36fadd54a8dff7 1-78
+output_skills/developer-tools/playwright-cli/references/attaching-to-chrome.md
+  s_400d4aedf9005d::t_f8744e02da2684 1-41
+output_skills/developer-tools/playwright-cli/references/full-command-reference.md
+  s_400d4aedf9005d::t_d72c9a2963831a 7
+  s_400d4aedf9005d::t_713efb0ae8666d 1-6,8-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bacb49d05b20369f4c5d6b1784d64157d6dfee34",
+  "prompts": {},
+  "sessions": {
+    "s_400d4aedf9005d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88f10cfd-49e7-4b1d-abcc-031c0a6e10e3",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
