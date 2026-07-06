@@ -62,6 +62,8 @@ Write assertions that are hard to satisfy without actually doing the work correc
 
 **Prefer mechanical validators over LLM judgment.** If the skill produces output in a format with an existing parser, linter, or compiler, write an assertion that runs that tool and checks the exit code. A mechanical "the parser accepts this" check is far stronger than a graded "this looks valid" — the LLM grader can be charitable, but a parser cannot. Look for validators that exist for the output format the skill produces, and call them in assertions when available.
 
+When a probe *executes* the output (sandbox run), make it exercise at least one documented non-happy path, not just the demo scenario. A happy-path-only probe certifies broken outputs: a git helper that worked only when run from `main` scored perfect because the probe never ran it from another branch.
+
 The grader agent will also critique weak assertions and suggest improvements, so the first draft doesn't need to be perfect.
 
 ### 3. Run Quality Evals
@@ -72,7 +74,7 @@ AI is non-deterministic — a single run can be an outlier. Multiple runs let yo
 - Thorough (5 runs each, 10 agents per prompt) — high confidence, highest token cost
 - Custom — user picks the number
 
-Spawn all runs in parallel.
+Spawn all runs in parallel, but expect a concurrency ceiling: spawning ~18 agents at once has hit fork/pane limits. Spawn in batches of about 9, retry the failures, and for follow-up work (grading) reuse finished idle agents via messages instead of spawning fresh ones.
 
 Each eval has two configurations: **with_skill** (the skill is loaded) and **without_skill** (no skill, just plain Claude on the same prompt). Each configuration runs N times (per the user's run-count choice).
 
@@ -130,6 +132,10 @@ When each subagent completes, capture timing data from the task notification and
 ```json
 {"total_tokens": 84852, "duration_ms": 23332, "total_duration_seconds": 23.3}
 ```
+
+Named teammate agents signal completion with idle notifications that carry NO token or duration data — only Task-tool notifications have it. When it's unavailable: approximate duration from file mtimes, set `total_tokens` to 0, and record the approximation in a `note` field. Beware the aggregator's fallback — with tokens at 0 it substitutes `output_chars` as "tokens", so state in the benchmark metadata that the tokens column is output size, not token usage.
+
+After all runs complete, check `git status` for stray files outside the workspace — executors occasionally leak test debris (e.g. a stderr redirect) into the repo root despite sandbox instructions.
 
 ### 4. Grade
 
