@@ -85,15 +85,17 @@ ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace
 
 `next_iteration.py` scans for existing `iteration-N` and creates the next number, never overwriting. Use the printed path — written `$ITER` below — everywhere these steps reference an iteration directory. Old iterations stay intact, so their feedback stays welded to the outputs it described.
 
+**Eval directory names**: Name each eval directory `eval-{ID}-{slug}` where the slug says what it tests (e.g., `eval-1-stack-kata`, `eval-3-legacy-refactor`) — written `eval-{ID}-{slug}` below. Bare `eval-1` tells a reviewer nothing when scanning the workspace. The ID stays first so tooling that parses it from the name keeps working.
+
 **With-skill runs**: Tell the agent to read the skill first, then execute the task. Include:
 - The skill path
 - The task prompt
-- The output directory: `$ITER/eval-{ID}/with_skill/run-{N}/outputs/`
+- The output directory: `$ITER/eval-{ID}-{slug}/with_skill/run-{N}/outputs/`
 - Which outputs to save — name the deliverable the user cares about (e.g., "the final .dsl file", "the generated test suite"), so the agent saves the right thing instead of guessing
 - A request to save a transcript (every step, test, prediction, refactoring) to `transcript.md` in the run directory — the grader needs this
 - A request to save `metrics.json` (tool-call counts per tool, total steps, files created, errors encountered — schema in `docs/knowledge/anthropic-skill-creator/references/schemas.md`) and `user_notes.md` (anything the agent was uncertain about, worked around, or thinks needs human review) into the outputs directory. The grader reads both; without them, the benchmark's execution metrics stay empty.
 
-**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `$ITER/eval-{ID}/without_skill/run-{N}/outputs/`. Request the same transcript, `metrics.json`, and `user_notes.md`.
+**Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `$ITER/eval-{ID}-{slug}/without_skill/run-{N}/outputs/`. Request the same transcript, `metrics.json`, and `user_notes.md`.
 
 **Baseline for an existing skill**: When the evals target changes to a skill that already worked (iteration on an installed skill), the question is "did my change help", not "is a skill useful". Snapshot the pre-change version (`cp -r <skill-path> <workspace>/skill-snapshot/`) before editing, and run the baseline agents against the snapshot instead of skill-less. Save those runs to `old_skill/` in place of `without_skill/`. Caveat: `aggregate_benchmark.py` discovers configs alphabetically and computes delta as first-minus-second, so with `old_skill`/`with_skill` the delta is old-minus-new — read the sign accordingly (or swap the summary when reporting).
 
@@ -114,11 +116,11 @@ The schema:
 Write the file once at the eval level, then create symlinks from each config directory so the viewer's parent-lookup finds it for both `with_skill/run-N/` and `without_skill/run-N/` runs:
 
 ```bash
-echo '{ ... }' > $ITER/eval-{ID}/eval_metadata.json
-mkdir -p $ITER/eval-{ID}/with_skill
-mkdir -p $ITER/eval-{ID}/without_skill
-ln -sf ../eval_metadata.json $ITER/eval-{ID}/with_skill/eval_metadata.json
-ln -sf ../eval_metadata.json $ITER/eval-{ID}/without_skill/eval_metadata.json
+echo '{ ... }' > $ITER/eval-{ID}-{slug}/eval_metadata.json
+mkdir -p $ITER/eval-{ID}-{slug}/with_skill
+mkdir -p $ITER/eval-{ID}-{slug}/without_skill
+ln -sf ../eval_metadata.json $ITER/eval-{ID}-{slug}/with_skill/eval_metadata.json
+ln -sf ../eval_metadata.json $ITER/eval-{ID}-{slug}/without_skill/eval_metadata.json
 ```
 
 (With an `old_skill` baseline, symlink into `old_skill/` instead of `without_skill/`.)
@@ -224,7 +226,12 @@ Save the eval set to the workspace as a JSON array — this exact shape is what 
 ]
 ```
 
-**Review with user**: Present the queries for review. The user can edit, add, remove, toggle should/shouldn't trigger.
+**Review with user**: Present the queries through Anthropic's review page rather than dumping them in chat — bad eval queries lead to bad descriptions, and the page makes editing painless:
+
+1. Read the template at `docs/knowledge/anthropic-skill-creator/assets/eval_review.html`
+2. Replace `__EVAL_DATA_PLACEHOLDER__` with the JSON array (unquoted — it's a JS assignment), `__SKILL_NAME_PLACEHOLDER__` and `__SKILL_DESCRIPTION_PLACEHOLDER__` with the skill's name and current description
+3. Write to `playground/eval_review_{skill-name}.html` and `open` it
+4. The user edits queries, toggles should-trigger, adds/removes, then clicks "Export Eval Set" — the file lands in `~/Downloads/eval_set.json` (grab the most recent if there are duplicates like `eval_set (1).json`)
 
 **Run optimization**: The optimization loop splits queries 60% train / 40% held-out test, evaluates the current description (3 runs per query), proposes improvements using extended thinking, and iterates up to 5 times:
 

@@ -113,7 +113,12 @@ description: [What it does]. Use when [trigger context]. (drop the second part i
 **One level deep means link chains, not folders.** SKILL.md should link directly to content files - avoid SKILL.md → index.md → actual-content.md chains. Organizing references into subfolders (`references/architecture/`, `references/building/`) is fine as long as SKILL.md links directly to each file.
 
 ### 9. Review Against Best Practices
-Re-read `docs/knowledge/anthropic-skill-docs/best-practices.md` and `skills.md` (troubleshooting section). Compare to what you created:
+First run the mechanical frontmatter check — it catches invalid YAML, disallowed keys, name/description limits, and angle brackets in the description:
+```bash
+uv run --with pyyaml docs/knowledge/anthropic-skill-creator/scripts/quick_validate.py output_skills/{category}/{skill-name}
+```
+
+Then re-read `docs/knowledge/anthropic-skill-docs/best-practices.md` and `skills.md` (troubleshooting section). Compare to what you created:
 - Does the description include clear trigger words?
 - Is the body concise? Remove anything Claude already knows.
 - Are references one level deep?
