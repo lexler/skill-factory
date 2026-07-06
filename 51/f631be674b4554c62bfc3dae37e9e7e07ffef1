@@ -1,0 +1,38 @@
+output_skills/testing/nullables/references/utilities.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-182
+output_skills/testing/nullables/references/building-low-level-wrappers-dynamic.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-179
+output_skills/testing/nullables/references/building-low-level-wrappers-static.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-204
+output_skills/testing/nullables/references/migration.md
+  s_a798e9400bf1a0::t_d4135b553a8164 3,7-10,12,14,16,18-21,23-36,39,41,43,45-49,52-55,58,61-65,68,70,72-74,76,78-83
+output_skills/testing/nullables/references/building-high-level-wrappers.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-172
+output_skills/testing/nullables/references/consuming-nullables.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-185
+output_skills/testing/nullables/SKILL.md
+  s_a798e9400bf1a0::t_726ca0cd68b0ab 3
+  s_a798e9400bf1a0::t_d4135b553a8164 12,14,27,29,31-33,35,37,39,41-47,49,51,53-60,62,64-69
+  s_a798e9400bf1a0::t_2b6de750a78a10 17-19,22-25
+  s_a798e9400bf1a0::t_a7f5af5ae476d3 10
+output_skills/testing/nullables/credits.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-8
+output_skills/testing/nullables/references/architecture.md
+  s_a798e9400bf1a0::t_d4135b553a8164 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "51f631be674b4554c62bfc3dae37e9e7e07ffef1",
+  "prompts": {},
+  "sessions": {
+    "s_a798e9400bf1a0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "107db656-17dd-4b66-8714-e71f4a82b9ea",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
