@@ -56,7 +56,7 @@ public class DieRoller {
 
     // ---- nullability machinery, invisible to callers ----
 
-    private interface RandomInt {          // mirrors java.util.Random, only what we use
+    private interface RandomInt {          // mirrors java.util.Random, only what the wrapper uses
         int nextInt(int bound);
     }
     private static class RealRandom implements RandomInt {
@@ -188,7 +188,7 @@ public class JsonHttpClient {
 
     // ---- nullability machinery ----
 
-    interface RestTemplateWrapper {   // exactly RestTemplate's signatures, only what we use
+    interface RestTemplateWrapper {   // exactly RestTemplate's signatures, only what the wrapper uses
         <T> ResponseEntityWrapper<T> getForEntity(String url, Class<T> type, Object... vars);
     }
     interface ResponseEntityWrapper<T> {   // wraps the third-party return type
@@ -205,7 +205,7 @@ Stubbing works for anything with an interface-shaped seam — even a Spring Data
 
 ```java
 public class GameDatabase {
-    interface Jpa {                            // mirrors the repository methods we use
+    interface Jpa {                            // mirrors the repository methods the wrapper uses
         GameRow save(GameRow gameRow);
         Optional<GameRow> findById(Long id);
     }

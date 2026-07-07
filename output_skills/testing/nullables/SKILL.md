@@ -68,7 +68,7 @@ Start from the code you need to test. For a whole system, pick one class and rep
 
 Converting a mock-based suite → [migration.md](references/migration.md). Improving existing nullables → walk their layers and check each against the rules below, plus: the stub sits at the true edge, one stub per technology (no duplicates), no leftover throwaway stubs, each layer's `createNull()` speaks that layer's language. Structuring a new app around this (optional) → [architecture.md](references/architecture.md).
 
-## Rules that hold everywhere
+## Rules at every layer
 
 - `create()` wires production, `createNull()` wires nulled — both factories live on the wrapped class, never on the stub. The plain constructor is the test seam: tests use it to inject dependencies they hold handles on.
 - Configure and assert as the state of the world the caller wants to control, in the caller's language: `PaymentClient.createNull({ approved: false })`, not HTTP statuses. Each layer decomposes its configuration into its dependency's language.

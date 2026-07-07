@@ -40,6 +40,18 @@ Each replacement requires the dependency to *be* Nullable — that's the convers
 
 ## Choose a conversion order
 
+"Converting" names a class, never a branch or the whole app: converting X means X's tests become sociable and nulled, which requires X's *direct* dependencies to have `createNull()` — nothing deeper. Every conversion leaves tests green and the codebase shippable, so the tree converts one class-sized increment at a time, and the purpose of the work decides how many increments to do.
+
+```
+                    App
+         ┌───────────┼───────────┐
+    ReportClient   Emailer      Cli
+         │             │          │
+    HttpClient    SmtpClient   stdout      ← three technologies, three edges
+```
+
+Converting App gives its three direct dependencies `createNull()` (throwaway stubs if the branches below aren't ready) and rewrites App's tests. The branches stay untouched. Converting ReportClient later descends one branch; the console branch can wait forever if testing never hurts there.
+
 Map the dependency tree first. Each class falls into one of three cases:
 
 - **No infrastructure anywhere below** → nothing to convert; plain tests.
@@ -55,14 +67,14 @@ Map the dependency tree first. Each class falls into one of three cases:
 4. Router          — same
 ```
 
-**Descend the ladder** (large tree): convert one class and its *direct* dependencies only, top-down, spreading the work across many sessions. Direct dependencies that aren't Nullable yet get throwaway stubs.
+**Descend the ladder** (large tree): convert one class and its *direct* dependencies only, top-down; dependencies that aren't Nullable yet get throwaway stubs. Every rung leaves tests green and the codebase shippable, so the conversion can stop at any rung — at the cost that the sociable chain stays broken below each remaining throwaway stub. When the goal is converting the whole tree anyway, climb instead; throwaway stubs are pure waste then.
 
 ```
 1. Router first: give LoginController a throwaway stub, make Router Nullable,
    replace mocks in Router's tests.
 2. Later, LoginController: its dependency Auth0Client gets converted (or stubbed),
    LoginController's throwaway stub is replaced by real composition.
-3. Repeat downward as time allows.
+3. Repeat downward as far as the task's scope requires.
 ```
 
 ## Throwaway stubs
