@@ -1,6 +1,6 @@
 # Building High-Level Wrappers and Nullable App Code
 
-Giving `createNull()` to code you own: clients for one specific service (sitting on a low-level wrapper), and app code composing nullable dependencies. No stub, no integration tests — that machinery exists only at the bottom layer.
+Giving `createNull()` to code you own: clients for one specific service (sitting on a low-level wrapper), and app code composing nullable dependencies. These need no stub and no integration tests — that machinery exists only at the bottom layer.
 
 ## Contents
 

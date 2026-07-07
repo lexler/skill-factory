@@ -1,10 +1,11 @@
-# Building Low-Level Wrappers — Static Typing (Java, C#, Kotlin)
+# Building Low-Level Wrappers — Declared-Interface Seam
 
-The bottom layer: a wrapper for one communication *technology* (HTTP, JDBC, filesystem, clock, random), made Nullable by stubbing the third-party library it calls. This is the only place two special things live: narrow integration tests against the real system, and an embedded stub. Nominal typing adds one pattern — the Thin Wrapper — and everything else follows the same recipe.
+The bottom layer: a wrapper for one communication *technology* (HTTP, database driver, filesystem, clock, random), made Nullable by stubbing the third-party library it calls. This is the only place two special things live: narrow integration tests against the real system, and an embedded stub. Swapping the seam behind a declared interface adds one pattern — the Thin Wrapper; everything else follows the same recipe. Examples are Java.
 
 ## Contents
 
 - Find the edge
+- Adapting to your language
 - The Thin Wrapper pattern
 - The build ladder
 - Design the public interface
@@ -17,15 +18,23 @@ The bottom layer: a wrapper for one communication *technology* (HTTP, JDBC, file
 
 ## Find the edge
 
-The stub cuts at code you **don't own** — the third-party library — never at your own class. Mocks fake code you own; Nullables stub only code you don't. That way your wrapper's real logic runs in every test, nulled or not, and a change to it is caught, not hidden.
+The stub cuts at code you **don't own** — the third-party library — never at your own class. Mocks mock code you own; Nullables stub only code you don't. That way your wrapper's real logic runs in every test, nulled or not, and a change to it is caught, not hidden.
 
 Go all the way down: wrap `System.currentTimeMillis()`, not a convenience layer above it; wrap `RestTemplate`, not your service client. One low-level wrapper per technology — every service client speaking HTTP reuses the same `JsonHttpClient`. A single-purpose dependency may get one combined high+low wrapper; the stub still cuts at the third-party edge.
 
 Before building, search the codebase for an existing wrapper (`createNull`, `Stubbed`, an `adapter/` or `infrastructure/` package). Building a duplicate wrapper for a technology is the expensive mistake here.
 
+## Adapting to your language
+
+The examples here are Java; the pattern is not.
+
+- Follow the codebase's naming idiom for the two factories (`create`/`createNull` shown here), and keep both on the wrapper.
+- "Throw a detailed error" means the language's failure idiom — exceptions, returned errors, result types. The detail and the failing loudly are the point, not the mechanism.
+- Where classes can't nest, keep the stub invisible with the language's privacy unit — package-private, module-local, unexported.
+
 ## The Thin Wrapper pattern
 
-You can't duck-type past a concrete third-party class, so create a **private interface that mirrors the third-party signatures exactly, containing only the methods your wrapper uses** — plus two implementations: a Real one that forwards, and a Stubbed one that returns canned data.
+Declare a **seam interface that mirrors the third-party signatures exactly, containing only the methods your wrapper uses** — plus two implementations: a Real one that forwards, and a Stubbed one that returns canned data.
 
 ```java
 public class DieRoller {
@@ -116,7 +125,8 @@ Grow `createNull()`'s configuration in this order, one test each:
 1. **Loud default** — an unconfigured Nullable returns unmistakably fake data (`"Nulled JsonHttpClient response"`, 42.0) so accidental reliance fails visibly.
 2. **Single configurable response**.
 3. **Per-endpoint** — a `Map<String, Object>` from endpoint to response.
-4. **Repetition semantics** — a single value repeats forever; a `List` is consumed in order; exhaustion throws an informative error naming the endpoint:
+4. **Partial configuration** — unspecified fields of a configured response get loud per-field defaults.
+5. **Repetition semantics** — a single value repeats forever; a `List` is consumed in order; exhaustion throws an informative error naming the endpoint:
 
 ```java
 private static Iterator<Object> normalizeResponses(Map.Entry<String, Object> entry) {
@@ -129,7 +139,7 @@ private static Iterator<Object> normalizeResponses(Map.Entry<String, Object> ent
 throw new NoSuchElementException("No more responses configured for URL: " + url);
 ```
 
-5. **Validate configuration** — reject impossible configured values (a die roll of 7) instead of decoding them silently.
+6. **Validate configuration** — reject impossible configured values (a die roll of 7) instead of decoding them silently.
 
 ## Named null factories
 
@@ -173,7 +183,7 @@ public class JsonHttpClient {
                            .getBody();
     }
     public OutputTracker<JsonHttpRequest> trackRequests() {
-        return listener.createTracker();
+        return listener.trackOutput();
     }
 
     // ---- nullability machinery ----

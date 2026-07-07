@@ -50,7 +50,7 @@ Semantics to rely on:
 - A list is consumed in order, then the Nullable throws ("No more responses configured…") — a test that consumes too much fails fast instead of passing on stale data.
 - An error is just another configured response: `createNull([{ error: "my_error" }])`.
 
-Pass every parameter the test cares about; never let an assertion depend on a default. Nulled defaults are deliberately absurd (`"Nulled HttpClient default body"`, port 42) so accidental reliance fails loudly.
+Pass every parameter the test cares about; never let an assertion depend on a default.
 
 In languages without named optional parameters, configuration comes as an options builder or overloaded factories:
 
@@ -80,6 +80,7 @@ assert.deepEqual(translationRequests.data, [], "shouldn't call translation servi
 
 - `clear()` returns-and-resets — useful between phases of a longer test. `stop()` unsubscribes.
 - Start tracking before the act step; trackers only see what happens after they're created.
+- Tracker methods are named after the writes they record — `trackRequests()`, `trackSaves()`; `trackOutput()` is the generic fallback.
 
 ## Signature shielding
 
@@ -116,6 +117,7 @@ async function postAsync({
 - The helper returns a bag; each test destructures what it needs, so the bag can grow without breaking existing tests.
 - Prefer helpers over `beforeEach` — setup stays visible at the call site.
 - Some duplication between similar tests is fine when it makes them easier to read.
+- `createTestInstance()` on a value object defaults any boundary-crosser it holds to the nulled version — `WwwConfig` above defaults its `log` to `Log.createNull()`.
 
 ## Error paths
 
@@ -136,8 +138,10 @@ A nulled Clock freezes time at a configured instant and moves only when told:
 
 ```javascript
 const clock = Clock.createNull({ now: "2024-01-01T00:00:00Z" });
-clock.advanceNulledClock(60_000);
+await clock.advanceNulledClockAsync(60_000);
 ```
+
+Method names vary by codebase. A real clock throws on advance calls — time travel is nulled-only.
 
 Timeout tests combine a hanging dependency with time travel — act *without awaiting*, advance, then await:
 
@@ -155,7 +159,7 @@ Where possible, prefer passing time in as a value: a clock for *actions* ("what 
 
 ## Simulating incoming events
 
-For dependencies that push data (sockets, queues, UI events), `simulateX()` fires a fake incoming event through the same handler path a real event takes:
+For dependencies that push data (sockets, queues, UI events), `simulateX()` fires a simulated incoming event through the same handler path a real event takes:
 
 ```javascript
 const network = Network.createNull();
@@ -183,3 +187,4 @@ assert.deepEqual(response, expected);
 - Assert against a collaborator's own output rather than hand-typing its format: `assert.deepEqual(response, translationView.page("my_response"))` — the test isn't about the view's HTML. But never *recompute* the expected value with the code under test; that verifies nothing. Use this sparingly, only when the collaborator's format is genuinely irrelevant to the test.
 - Stay in consumer scope: assert that the right request went out and that whatever came back got used. The dependency's behavior (does the translator translate correctly?) belongs to the dependency's own tests.
 - One real bug turning several tests red is the sociable chain working, not a smell — the overlap is what replaces end-to-end tests. The failing set points at the shared code.
+- Keep one or two end-to-end smoke tests as a safety net. When a smoke test catches something, the narrow suite has a gap — fill it with narrow tests rather than growing the smoke suite.

@@ -46,7 +46,7 @@ class OutputTracker {
 }
 ```
 
-Java (from Shore & Young's yacht-tdd):
+Java:
 
 ```java
 public class OutputListener<T> {
@@ -56,7 +56,7 @@ public class OutputListener<T> {
         listeners.forEach(tracker -> tracker.add(data));
     }
 
-    public OutputTracker<T> createTracker() {
+    public OutputTracker<T> trackOutput() {
         OutputTracker<T> tracker = new OutputTracker<>(this);
         listeners.add(tracker);
         return tracker;
@@ -105,7 +105,7 @@ public void saveGame(Game.Snapshot snapshot) {
     listener.emit(snapshot);                    // domain-level, both modes
 }
 public OutputTracker<Game.Snapshot> trackSaves() {
-    return listener.createTracker();
+    return listener.trackOutput();
 }
 ```
 
@@ -113,7 +113,7 @@ public OutputTracker<Game.Snapshot> trackSaves() {
 
 Encapsulates the read-channel semantics: a single value repeats forever; a list is consumed in order and then fails fast with a named error. Used inside embedded stubs.
 
-JavaScript/TypeScript (James Shore, MIT License):
+JavaScript/TypeScript:
 
 ```javascript
 export class ConfigurableResponses {
@@ -150,7 +150,7 @@ export class ConfigurableResponses {
 }
 ```
 
-Java idiom (iterator normalization, from yacht-tdd's JsonHttpClient):
+Java idiom (iterator normalization):
 
 ```java
 private static Iterator<Object> normalize(Object responses) {

@@ -1,10 +1,11 @@
-# Building Low-Level Wrappers — Dynamic Typing (JS, TS, Python, Ruby)
+# Building Low-Level Wrappers — Duck-Typed Seam
 
-The bottom layer: a wrapper for one communication *technology* (HTTP, filesystem, message bus, clock, random), made Nullable by stubbing the third-party library it calls. This is the only place two special things live: narrow integration tests against the real system, and an embedded stub.
+The bottom layer: a wrapper for one communication *technology* (HTTP, database driver, filesystem, message bus, clock, random), made Nullable by stubbing the third-party library it calls. This is the only place two special things live: narrow integration tests against the real system, and an embedded stub. Duck typing keeps the seam simple: the stub is any object with the right method names. Examples are JavaScript.
 
 ## Contents
 
 - Find the edge
+- Adapting to your language
 - Design the public interface
 - Narrow integration tests first
 - Wire the nullability seam
@@ -12,15 +13,23 @@ The bottom layer: a wrapper for one communication *technology* (HTTP, filesystem
 - The response ladder
 - Match real behavior where it counts
 - Output tracking
-- Complete example
+- Minimal example
 
 ## Find the edge
 
-The stub cuts at code you **don't own** — the third-party library — never at your own class. Mocks fake code you own; Nullables stub only code you don't. That way your wrapper's real logic runs in every test, nulled or not, and a change to it is caught, not hidden.
+The stub cuts at code you **don't own** — the third-party library — never at your own class. Mocks mock code you own; Nullables stub only code you don't. That way your wrapper's real logic runs in every test, nulled or not, and a change to it is caught, not hidden.
 
 Go all the way down: wrap `System.currentTimeMillis` / `Date`, not a convenience layer above it; wrap the HTTP library, not your service client. One low-level wrapper per technology — every service client speaking HTTP reuses the same `HttpClient`. A single-purpose dependency may get one combined high+low wrapper; the stub still cuts at the third-party edge.
 
 Before building, search the codebase for an existing wrapper: `grep -r "createNull\|Stubbed" src/` and look for an `infrastructure/` directory. Building a duplicate wrapper for a technology is the expensive mistake here.
+
+## Adapting to your language
+
+The examples here are JavaScript; the pattern is not.
+
+- Follow the codebase's naming idiom for the two factories (`create`/`createNull` shown here), and keep both on the wrapper.
+- "Throw a detailed error" means the language's failure idiom — exceptions, returned errors, result types. The detail and the failing loudly are the point, not the mechanism.
+- Keep the stub invisible to callers with the language's privacy unit — module-local class, unexported name.
 
 ## Design the public interface
 
@@ -120,15 +129,15 @@ Grow `createNull()`'s configuration in this order, one test each:
 
 ## Match real behavior where it counts
 
-Stubs return hardcoded data — don't reimplement the real system (that's a fake, and a smell at this level). But where the stub *does* emulate behavior, it must match the real library exactly, because everything above tests against the nulled instance. Example: node's `http` lowercases header names, so the stub must too. Your narrow integration tests are the record of what "exactly" means; when the stub needs a behavior they don't cover, extend them first.
+Stubs return hardcoded data; prefer that over reimplementing real behavior (a fake) — needing real logic in the stub usually means you're cutting at the wrong level. But where the stub *does* emulate behavior, it must match the real library exactly, because everything above tests against the nulled instance. Example: node's `http` lowercases header names, so the stub must too. Your narrow integration tests are the record of what "exactly" means; when the stub needs a behavior they don't cover, extend them first.
 
 ## Output tracking
 
 Technically separate from nullability, usually built at the same time: emit in the shared request path (works real and nulled), return a tracker from `trackRequests()`. See utilities.md for `OutputListener`.
 
-## Complete example
+## Minimal example
 
-A minimal fetch-based HTTP wrapper — seam, stub, defaults, and normalization on one screen (illustrates the shape; adapt to your library):
+A fetch-based HTTP wrapper — seam, stub, defaults, and normalization on one screen (illustrates the shape; adapt to your library). It covers ladder rungs 1–3 with single responses only; for lists and repetition, wire the endpoint values through `ConfigurableResponses`:
 
 ```javascript
 import { OutputListener } from "./output_listener.js";
@@ -169,6 +178,7 @@ class StubbedGlobals {
   }
   async fetch(url) {
     const configured = this._endpoints?.[url] ?? {};
+    // compact: collapses the loud whole-client default and the per-field defaults into one tier
     const response = new Response(configured.body ?? "Nulled HttpClient default body", {
       status: configured.status ?? 503,
       headers: configured.headers ?? { nulledhttpclient: "default header" },

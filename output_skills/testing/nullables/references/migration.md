@@ -1,6 +1,6 @@
-# Migrating from Mocks to Nullables
+# Migrating an Existing Codebase to Nullables
 
-Converting an existing mock-based codebase, incrementally. Mocks and Nullables coexist in the same suite and even the same test, so every step ships green — no big-bang rewrite. Convert where testing hurts; skip code that's already easy to maintain.
+Converting an existing codebase incrementally — replacing mock-based tests, or making untested code testable. The conversion orders below apply either way. Mocks and Nullables coexist in the same suite and even the same test, so every step ships green — no big-bang rewrite. Convert where testing hurts; skip code that's already easy to maintain.
 
 ## Contents
 
