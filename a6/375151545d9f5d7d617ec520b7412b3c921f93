@@ -1,0 +1,59 @@
+output_skills/testing/nullables/references/building-high-level-wrappers.md
+  s_a798e9400bf1a0::t_3d38b4894f9703 3
+output_skills/testing/nullables/references/utilities.md
+  s_a798e9400bf1a0::t_c39f31b88abc71 49
+  s_a798e9400bf1a0::t_044006553adf67 59,108
+  s_a798e9400bf1a0::t_1ac09c3e82820e 153
+  s_a798e9400bf1a0::t_9424bfc58d3130 116
+output_skills/testing/nullables/references/building-low-level-wrappers-static.md
+  s_a798e9400bf1a0::t_844b01a95a7d63 142
+  s_a798e9400bf1a0::t_044006553adf67 186
+  s_a798e9400bf1a0::t_02150db387b683 21
+  s_a798e9400bf1a0::t_6bee16910fac8a 1,3,8
+  s_a798e9400bf1a0::t_7a302abd645a65 27-34,37
+  s_a798e9400bf1a0::t_a6b083893f6005 128-129
+output_skills/testing/nullables/references/building-low-level-wrappers-dynamic.md
+  s_a798e9400bf1a0::t_1c18c313a488c2 138,140
+  s_a798e9400bf1a0::t_33b18ae691d238 181
+  s_a798e9400bf1a0::t_db9351957fec2a 20
+  s_a798e9400bf1a0::t_472d246a20a7a4 1,3,8
+  s_a798e9400bf1a0::t_6d152facb11e9e 16
+  s_a798e9400bf1a0::t_9ea6f6d744fff2 26-33
+  s_a798e9400bf1a0::t_7e12cf3f650f3f 132
+output_skills/testing/nullables/references/consuming-nullables.md
+  s_a798e9400bf1a0::t_d8d8c55332c187 162
+  s_a798e9400bf1a0::t_a106a98e5027c3 190
+  s_a798e9400bf1a0::t_8bd55a1dc0d7d4 53
+  s_a798e9400bf1a0::t_40d9111b761b37 120
+  s_a798e9400bf1a0::t_703ce896411f68 83
+  s_a798e9400bf1a0::t_3bfea6e4fe80c4 141,144
+  s_a798e9400bf1a0::t_bc624476d24d44 145
+output_skills/testing/nullables/references/migration.md
+  s_a798e9400bf1a0::t_a1416a98855af2 1,3
+output_skills/testing/nullables/SKILL.md
+  s_a798e9400bf1a0::t_7ed3f1b529ff80 60-62
+  s_a798e9400bf1a0::t_6a066e88b917fa 56
+  s_a798e9400bf1a0::t_8dbc47347e729b 50
+  s_a798e9400bf1a0::t_1313d42386af90 31
+  s_a798e9400bf1a0::t_f21176ae93702e 59
+  s_a798e9400bf1a0::t_aa8706cf7f7b74 14
+  s_a798e9400bf1a0::t_2022a7fc066e82 27
+  s_a798e9400bf1a0::t_356a49d41babf7 66
+  s_a798e9400bf1a0::t_d63183041cfa34 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a6375151545d9f5d7d617ec520b7412b3c921f93",
+  "prompts": {},
+  "sessions": {
+    "s_a798e9400bf1a0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "107db656-17dd-4b66-8714-e71f4a82b9ea",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
