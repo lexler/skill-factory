@@ -1,0 +1,20 @@
+output_skills/testing/nullables/SKILL.md
+  s_a798e9400bf1a0::t_1f59127cd664be 75-76
+  s_a798e9400bf1a0::t_47e6f232970549 54,56,58-67,69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8920e04eb1d62b16aa1cc22e578c6f52110b7b53",
+  "prompts": {},
+  "sessions": {
+    "s_a798e9400bf1a0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "107db656-17dd-4b66-8714-e71f4a82b9ea",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
