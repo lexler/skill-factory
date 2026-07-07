@@ -1,0 +1,25 @@
+output_skills/testing/nullables/SKILL.md
+  s_a798e9400bf1a0::t_7ff825ef2e13e3 71
+output_skills/testing/nullables/references/migration.md
+  s_a798e9400bf1a0::t_b4986798a9fbdf 77
+  s_a798e9400bf1a0::t_e0c83c9bd5dc2e 43-54
+  s_a798e9400bf1a0::t_5626aeff54ae83 70
+output_skills/testing/nullables/references/building-low-level-wrappers-static.md
+  s_a798e9400bf1a0::t_9051c0c0b07a64 59,191,208
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "072a2a74fca019f741b85192b70d765fae12db4c",
+  "prompts": {},
+  "sessions": {
+    "s_a798e9400bf1a0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "107db656-17dd-4b66-8714-e71f4a82b9ea",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
