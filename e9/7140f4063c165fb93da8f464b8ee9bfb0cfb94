@@ -1,0 +1,26 @@
+docs/knowledge/anthropic-skill-docs/skills.md
+  s_38aa698a7f861a::t_20beb95fc2ae1e 122-123,363
+  s_38aa698a7f861a::t_110e94d840dbb5 364
+docs/knowledge/anthropic-skill-docs/sub-agents.md
+  s_38aa698a7f861a::t_20beb95fc2ae1e 263-264
+docs/knowledge/anthropic-skill-docs/overview.md
+  s_38aa698a7f861a::t_20beb95fc2ae1e 168
+docs/knowledge/anthropic-skill-docs/hooks-guide.md
+  s_38aa698a7f861a::t_20beb95fc2ae1e 666
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e97140f4063c165fb93da8f464b8ee9bfb0cfb94",
+  "prompts": {},
+  "sessions": {
+    "s_38aa698a7f861a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "45bc1dcf-87e7-49aa-b625-a7780c5017a5",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
