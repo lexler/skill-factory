@@ -1,0 +1,24 @@
+output_skills/testing/nullables/references/building-low-level-wrappers-static.md
+  s_eb63290de53ad2::t_7131e61048f169 16
+  s_eb63290de53ad2::t_1f58e7d94a3928 159-162
+output_skills/testing/nullables/SKILL.md
+  s_eb63290de53ad2::t_aa8bd0d32a0ef0 73-74
+  s_eb63290de53ad2::t_28831230559dc8 66-67
+  s_eb63290de53ad2::t_cbbd7bb5b717bd 41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "635fdc2561195df7df86d9c860316e7aeb0b4c75",
+  "prompts": {},
+  "sessions": {
+    "s_eb63290de53ad2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6a7aefea-0d2d-4e54-acdf-85de8902c4ee",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
