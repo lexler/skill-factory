@@ -9,6 +9,7 @@ Giving `createNull()` to code you own: clients for one specific service (sitting
 - Decomposing configurable responses
 - App-level composition
 - Static-typing variants
+- Done when
 
 ## The shape
 
@@ -120,7 +121,7 @@ function nulledHttpResponse({ response = "Nulled TranslationClient response", er
 }
 ```
 
-Callers say `{ response: "x" }`, `{ error: "boom" }`, `{ hang: true }`; the translation produces the HTTP responses the real service would return. Error configs deliberately reuse the telemetry path built in step 5 — a configured error exercises the same parsing and throwing as a real one.
+Callers say `{ response: "x" }`, `{ error: "boom" }`, `{ hang: true }`; the translation produces the HTTP responses the real service would return. Error configs deliberately reuse the telemetry path built in step 5 — a configured error exercises the same parsing and throwing as a real one. Named error factories thread down the layers the same way — `Loans.createNullDatabaseDown()` decomposes to `Jdbc.createNullDown()` — so an error stays one configuration argument at every layer.
 
 ## App-level composition
 
@@ -172,3 +173,15 @@ public static GameService createNull(NulledResponses responses) {
 }
 // GameService.createNull(new NulledResponses().withDieRolls(1,2,3,4,5).withGame(game))
 ```
+
+## Done when
+
+Walk this against the finished wrapper:
+
+- Tests assert the exact outgoing request through the lower wrapper's tracker, and the parsed domain return value.
+- No transport shapes escape — the interface is designed from callers' needs.
+- `createNull()` options speak the caller's language and decompose into the dependency's; bare `createNull()` works; invented defaults are loud and self-naming.
+- External responses are validated hard; every failure a caller must handle is one configuration argument (`{ error }`, `createNullXxxDown()`) reusing the telemetry path.
+- Output is tracked as domain data in the shared path.
+- The nulled instance itself is tested: default, configured responses, configured errors.
+- No stub and no integration tests at this layer — that machinery lives only at the bottom.

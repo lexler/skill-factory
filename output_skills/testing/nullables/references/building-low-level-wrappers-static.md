@@ -17,6 +17,7 @@ The bottom layer: a wrapper for one communication *technology* (HTTP, database d
 - Behavior simulation
 - Exceptions at the boundary
 - Complete examples
+- Done when
 
 ## Find the edge
 
@@ -77,6 +78,18 @@ Rules:
 - Include only methods your wrapper calls. Don't implement the library's own interface; it's far bigger than you need.
 - If the third-party methods return third-party types, wrap those types the same way (`ResponseEntityWrapper<T>` with `getBody()` — Real holds the `ResponseEntity`, Stubbed holds the canned value).
 - Everything nests privately inside the wrapper class: factories on the wrapper, never on the stub; the stub invisible to callers.
+
+For a multi-object protocol (JDBC's `DataSource → Connection → PreparedStatement → ResultSet`), the mirror looks impossibly expensive only until the unused methods drop out. Mirror each object with its own thin interface — only the methods you use — and let one stub class play the whole chain, returning itself down it:
+
+```java
+private static class StubbedJdbc
+        implements DataSourceWrapper, ConnectionWrapper, StatementWrapper, ResultSetWrapper {
+    // getConnection() → this; prepareStatement() → this; executeQuery() → this;
+    // next()/getString()/getDate() serve the configured rows
+}
+```
+
+This keeps your cursor loop (`while (resultSet.next()) readBook(...)`) above the seam, where every nulled test runs it. Inventing a simpler seam above the edge instead (`rows() → List<Row>`) pushes that mapping below the seam, where nulled tests never run it — the most bug-prone coupling code drops out of the sociable chain.
 
 ## The build ladder
 
@@ -142,6 +155,7 @@ throw new NoSuchElementException("No more responses configured for URL: " + url)
 ```
 
 6. **Validate configuration** — reject impossible configured values (a die roll of 7) instead of decoding them silently.
+7. **Errors as configuration** — a configured failure is just another response, thrown through the same path a real failure takes. Name meaningful failures as factories (`createNullDown()` — see Named null factories below) so error cases cost the same as happy paths.
 
 ## Named null factories
 
@@ -222,3 +236,16 @@ public class GameDatabase {
     // RealJpa forwards to the @Autowired repository; StubbedJpa returns configured GameRows
 }
 ```
+
+## Done when
+
+Walk this against the finished wrapper:
+
+- A test proves the nulled instance performs no I/O.
+- Seam interfaces mirror the third-party signatures exactly, only the methods the wrapper uses; Real implementations purely forward. Your parsing, mapping, and normalization sit above the seam and run in nulled tests.
+- Bare `createNull()` works; invented defaults are loud and self-naming; collections default empty.
+- A single configured response repeats; a list is consumed in order; exhaustion throws a named error; impossible configurations are rejected.
+- Every behavior the stub emulates (async timing, normalization) is documented by a narrow integration test the stub matches.
+- The write channel is tracked — `trackX()` emitting domain data in the shared path.
+- Meaningful failures are configurable (error response or named null factory).
+- No `nulled` if-branches; the stub is invisible to callers; both factories live on the wrapper.

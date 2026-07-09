@@ -15,6 +15,7 @@ The bottom layer: a wrapper for one communication *technology* (HTTP, database d
 - Output tracking
 - Behavior simulation
 - Minimal example
+- Done when
 
 ## Find the edge
 
@@ -203,3 +204,16 @@ class StubbedGlobals {
   }
 }
 ```
+
+## Done when
+
+Walk this against the finished wrapper:
+
+- A test proves the nulled instance performs no I/O.
+- The stub replaces only the third-party library, implementing just the methods the wrapper calls. Your parsing, mapping, and normalization sit above the seam and run in nulled tests.
+- Bare `createNull()` works; invented defaults are loud and self-naming; collections default empty.
+- A single configured response repeats; a list is consumed in order; exhaustion throws a named error.
+- Every behavior the stub emulates (async timing, header normalization) is documented by a narrow integration test the stub matches.
+- The write channel is tracked — `trackRequests()` emitting domain data in the shared path.
+- Meaningful failures are configurable (error response, `hang`).
+- No `nulled` if-branches; the stub is invisible to callers; both factories live on the wrapper.
