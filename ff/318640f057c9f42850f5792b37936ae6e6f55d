@@ -1,0 +1,40 @@
+docs/map.md
+  s_dec91df16205e1::t_a2f940d435a25d 27-29
+  s_dec91df16205e1::t_1bc354f0335dba 13
+scripts/fetch_writing_great_skills.py
+  s_dec91df16205e1::t_678c3ed68e64a1 1-68
+docs/knowledge/writing-great-skills/LICENSE
+  s_dec91df16205e1::t_e2dd50a9e1e867 1-21
+docs/knowledge/writing-great-skills/SKILL.md
+  s_dec91df16205e1::t_e2dd50a9e1e867 1-83
+update-docs
+  s_dec91df16205e1::t_48d5f10d5f6eea 6
+docs/knowledge/writing-great-skills/GLOSSARY.md
+  s_dec91df16205e1::t_e2dd50a9e1e867 1-201
+docs/create_new_skill-process.md
+  s_dec91df16205e1::t_48984acdef24ce 59-60
+  s_dec91df16205e1::t_a5e125f3576471 168-175
+  s_dec91df16205e1::t_16601032f74fb7 40-47
+  s_dec91df16205e1::t_434e368582797e 109-111,113
+  s_dec91df16205e1::t_ff12e96b5043e3 117
+  s_dec91df16205e1::t_58f571c9131420 32-33
+  s_dec91df16205e1::t_eaf5227fbc5164 134-135
+docs/knowledge/writing-great-skills/ATTRIBUTION.md
+  s_dec91df16205e1::t_e2dd50a9e1e867 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ff318640f057c9f42850f5792b37936ae6e6f55d",
+  "prompts": {},
+  "sessions": {
+    "s_dec91df16205e1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c8ec4c47-5822-43ee-8507-ba1c9b7e803b",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
