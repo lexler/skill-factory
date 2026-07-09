@@ -24,13 +24,13 @@ Decide which seat you are in — it changes what you can verify.
 
 2. Draft the extraction. Capture what the session learned: decisions with their why, corrections and preferences the user stated, insights discovered, dead ends that cost time, and questions still open. Done when every insight in scope is either in the draft or consciously judged not worth the reader's time.
 
-3. Run the lens gate below and keep a visible verdict list: one line per lens — its name, then "clean" or the fix applied. A lens without a verdict line was skipped, not passed. Done when the verdict list covers every lens in all three groups.
+3. Run the lens gate below and keep a visible verdict list: a bulleted list, one lens per line — its name, then "clean" or the defect found and fixed. A verdict names a defect caught in the draft; a lens that shaped the draft from the start still reports "clean". A lens without a verdict line was skipped, not passed. Done when the verdict list covers every lens in all three groups.
 
-4. Output the text in chat, or return it if another agent invoked you. Persistence belongs to the caller: hand over prose, and let the caller decide if and where it becomes a file.
+4. Output the text in chat, or return it if another agent invoked you. Persistence belongs to the caller: hand over prose, and let the caller decide if and where it becomes a file. The extracted text is the only artifact — the verdict list and any questions to the user are chat output, and stay out of the text however it is saved or passed on.
 
 ## Lens gate
 
-Look through one lens at a time. Each lens names a distortion and its fix.
+Look through one lens at a time.
 
 ### Standalone — the stranger was not there
 
