@@ -1,0 +1,21 @@
+output_skills/ai/extract-knowledge/SKILL.md
+  s_38aa698a7f861a::t_f961d8bff5531b 29
+  s_38aa698a7f861a::t_b10377ff6c32ab 33
+  s_38aa698a7f861a::t_396b944f14bf69 27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d04a47afb705bb6dfb3b89dada148e50fb290e7b",
+  "prompts": {},
+  "sessions": {
+    "s_38aa698a7f861a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "45bc1dcf-87e7-49aa-b625-a7780c5017a5",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
