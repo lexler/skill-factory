@@ -38,7 +38,7 @@ Clock.createNull({ now: "2024-01-01" })   // test: frozen time, no external stat
 Tests interact with a nulled instance through three moves:
 
 - **Reads** — configure what the world answers, as `createNull(...)` parameters in the caller's domain terms: `PaymentClient.createNull({ approved: false })`, `DieRoller.createNull([3, 5, 1])`. A single value repeats forever; a list is consumed in order, then fails fast. An error is just another configured response: `createNull([{ error: "boom" }])`.
-- **Writes** — observe what the code sent:
+- **Writes** — observe what the code sent, as domain data (track the data, not the rendered string):
 
   ```javascript
   const emails = emailer.trackOutput();
@@ -63,12 +63,14 @@ Start from the code you need to test. For a whole system, pick one class and rep
 2. Follow that dependency's chain down until you reach code you don't own — a third-party library doing I/O. That is the edge.
    - The codebase already has a wrapper for this technology (search `createNull`, `Stubbed`, `infrastructure/`) → reuse it, go to step 3.
    - No wrapper → build one: [building-low-level-wrappers-static.md](references/building-low-level-wrappers-static.md) when the seam is an interface you declare, [building-low-level-wrappers-dynamic.md](references/building-low-level-wrappers-dynamic.md) when any object with the right methods will do.
-3. Walk back up the chain. Give each class on the way `create()` and `createNull()`, composing its nulled dependencies: [building-high-level-wrappers.md](references/building-high-level-wrappers.md). At each layer, keep the configuration in that layer's own language and decompose it downward — this is where abstractions leak if you rush.
-4. Write the tests: [consuming-nullables.md](references/consuming-nullables.md).
+3. Walk back up the chain, giving each class `create()` and `createNull()` that compose its nulled dependencies — follow [building-high-level-wrappers.md](references/building-high-level-wrappers.md); its recipe carries the decomposition and tracker moves that keep layers honest, and this is where abstractions leak if you rush. Done when every class between the edge and the class under test has both factories, configuration in its own language decomposed downward, and its write channel tracked.
+4. Write the tests: [consuming-nullables.md](references/consuming-nullables.md). Done when every read, write, and error path of the class is asserted — both directions per dependency: the exact outgoing request (via that dependency's tracker) and the returned answer being used.
 
 Converting a mock-based suite → [migration.md](references/migration.md). Improving existing nullables → walk their layers and check each against The cut and the rules below, plus: no leftover throwaway stubs. Structuring a new app around this (optional) → [architecture.md](references/architecture.md).
 
 ## Rules at every layer
+
+Before committing a converted class, walk these as a checklist against it.
 
 - `create()` wires production, `createNull()` wires nulled — both factories live on the wrapped class, never on the stub. The plain constructor is the test seam: tests use it to inject dependencies they hold handles on.
 - Configure and assert as the state of the world the caller wants to control, in the caller's language: `PaymentClient.createNull({ approved: false })`, not HTTP statuses. Each layer decomposes its configuration into its dependency's language.

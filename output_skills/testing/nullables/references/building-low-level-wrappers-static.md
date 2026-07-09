@@ -13,6 +13,7 @@ The bottom layer: a wrapper for one communication *technology* (HTTP, database d
 - Grow the stub by instrumentation
 - The response ladder
 - Named null factories
+- Output tracking
 - Behavior simulation
 - Exceptions at the boundary
 - Complete examples
@@ -154,6 +155,10 @@ GameDatabase.createCorruptedNull();      // load throws GameCorrupted
 ```
 
 For a class with several nullable dependencies, collect configuration in a builder (`createNull(new NulledResponses().withDieRolls(1,2,3).withGame(game))`) — see building-high-level-wrappers.md.
+
+## Output tracking
+
+Technically separate from nullability, built at the same time: hold an `OutputListener`, `emit(domainData)` in the shared write path (runs real and nulled), return a tracker from `trackRequests()`/`trackSaves()`. Consumers one layer up need this tracker to assert their outgoing requests — a wrapper without one leaves its callers unable to prove what they sent. See utilities.md for `OutputListener`; the complete example below shows the wiring.
 
 ## Behavior simulation
 
