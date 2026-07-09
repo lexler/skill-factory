@@ -1,0 +1,34 @@
+output_skills/testing/nullables/references/building-low-level-wrappers-static.md
+  s_eb63290de53ad2::t_fc26f322b11aab 88
+  s_eb63290de53ad2::t_debe20b66e91c9 158-161
+  s_eb63290de53ad2::t_7f81558d456673 16
+output_skills/testing/nullables/SKILL.md
+  s_eb63290de53ad2::t_38ba356c725df6 69
+  s_eb63290de53ad2::t_93edb785561862 85
+  s_eb63290de53ad2::t_beb30d13db3e84 87
+  s_eb63290de53ad2::t_d7f2f5f35437f1 75
+  s_eb63290de53ad2::t_3de0ce29b84531 65
+output_skills/testing/nullables/references/building-low-level-wrappers-dynamic.md
+  s_eb63290de53ad2::t_21034956fe5f6a 16
+  s_eb63290de53ad2::t_beeae2134b75a0 139-153
+output_skills/testing/nullables/references/architecture.md
+  s_eb63290de53ad2::t_eddee9491d90f0 16
+output_skills/testing/nullables/references/utilities.md
+  s_eb63290de53ad2::t_ca95b7f7d33f63 5-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cd991a940af08fc762b1670847adb68a297ab7c8",
+  "prompts": {},
+  "sessions": {
+    "s_eb63290de53ad2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6a7aefea-0d2d-4e54-acdf-85de8902c4ee",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
