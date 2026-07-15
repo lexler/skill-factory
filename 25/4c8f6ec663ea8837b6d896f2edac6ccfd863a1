@@ -1,0 +1,21 @@
+output_skills/practices/demo-with-narration/SKILL.md
+  s_a48e6bfea2f1f7::t_032d6c26be6742 1-42
+docs/knowledge/writing-great-skills/agents/openai.yaml
+  s_a48e6bfea2f1f7::t_419ee34bf5ae1e 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "254c8f6ec663ea8837b6d896f2edac6ccfd863a1",
+  "prompts": {},
+  "sessions": {
+    "s_a48e6bfea2f1f7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bf14e659-edba-4071-9379-f10e31f0216e",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
