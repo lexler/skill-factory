@@ -1,0 +1,25 @@
+docs/knowledge/anthropic-skill-docs/best-practices.md
+  s_a48e6bfea2f1f7::t_419ee34bf5ae1e 472,517
+docs/knowledge/anthropic-skill-docs/skills.md
+  s_a48e6bfea2f1f7::t_419ee34bf5ae1e 23-25,853-855,857
+docs/knowledge/anthropic-skill-docs/sub-agents.md
+  s_a48e6bfea2f1f7::t_419ee34bf5ae1e 178,261-262,275,348-349,743-744,840,866-870
+docs/knowledge/anthropic-skill-docs/overview.md
+  s_a48e6bfea2f1f7::t_419ee34bf5ae1e 13,15,17-19,22,27,36,42,44,46,50,59,63,82,86,89,97,99,101,105-109,115,121,125-127,129,131,133-137,151,153,157-161,163,167,169,171,179,181,194,209,211,226,230,236-242,244,252-255,257,263,277,287,293-295,301,303-304,306,308-310,312,314-315,322-323,326-327,331,334-335
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "0042cebe16b59814e9a492e46de879631b2c0b79",
+  "prompts": {},
+  "sessions": {
+    "s_a48e6bfea2f1f7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bf14e659-edba-4071-9379-f10e31f0216e",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Lada Kesseler <archie.kesseler@gmail.com>"
+    }
+  }
+}
