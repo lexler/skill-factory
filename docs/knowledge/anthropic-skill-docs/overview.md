@@ -5,7 +5,7 @@ description: Agent Skills are modular capabilities that extend Claude's function
 ---
 
 <Note>
-  For how zero data retention (ZDR) applies to this feature, see [API and data retention](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention).
+  To learn how zero data retention (ZDR) applies to this feature, see [API and data retention](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention).
 </Note>
 
 ## Why use Skills
@@ -142,7 +142,7 @@ Here's how Claude loads and uses the custom `pdf-processing` Skill from the earl
 Skills are available across Claude's agent products:
 
 <Note>
-  Claude Platform on AWS and Microsoft Foundry inherit the same Skills behavior as the Claude API in all following sections.
+  Claude Platform on AWS and Microsoft Foundry inherit the same Skills behavior as the Claude API in all following sections, except where [Limitations and constraints](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#limitations-and-constraints) says otherwise.
 </Note>
 
 ### Claude API
@@ -271,7 +271,7 @@ For audit logging of Skills API operations, see [Audit logging](https://platform
 
 ## Limitations and constraints
 
-Claude Platform on AWS and Microsoft Foundry follow the same limitations as the Claude API in the following subsections.
+Claude Platform on AWS and Microsoft Foundry follow the same limitations as the Claude API in the following subsections. In addition, on Microsoft Foundry, the [Skill version download endpoint](https://platform.claude.com/docs/en/api/beta/skills/versions/download) (`GET /v1/skills/{skill_id}/versions/{version}/content`) is not supported.
 
 ### Cross-surface availability
 
