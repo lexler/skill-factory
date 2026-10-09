@@ -1,23 +1,23 @@
 ---
 name: deep-research
-description: "ChatGPT Deep Research: whether a question earns a run, writing its prompt, running it, and filing the cited report in the research archive. Use when deep research is asked for, when saving a ChatGPT Deep Research chat, or when a question needs a broad, sourced survey of current work."
+description: "ChatGPT Deep Research: whether a question is worth a run, writing its prompt, running it, and filing the cited report in the research archive. Use when deep research is asked for, when saving a ChatGPT Deep Research chat, or when a question needs a broad, sourced survey of current work."
 ---
 
 STARTER_CHARACTER = 🔭
 
 # ChatGPT Deep Research
 
-Archie's ChatGPT Pro subscription runs Deep Research: 5 to 30 minutes of browsing that ends in a long report with numbered sources. The deep-research tool in `~/ws/sprouts/chatgpt-deep-research` starts a run in its own signed-in Chrome, waits for it, and files the report in Archie's research archive. Runs come from a monthly quota of about 250.
+Archie's ChatGPT Pro subscription runs Deep Research: 5 to 30 minutes of browsing that ends in a long report with numbered sources. The deep-research tool in `~/ws/sprouts/chatgpt-deep-research` starts a run in its own signed-in Chrome, waits for it, and files the report in Archie's research archive. Runs come from a monthly quota of about 250, a number seen in use rather than published by OpenAI.
 
-## Whether a question earns a run
+## Whether a question is worth a run
 
-A run earns its place when the answer is a survey: the current state of a field, options compared across many sources, what other fields already know about Archie's problem.
+A run is worth it when the answer is a survey: the current state of a field, options compared across many sources, what other fields already know about Archie's problem.
 
 Reach for something else when:
 - one fact or a few pages answer it: WebSearch and WebFetch;
 - the answer lives in code, a repo or Archie's notes: read them, since ChatGPT sees only the prompt;
 - the question needs client material, names or secrets to make sense: the prompt goes to OpenAI, so ask Archie first;
-- you want to see whether the tool works: runs are never spent on trials; the tool's own tests cover that.
+- you want to see whether the tool works: the tool's own tests cover that, so never spend a run on a trial.
 
 Done when you can say in one sentence what the report will help Archie decide or understand.
 
@@ -46,7 +46,7 @@ The other two commands take a chat URL:
 - `save <chat-url> --slug <slug> --summary "…"` files a finished Deep Research chat, such as one Archie started by hand, or a run that outlasted the 90 minutes. First search the archive for the chat URL (`grep -l '<chat-url>' ~/second-brain/research/*.md`): a chat found there is already filed. When you don't know the topic yet, leave out `--slug` and `--summary`; the slug then comes from ChatGPT's plan title, and you write the summary after reading the report. Saving again with the same slug replaces the report and its index line.
 - `status <chat-url>` prints `completed`, or `researching (<status>)`.
 
-The tool handles Chrome and ChatGPT itself. When it says the sign-in is gone, pass its instructions to Archie; signing in is his step. When it says the research ended with a status like `failed` or `stopped`, report that with the chat URL rather than starting another run.
+The tool handles Chrome and ChatGPT itself. When it says the sign-in is gone, pass its instructions to Archie, since signing in is his step. When it says the research ended with a status like `failed` or `stopped`, report that with the chat URL rather than starting another run.
 
 ## Filing the report
 

@@ -164,6 +164,8 @@ Tell user to restart Claude Code to load the skill.
 - Verify: Does it trigger? Does Claude follow instructions correctly?
 - Try edge cases
 
+A throwaway session works for a trigger check: `claude -p "<request>" --output-format stream-json --verbose`, then look for the `Skill` tool call in the output. When the skill acts on the outside world (it sends messages, writes files or uses up quota), run it with `--permission-mode plan` and disallow every tool that acts: Bash, Monitor, Agent, Write, Edit. Monitor runs shell commands too, so with only Bash disallowed the skill still reaches real data.
+
 ### 13. Iterate
 Diagnose observed problems against the failure modes (full definitions in `docs/knowledge/writing-for-agents/SKILL.md`):
 - Doesn't trigger → sharpen the description: leading word up front, one trigger per branch
