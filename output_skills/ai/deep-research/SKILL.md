@@ -55,6 +55,7 @@ The tool writes `~/second-brain/research/<date>-<slug>.md`, with the prompt, cha
 After `Saved`:
 - Read the index line. Fix the summary in `index.md` by hand if it doesn't tell Archie at a glance what the report is.
 - Read the report and give the asker its answer at a glance, with the report path.
+- Write that answer for Archie beside the report as `<report>-summary.md`, starting with a link to the report.
 - When the research serves a project, link the report from that project's docs.
 
-Done when the report is in the archive, its index line reads as one clear sentence, and the asker has the answer and the path.
+Done when the report and its summary are in the archive, its index line reads as one clear sentence, and the asker has the answer and the path.
