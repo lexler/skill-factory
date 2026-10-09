@@ -7,7 +7,7 @@ STARTER_CHARACTER = 🔭
 
 # ChatGPT Deep Research
 
-Archie's ChatGPT Pro subscription runs Deep Research: 5 to 30 minutes of browsing that ends in a long report with numbered sources. The deep-research tool in `~/ws/sprouts/chatgpt-deep-research` starts a run in its own signed-in Chrome, waits for it, and files the report in Archie's research archive. Runs come from a monthly quota of about 250, a number seen in use rather than published by OpenAI.
+Archie's ChatGPT Pro subscription runs Deep Research: 5 to 30 minutes of browsing that ends in a long report with numbered sources. The `deep-research` tool in `~/tools/deep-research` starts a run in its own signed-in Chrome, waits for it, and files the report in Archie's research archive. Runs come from a monthly quota of about 250, a number seen in use rather than published by OpenAI.
 
 ## Whether a question is worth a run
 
@@ -23,7 +23,7 @@ Done when you can say in one sentence what the report will help Archie decide or
 
 ## Writing the prompt
 
-The prompt is an open question: short, problem first, in Archie's voice, free of answer injection, ending with "What am I not thinking about?" Read `~/ws/sprouts/chatgpt-deep-research/docs/prompt-guide.md` before writing one; it holds the rules and a before-and-after example. Where you lack a fact about Archie's situation, such as why he needs this now, ask him.
+The prompt is an open question: short, problem first, in Archie's voice, free of answer injection, ending with "What am I not thinking about?" Read `~/tools/deep-research/docs/prompt-guide.md` before writing one; it holds the rules and a before-and-after example. Where you lack a fact about Archie's situation, such as why he needs this now, ask him.
 
 Write the prompt to a file outside the repo, such as your scratchpad. Show it to Archie, or to the session that asked for the research, and run only on their go.
 
@@ -31,10 +31,10 @@ Done when Archie or the asking session has said go on this exact text.
 
 ## Running it
 
-One run at a time: check that none is going (`pgrep -fl 'chatgpt-deep-research/src/cli.ts'` prints nothing), then start it in the background, since it waits up to 90 minutes:
+One run at a time: check that none is going (`pgrep -fl 'deep-research/src/cli.ts run'` prints nothing), then start it in the background, since it waits up to 90 minutes:
 
 ```sh
-node ~/ws/sprouts/chatgpt-deep-research/src/cli.ts run <prompt-file> --slug <slug> --summary "<one sentence>"
+deep-research run <prompt-file> --slug <slug> --summary "<one sentence>"
 ```
 
 It prints the chat URL first, a progress line every minute, and `Saved <report-file>` at the end.
