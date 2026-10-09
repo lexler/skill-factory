@@ -23,14 +23,7 @@ Done when you can say in one sentence what the report will help Archie decide or
 
 ## Writing the prompt
 
-The prompt is an open question: it hands over the problem and leaves the answer to the research.
-
-- Problem first, in Archie's voice: first person, plain words, what he is doing, what he is stuck on, why it matters now.
-- What he already knows goes in as "ones I've heard of", as a starting point, never as the frame.
-- Ask what he should look at, what carries over to his case, and the current state, with sources.
-- End with "What am I not thinking about?"
-
-Answer injection closes the question. Deep Research researches inside whatever box the prompt draws and hands the box back. The box shows up as: named tools, methods or vocabularies to cover; an assumed setup ("my first target is X"); a fixed list of numbered sub-questions; a prescribed report format. The first ontology prompt did all four, and the report came back shaped by the prompt rather than the field.
+The prompt is an open question: short, problem first, in Archie's voice, free of answer injection, ending with "What am I not thinking about?" Read `~/ws/sprouts/chatgpt-deep-research/docs/prompt-guide.md` before writing one; it holds the rules and a before-and-after example. Where you lack a fact about Archie's situation, such as why he needs this now, ask him.
 
 Write the prompt to a file outside the repo, such as your scratchpad. Show it to Archie, or to the session that asked for the research, and run only on their go.
 
