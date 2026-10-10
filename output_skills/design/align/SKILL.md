@@ -1,20 +1,19 @@
 ---
 name: align
 description: Presents a proposed approach in progressive confirmable chunks with recommended decisions and alternatives. Use when aligning on a design, plan, or technical approach before implementation.
-argument-hint: [file|folder]
 ---
 
 STARTER_CHARACTER = 🎯
 
 ## Goal
 
-Synchronize the mental model between you and the user before implementation begins. Discrepancies found during implementation are expensive — find them now while changes are free. Your job is to make your thinking visible so the user can spot where your understanding diverges from theirs.
+Synchronize the mental model between you and the user before implementation begins. Discrepancies found during implementation are expensive, so find them now while changes are free. Your job is to make your thinking visible so the user can spot where your understanding diverges from theirs.
 
-## Core Principle
+## Core principle
 
 Propose, don't ask. Think first, then present your thinking for confirmation. The user's job is to spot divergence and course-correct, not to generate the approach.
 
-## Flow — Zoom In
+## Flow: zoom in
 
 Each level deepens understanding. Confirm before going deeper.
 
@@ -24,29 +23,29 @@ Goal → Big Picture → Straightforward Details → Non-obvious Decisions (one 
 
 ### 1. Goal
 
-State what you understand the goal to be and why it matters. A sentence or two. This catches the deepest misalignment — if you're solving the wrong problem, nothing else matters.
+State what you understand the goal to be and why it matters. Keep it to a sentence or two. This catches the deepest misalignment, because if you're solving the wrong problem, nothing else matters.
 
-Confirm with me that the goal is right before moving on.
+Confirm with the user that the goal is right before moving on.
 
-### 2. Big Picture
+### 2. Big picture
 
-Present the overall shape of the approach: how do the pieces relate, what's the high-level flow. ASCII diagram. A few sentences, not a page.
+Present the overall shape of the approach: how do the pieces relate, what's the high-level flow. Use an ASCII diagram and a few sentences.
 
-Confirm with before going deeper.
+Confirm with the user before going deeper.
 
-### 3. Straightforward Details
+### 3. Straightforward details
 
-Decisions where there's really only one reasonable approach. No ⭐/❌ needed since there are no real alternatives. The user confirms or flags exceptions.
+Decisions where there's only one reasonable approach. No ⭐/❌ needed since there are no real alternatives. The user confirms or flags exceptions.
 
-Group items by topic. Anchor each group with an ASCII diagram — not just for file structures, but for any group: roles and their responsibilities, control flow, communication between components. The diagram is what makes a group scannable. Present one group at a time, confirm, move to the next group.
+Group items by topic. Anchor each group with an ASCII diagram, whatever the group holds: file structures, roles and their responsibilities, control flow, communication between components. The diagram is what makes a group scannable. Present one group at a time, confirm, move to the next group.
 
-Each item: one line stating the decision. Save the "why" — it's obvious.
+Each item: one line stating the decision. Skip the "why", since it's obvious.
 
-### 4. Non-obvious Decisions
+### 4. Non-obvious decisions
 
 Decisions with real tradeoffs, multiple valid approaches, or where your recommendation might surprise the user.
 
-First, present a brief index of what's coming — just the problem titles, no recommendations. This lets the user see the scope.
+First, present a brief index of what's coming: the problem titles only, without recommendations. This lets the user see the scope.
 
 Then walk through each one (or small related groups) with:
 - The problem: what is being decided, why it matters
@@ -58,9 +57,9 @@ Confirm each with a question before moving to the next.
 
 When the user rejects a recommendation, check whether downstream items are affected. If so, flag which ones need revisiting.
 
-## After Corrections
+## After corrections
 
-When the user corrects something, re-present the full updated version (diagram, section, whatever was corrected) before asking to proceed. Don't just show the delta. The user needs to see the corrected whole — it often triggers additional corrections they wouldn't have noticed otherwise.
+When the user corrects something, re-present the full updated version (diagram, section, whatever was corrected) before asking to proceed. Seeing the whole again often surfaces corrections the user would miss in a delta.
 
 ## Anti-patterns
 
