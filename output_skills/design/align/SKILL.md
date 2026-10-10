@@ -26,13 +26,13 @@ Goal → Big Picture → Straightforward Details → Non-obvious Decisions (one 
 
 State what you understand the goal to be and why it matters. A sentence or two. This catches the deepest misalignment — if you're solving the wrong problem, nothing else matters.
 
-Confirm with AskUserQuestion before going deeper.
+Confirm with me that the goal is right before moving on.
 
 ### 2. Big Picture
 
 Present the overall shape of the approach: how do the pieces relate, what's the high-level flow. ASCII diagram. A few sentences, not a page.
 
-Confirm with AskUserQuestion before going deeper.
+Confirm with before going deeper.
 
 ### 3. Straightforward Details
 
@@ -54,7 +54,7 @@ Then walk through each one (or small related groups) with:
 - ❌ Alternatives considered with why they were rejected
 - ASCII diagram if the item involves structure or flow
 
-Confirm each with AskUserQuestion before moving to the next.
+Confirm each with a question before moving to the next.
 
 When the user rejects a recommendation, check whether downstream items are affected. If so, flag which ones need revisiting.
 
@@ -69,5 +69,4 @@ When the user corrects something, re-present the full updated version (diagram, 
 - Presenting the full detailed analysis for every item (save depth for non-obvious items only)
 - Asking open-ended questions instead of proposing (the user invoked this to see YOUR thinking)
 - Presenting a group of decisions without a visual anchor (diagram makes it scannable)
-- Offering redundant AskUserQuestion options that split the same intent
 - Continuing with pre-planned items after a redirect without reconsidering downstream impact
