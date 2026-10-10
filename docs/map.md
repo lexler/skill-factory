@@ -60,7 +60,6 @@ skill-factory/
     ├── ai/
     │   ├── ai-patterns/
     │   ├── creating-process-files/
-    │   ├── deep-research/              # ChatGPT Deep Research via the deep-research CLI
     │   └── claude-code/                # subfolder for Claude Code-specific skills
     │       ├── creating-hooks/
     │       ├── launching-agent-teams/
