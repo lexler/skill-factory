@@ -1,21 +1,23 @@
 ---
 name: align
-description: Presents a proposed approach in progressive confirmable chunks with recommended decisions and alternatives. Use when aligning on a design, plan, or technical approach before implementation.
+description: Aligns on a design or plan before implementation by proposing it in confirmable chunks, with recommended decisions and alternatives.
 ---
 
 STARTER_CHARACTER = 🎯
 
 ## Goal
 
-Synchronize the mental model between you and the user before implementation begins. Discrepancies found during implementation are expensive, so find them now while changes are free. Your job is to make your thinking visible so the user can spot where your understanding diverges from theirs.
+Align your mental model with the user's before implementation begins. Divergence found during implementation is expensive, so surface it now while changes are free.
 
-## Core principle
+Think first, then propose the approach. It's easier to complain than to explain: a user looking at a concrete, scannable proposal spots what's wrong early and corrects you before you build the wrong thing.
 
-Propose, don't ask. Think first, then present your thinking for confirmation. The user's job is to spot divergence and course-correct, not to generate the approach.
+## Language
+
+Write the shortest message that is clear on the first read, using plain English words and complete sentences.
 
 ## Flow: zoom in
 
-Each level deepens understanding. Confirm before going deeper.
+Start from high level and go lower. Zoom in one level at a time:
 
 ```
 Goal → Big Picture → Straightforward Details → Non-obvious Decisions (one by one)
@@ -35,17 +37,23 @@ Confirm with the user before going deeper.
 
 ### 3. Straightforward details
 
-Decisions where there's only one reasonable approach. No ⭐/❌ needed since there are no real alternatives. The user confirms or flags exceptions.
+Decisions where there's only one reasonable approach.
 
-Group items by topic. Anchor each group with an ASCII diagram, whatever the group holds: file structures, roles and their responsibilities, control flow, communication between components. The diagram is what makes a group scannable. Present one group at a time, confirm, move to the next group.
+Group decisions where there's commonality that helps understand. 
+Organize the group around meaningful differences. 
 
-Each item: one line stating the decision. Skip the "why", since it's obvious.
+Include specific details when they change what the user is agreeing to, otherwise stay on higher level.
+
+Use short prose or bullets for simple choices. Use an ASCII diagram
+when seeing a relationship, structure, or flow makes the choice clearer.
+
+Describe the resulting behavior with complete statements.
 
 ### 4. Non-obvious decisions
 
 Decisions with real tradeoffs, multiple valid approaches, or where your recommendation might surprise the user.
 
-First, present a brief index of what's coming: the problem titles only, without recommendations. This lets the user see the scope.
+First, present a brief index of what's coming, staying on high level: the problem titles only, without recommendations. This lets the user see the scope.
 
 Then walk through each one (or small related groups) with:
 - The problem: what is being decided, why it matters
@@ -55,17 +63,8 @@ Then walk through each one (or small related groups) with:
 
 Confirm each with a question before moving to the next.
 
-When the user rejects a recommendation, check whether downstream items are affected. If so, flag which ones need revisiting.
+## When the user corrects you
 
-## After corrections
+Re-present the full updated version of whatever was corrected (goal, diagram, group, decision) before asking to proceed. Seeing the whole again often surfaces corrections the user would miss in a delta.
 
-When the user corrects something, re-present the full updated version (diagram, section, whatever was corrected) before asking to proceed. Seeing the whole again often surfaces corrections the user would miss in a delta.
-
-## Anti-patterns
-
-- Jumping to detail-level decisions before establishing the big picture
-- Flat-listing many decisions without grouping by topic (user loses context)
-- Presenting the full detailed analysis for every item (save depth for non-obvious items only)
-- Asking open-ended questions instead of proposing (the user invoked this to see YOUR thinking)
-- Presenting a group of decisions without a visual anchor (diagram makes it scannable)
-- Continuing with pre-planned items after a redirect without reconsidering downstream impact
+After any correction or rejected recommendation, check which downstream items it affects. Flag them and rethink them before going on.
