@@ -100,7 +100,7 @@ ITER=$(scripts/next_iteration.py output_skills/{category}/{skill-name}-workspace
 - The task prompt
 - The output directory: `$ITER/eval-{ID}-{slug}/with_skill/run-{N}/outputs/`
 - Which outputs to save — name the deliverable the user cares about (e.g., "the final .dsl file", "the generated test suite"), so the agent saves the right thing instead of guessing
-- A request to save a transcript (every step, test, prediction, refactoring) to `transcript.md` in the run directory — the grader needs this
+- A request to save an action log to `transcript.md` in the run directory — the grader needs this. The log lists, in order and one line each, every file read, every tool call or command with its result, and every artifact the skill's workflow produces (test runs, stated predictions, refactorings). Ask for actions and observable results only, never for the agent's reasoning: wording like "every step you took and why" triggered the API's `[reasoning_extraction]` safeguard and killed every run before it wrote a file.
 - A request to save `metrics.json` (tool-call counts per tool, total steps, files created, errors encountered — schema in `docs/knowledge/anthropic-skill-creator/references/schemas.md`) and `user_notes.md` (anything the agent was uncertain about, worked around, or thinks needs human review) into the outputs directory. The grader reads both; without them, the benchmark's execution metrics stay empty.
 
 **Baseline runs**: Same task prompt but explicitly tell the agent NOT to read any skill files. Save to `$ITER/eval-{ID}-{slug}/without_skill/run-{N}/outputs/`. Request the same transcript, `metrics.json`, and `user_notes.md`.
