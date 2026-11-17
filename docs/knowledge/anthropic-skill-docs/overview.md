@@ -8,6 +8,8 @@ featureMetadata:
     eligibility: not-eligible
     note: Skill data retained according to standard policy.
   supportedModels:
+    - claude-fable-5-2
+    - claude-mythos-5-2
     - claude-fable-5-1
     - claude-mythos-5-1
     - claude-fable-5
